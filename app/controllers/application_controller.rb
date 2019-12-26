@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
 
   def hello
     render text: "All world one big haha where one fools laught on enather!"
-    render button: "BIG RED!"
+    
   end
 end
