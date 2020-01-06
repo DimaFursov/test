@@ -1,8 +1,16 @@
-<!-- <% provide(:title, "Home") %> -->
-<!DOCTYPE html>
+<!--  <% provide(:title, "Home") %>-->
+<h1>Sample App</h1>
+<p>
+  This is the home page for the
+  <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
+  sample application.
+</p>
+<%= link_to 'about', static_pages_about_path %>
+<%= link_to 'help', static_pages_help_path %>
+<!--  <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</title>
+    <title>Home | Ruby on Rails Tutorial Sample App</title>
   </head>
   <body>
   	<h1>Sample App</h1>
@@ -12,4 +20,4 @@
   sample application.
 </p>
 </body>
-</html>	
+</html>	-->
