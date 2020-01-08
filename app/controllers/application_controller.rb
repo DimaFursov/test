@@ -2,12 +2,14 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  # MVC Controllers папка командует парадом над (GUI)views
-  # ПУп земли маршрутизатор! это контролер routs.rb root куда 
+  # config Над MVC Controllers папка командует парадом над (GUI)views и models(пользователи, статьи, продукты, БД)
+  # Браузер отправляет запрос, веб-сервер принимает этот запрос, и передаёт его в Rails-контроллер
+  # Этот контролер ApplicationController routs.rb root куда 
   # Сейчас стартует class StaticPagesController < ApplicationController который наследует этот контролер 
   # Вызов метода так как в routs.rb  путь  root 'static_pages#home'
-  # def home
+  # def home (home.html.erb)
   # end
-  # генерица страница 
+  # models сейчас обходи и сразу идем в views к Rails.application.routes.draw do  application.html.erb  
+  # генерица страница home.html.erb
   
 end
