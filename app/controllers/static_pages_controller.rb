@@ -10,4 +10,8 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
+  def string_message(str = '')
+  return  if str.empty?
+  return 
+  end
 end
