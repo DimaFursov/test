@@ -12,9 +12,12 @@ class StaticPagesController < ApplicationController
   end
 
   def string_message(str = '')
-  return "It's an empty string!" if str.noempty?
+  return if str.empty?
   return "Chui we're home"
   end
+# flash.each do |key, value|
+# puts "Key #{key.inspect} has value #{value.inspect}"
+  
 # def string_message(str = '')
 #  return "It's an empty string!" if str.include?("foo")
 #  return "Chui we're home"
@@ -22,4 +25,18 @@ class StaticPagesController < ApplicationController
 #def string_message(str = 'Home')
 #  return "Chui we're home"
 #end
+end
+class Word < String             # Word наследуется от String.
+   def palindrome?
+     self == self.reverse # self - это сама строка.
+     # return "1Chui we're home1"
+   end
+end
+class Myclass
+  def String(str = '')
+    return if str.empty? 
+     # str == str
+     # self == self
+    return  "Chui we're home"
+  end
 end

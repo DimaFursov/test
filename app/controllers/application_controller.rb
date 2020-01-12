@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   # Вызов метода(действие) так как в routs.rb  путь  root 'static_pages#home'
   # def home (home.html.erb)
   # end
-  # models сейчас обходит и сразу идет в views к Rails.application.routes.draw do  application.html.erb  
+  # models сейчас обходит и сразу идет в views к 
+  # реилс определяет какая страница будет запущенна Rails.application.routes.draw do
+  # root 'static_pages#home'   application.html.erb  
   # генерица страница home.html.erb
   #def hello
   #  render text: "hello, world!"
