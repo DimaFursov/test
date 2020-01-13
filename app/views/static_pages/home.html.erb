@@ -1,20 +1,24 @@
 <% provide(:title, "Home") %>
-<h1>Sample App где результат-</h1> 
-<p>123 <%= # OMFG forgot "=" in the <%= pfffffffffffffff
-sa = Myclass.new
-sa.string(:title)
-%>
-<%= s = Word.new("level")
-s.palindrome?
+<div class="center jumbotron">
+  <h1>Welcome to the Sample App <img alt="Rails logo" src="/assets/rails-9308b8f92fea4c19a3a0d8385b494526.png" /></h1>
 
-%></p>
-<p>
+  <h2>
+    <p>This is the home page for the 
+    <%= s = Word.new("level")
+    s.palindrome?%>
+    <%= 
+    sa = Myclass.new
+    sa.string(:title)
+    %>
+    </p>
+    <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
+    sample application.
+  </h2>
 
-  This is the home page for the
-  <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
-  sample application.
-</p>
-<%= link_to 'User', users_path %> |
-<%= link_to 'about', static_pages_about_path %> |
-<%= link_to 'help', static_pages_help_path %> |
-<%= link_to 'contact', static_pages_contact_path %>
+  <%= link_to "Sign up now!", '#', class: "btn btn-lg btn-primary" %>
+</div>
+<%= link_to image_tag("rails.png", alt: "Rails logo"), 'http://rubyonrails.org/' %> |
+<%= link_to 'User', users_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'about', static_pages_about_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'help', static_pages_help_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'contact', static_pages_contact_path, class: "btn btn-lg btn-primary" %>

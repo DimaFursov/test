@@ -36,7 +36,7 @@ class Myclass
     return if str.empty? 
      # str == str
      # self == self
-    return "Chui we're home?" #format.html {"Chui we're home"} "Chui we're home"
+    return "Chui we're home" #format.html {"Chui we're home"} "Chui we're home"
   end
   def string_message(str = '')
   # return "It's an empty string!" if str = "H"
