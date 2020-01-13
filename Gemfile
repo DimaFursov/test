@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails',                '4.2.2'
 gem 'bootstrap-sass',       '3.2.0.0'
+# https://rubygems.org/gems/bootstrap-sass/versions
 # bundle install
 # Fetching gem metadata from https://rubygems.org/.............
 # Fetching gem metadata from https://rubygems.org/.
