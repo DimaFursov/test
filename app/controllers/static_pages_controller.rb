@@ -39,7 +39,7 @@ class Myclass
     return format.html {"str"} #"Chui we're home"
   end
   def string_message(str = '')
-  return "It's an empty string!" if str = "Home"
-  return "Chui we're home"
+  # return "It's an empty string!" if str = "H"
+  return "Chui we're hom"
  end
 end
