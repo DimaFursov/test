@@ -10,7 +10,7 @@
   <%= @micropost.user_id %>
 </p>
 
-<%= link_to 'Edit', edit_micropost_path(@micropost) %> |
-<%= link_to 'Back', microposts_path %> |
-<%= link_to 'New User', new_user_path %> |
-<%= link_to 'Back to users Listing', users_path %>
+<%= link_to 'Edit', edit_micropost_path(@micropost), class: "btn btn-lg btn-primary" %> |
+<%= link_to 'Back', microposts_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'New User', new_user_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'Back to users Listing', users_path, class: "btn btn-lg btn-primary" %>
