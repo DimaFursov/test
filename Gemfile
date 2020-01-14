@@ -1,14 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'rails',                '4.2.2'
-gem 'bootstrap-sass',       '3.2.0.0'
+gem 'bootstrap-sass', '~> 3.4.1'
 # https://rubygems.org/gems/bootstrap-sass/versions
 # bundle install
 # Fetching gem metadata from https://rubygems.org/.............
 # Fetching gem metadata from https://rubygems.org/.
 # Could not find gem 'bootstrap-sass (= 3.2.0.0)' in any of the gem sources listed
 # in your Gemfile.
-
 gem 'sass-rails',           '5.0.2'
 gem 'uglifier',             '2.5.3'
 gem 'coffee-rails',         '4.1.0'
