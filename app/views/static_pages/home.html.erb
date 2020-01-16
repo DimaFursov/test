@@ -15,12 +15,12 @@ s.palindrome?
     sample application.
   </h2>
 
-  <%= link_to "Sign up now!", '#', class: "btn btn-lg btn-primary" %>
+  <%= link_to "Sign up now!", users_path, class: "btn btn-lg btn-primary" %>
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails logo"),
-            'http://rubyonrails.org/' %>
-<%= link_to 'User', users_path %> |
-<%= link_to 'about', static_pages_about_path %> |
-<%= link_to 'help', static_pages_help_path %> |
-<%= link_to 'contact', static_pages_contact_path %>
+            'http://rubyonrails.org/', class: "btn btn-lg btn-primary" %>
+<%= link_to 'User', users_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'about', static_pages_about_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'help', static_pages_help_path, class: "btn btn-lg btn-primary" %> |
+<%= link_to 'contact', static_pages_contact_path, class: "btn btn-lg btn-primary" %>
