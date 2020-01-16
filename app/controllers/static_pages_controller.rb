@@ -28,7 +28,7 @@ class Word < String             # Word наследуется от String.
 end
 class Myclass
   def string(str = '')
-    return "empty" if str = "Homr"  
+    return "MYcalss_empty" if str = "Homr"  
      # str == str
      # self == self
     return "Chui we're home?" #format.html {"Chui we're home"} "Chui we're home"
