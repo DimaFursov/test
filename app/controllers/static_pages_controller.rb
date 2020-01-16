@@ -18,13 +18,8 @@ class StaticPagesController < ApplicationController
    end
   end
 # flash.each do |key, value|
-# puts "Key #{key.inspect} has value #{value.inspect}"
-  
-
-
-  
+# puts "Key #{key.inspect} has value #{value.inspect}" 
 end
-
 class Word < String             # Word наследуется от String.
    def palindrome?
      self == self.reverse # self - это сама строка.
