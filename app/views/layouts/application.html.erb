@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  
     <title><%= full_title(yield(:title)) %></title>
     <%= stylesheet_link_tag 'application', media: 'all',
                                            'data-turbolinks-track' => true %>
@@ -10,10 +10,10 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
     <![endif]-->
-    <%= #render 'layouts/shim' #shim-партиал%>
-  </head>  
+    <%= render 'layouts/shim' %>
+    <%= render 'layouts/header' %>
   <body>
-    <%= #render 'layouts/header' #-партиал%>
+    
     <div class="container">
       <%= yield %>
       <%= render 'layouts/footer' %>
