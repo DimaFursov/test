@@ -1,14 +1,16 @@
     <header class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
         <%= link_to "sample app", '#', id: "logo" %>
+        
         <nav>
-
+            
           <ul class="nav navbar-nav navbar-right">
-         <!--   <div class="navbar">
-  <a href="#home">Home</a>
-  <a href="#news">News</a>
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown
+            <li><%= link_to "Home",   static_pages_home_path %></li>
+            <li><%= link_to "Help",   static_pages_home_path %></li>
+            <li><%= link_to "Log in", new_user_path %></li>
+          </ul>
+          <div class="dropdown">
+                <button class="dropbtn">Dropdown
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
@@ -17,11 +19,7 @@
       <a href="#">Link 3</a>
     </div>
   </div>
-</div>-->
-            <li><%= link_to "Home",   static_pages_home_path %></li>
-            <li><%= link_to "Help",   static_pages_home_path %></li>
-            <li><%= link_to "Log in", new_user_path %></li>
-          </ul>
+
           <div class="navbar">
   <a href="#home">Home</a>
   <a href="#news">News</a>
