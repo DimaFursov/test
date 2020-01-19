@@ -135,46 +135,19 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
-/* footer */
-/*
+/*footer */
+/*одна переменная */
+$gray-medium-light: #ff0000; /*#eaeaea;*/
 footer {
+  background-color: #333;
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: $light-green;
-}
-
-footer a {
-  color: #555;
-}
-
-footer a:hover {
-  color: #222;
-}
-
-footer small {
-  float: left;
-}
-
-footer ul {
-  float: right;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 15px;
-}
-*/
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;;
   a {
-    color: #555;
+    color: $gray;
     &:hover {
-      color: #222;
+      color: $gray-darker;
     }
   }
   small {
