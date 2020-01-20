@@ -12,7 +12,8 @@
 #sa.string(:title)  
 user1 = {:title => "Home"}
 user2 = {name: "Home"}
-user1 == user2
+puts "Betelgeuse!" 
+puts (user1 == user2).to_s
 %>
 <%= #s = Word.new("level1")
 #s.palindrome?
@@ -28,8 +29,8 @@ user1 == user2
   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
 </div>
 
-<%= link_to image_tag("rails.png", alt: "Rails logo"),
-            'http://rubyonrails.org/', class: "btn btn-lg btn-primary" %>
+<%= link_to image_tag("rails-logo.svg", alt: "Ruby on Rails"),
+            'http://rubyonrails.org/' %>
 <%= link_to 'User', users_path, class: "btn btn-lg btn-primary" %> |
 <%= link_to 'about', about_path, class: "btn btn-lg btn-primary" %> |
 <%= link_to 'help', help_path, class: "btn btn-lg btn-primary" %> |
