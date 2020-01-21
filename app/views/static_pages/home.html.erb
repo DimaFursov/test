@@ -1,20 +1,14 @@
 <% provide(:title, "Home") %>
 <div class="center jumbotron">
   <h1>Welcome to the Sample App -
-<%= # OMFG forgot "=" in the <%= pfffffffffffffff
-#sa = Myclass.new
+<%
+# Provide это только во вьюхах
+user1 = provide(:title, "Home")
+user2 = {title: "Home"}
+user1 == user2
 
-#:title.length
-#:title.empty?
-#:title.to_s # to string
-#:title => "Home" # ERROR  user = {:title => "Home"}  puts user  puts user.to_a.inspect # Вывести массив.# Вывести массив буквально.  
-# НИХУА :title => "Home" где  :title.inspect  user.inspect  user[:title]  user.tap {}  :title == "Home"
-#sa.string(:title)  
-user1 = {:title => "Home"}
-user2 = {name: "Home"}
-puts "Betelgeuse!" 
-puts (user1 == user2).to_s
 %>
+<%= yield(:title)%>
 <%= #s = Word.new("level1")
 #s.palindrome?
 %>
@@ -30,7 +24,7 @@ puts (user1 == user2).to_s
 </div>
 
 <%= link_to image_tag("rails-logo.svg", alt: "Ruby on Rails"),
-            'http://rubyonrails.org/' %>
+            'http://rubyonrails.org/', class: "logo" %>
 <%= link_to 'User', users_path, class: "btn btn-lg btn-primary" %> |
 <%= link_to 'about', about_path, class: "btn btn-lg btn-primary" %> |
 <%= link_to 'help', help_path, class: "btn btn-lg btn-primary" %> |
