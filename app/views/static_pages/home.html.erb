@@ -14,7 +14,7 @@ user1 == user2
 %>
 </h1>
   <h2>
-    <img alt="Rails logo" src="/assets/rails.svg" />
+    <img alt="Rails logo" src="/assets/rails.svg" id="img3" />
     This is the home page for the
     <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
     sample application.
@@ -23,8 +23,8 @@ user1 == user2
   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
 </div>
 
-<%= link_to image_tag("rails-logo.svg", alt: "Ruby on Rails"),
-            'http://rubyonrails.org/', class: "logo" %>
+<%= link_to image_tag("Ruby.svg", id: "img2", alt: "Ruby on Rails"),
+            'http://rubyonrails.org/', id: "img2" %>
 <%= link_to 'User', users_path, class: "btn btn-lg btn-primary" %> |
 <%= link_to 'about', about_path, class: "btn btn-lg btn-primary" %> |
 <%= link_to 'help', help_path, class: "btn btn-lg btn-primary" %> |
