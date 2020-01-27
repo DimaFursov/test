@@ -2,6 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 #  Так как @user — это переменная экземпляра, то она автоматически доступна во всех тестах, и мы можем тестировать её валидность методом valid?
+# изначально валидный объект модели User @user с помощью специального метода setup
   def setup
     @user = User.new(name: "Example User", email: "user@example.com")
   end
@@ -43,9 +44,12 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
     end
   end
-    test "email addresses should be unique" do
-    duplicate_user = @user.dup
+  test "email addresses should be unique" do
+    duplicate_user = @user.dup # создать пользователя с таким же адресом электронной почты, как и у @user
+    #адресом, записанным прописными буквами
+    duplicate_user.email = @user.email.upcase 
     @user.save
+    #Так как после этого мы сохраняем @user, то адрес электронной почты дублированного пользователя уже существует в базе данных, следовательно, он не должен быть валидным.
     assert_not duplicate_user.valid?
   end
 end
