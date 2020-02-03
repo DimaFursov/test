@@ -1,10 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :microposts
-  validates :name,  presence: true, length: { maximum: 50 }
-  
-
+  has_many :microposts  
 # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   before_save { self.email = email.downcase }
+  validates :name,  presence: true, length: { maximum: 50 }
   # Регулярное выражение VALID_EMAIL_REGEX — это константа, которая обозначается в Ruby именем, начинающимся с заглавной буквы
   # оно позволяет недопустимые адреса, содержащие последовательно расположенные точки, например foo@bar..com.
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
