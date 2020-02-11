@@ -3,6 +3,14 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
+=begin
+2-Rails направляет /users к действию index в контроллере Users.
+3-Действие index запрашивает у модели User получение всех пользователей (User.all).
+4-Модель User вытягивает всех пользователей из базы данных.
+5-Модель User возвращает список пользователей в контроллер.
+6-Контроллер получает пользователей в переменной @users, которую он передаёт представлению index.
+
+=end
   def index
     @users = User.all
   end
