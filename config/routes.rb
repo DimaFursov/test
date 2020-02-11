@@ -29,8 +29,17 @@ Rails.application.routes.draw do делает (ActionController::Base )
 
 
 Rails.application.routes.draw do
-  #  
+
+
+
+
+  # Static_Pages_Controller.rb   #   def  home   end 
   root 'static_pages#home'
+
+
+
+
+
   get 'static_pages/home'
   #get 'home'    => 'static_pages#home'
   get 'help'    => 'static_pages#help'
@@ -39,11 +48,21 @@ Rails.application.routes.draw do
   #get  'static_pages/contact'
   get 'signup'  => 'users#new'
   resources :microposts
-  resources :users
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  #1-Браузер выдает запрос на URL /users.
+  #2-  Rails.application.routes.draw do 
+  #направляет /users к действию index в контроллере Users.
+  # =>   Rails.application.routes.draw do 
+  #     Users_Controller.rb :user metod 
+  #def index
+  #  @users = User.all
+  #end
 
-  # You can have the root of your site routed with "root"
+
+ #               root 'users#index' 
+  #     Users_Controller.rb  metod  :users
+  resources :users
+#  root 'users#index'
+
   #root 'application#hello'
 
   # Example of regular route:
