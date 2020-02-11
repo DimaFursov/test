@@ -2,6 +2,9 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  # Определяем действие, которое возвращает обект код ruby
+  # маршрутизатор Rails, находится перед контроллером
+  
   # config Над MVC Controllers папка командует парадом над (GUI)views и models(пользователи, статьи, продукты, БД)
   # Браузер отправляет запрос, веб-сервер принимает этот запрос, и передаёт его в Rails-контроллер
   # Этот контролер ApplicationController routs.rb root куда 

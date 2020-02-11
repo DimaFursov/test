@@ -1,4 +1,17 @@
+# маршрутизатор Rails именно он определяет обекты
+=begin
+“Welcome” — имя контроллера, “index” — действие внутри этого контроллера.
+root 'welcome#inedx'
+Rails.application.routes.draw do делает (ActionController::Base )
+
+  StaticPagesController   #   def home   end
+
+
+=end
+
+
 Rails.application.routes.draw do
+  #  
   root 'static_pages#home'
   get 'static_pages/home'
   #get 'home'    => 'static_pages#home'
