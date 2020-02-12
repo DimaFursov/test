@@ -5,6 +5,7 @@ class MicropostsController < ApplicationController
   # GET /microposts.json
   def index
     @microposts = Micropost.all
+    debugger
   end
 
   # GET /microposts/1
@@ -15,6 +16,7 @@ class MicropostsController < ApplicationController
   # GET /microposts/new
   def new
     @micropost = Micropost.new
+    debugger
   end
 
   # GET /microposts/1/edit
@@ -25,7 +27,7 @@ class MicropostsController < ApplicationController
   # POST /microposts.json
   def create
     @micropost = Micropost.new(micropost_params)
-
+    debugger
     respond_to do |format|
       if @micropost.save
         format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
