@@ -1,4 +1,14 @@
+/*Сначала посмотрим на внешнюю структуру, которая состоит из встроенного Ruby, она открывается вызовом form_for и закрывается end:
+Наличие ключевого слова do указывает на то, что form_for принимает блок с одной переменной, которую мы назвали f (от “form”).
+
+*/
 <%= form_for(@user) do |f| %>
+/* объект f: при вызове с методом, соответствующим элементу HTML-формы — такому, как текстовое поле, переключатель или поле пароля — f возвращает код этого элемента, специально предназначенный для установки атрибута объекта @user. Другими словами,
+render 'form' =
+f.label :name 
+f.text_field :name
+*/
+создает HTML элемента “текстовое поле с заголовком” для назначения атрибута name модели User.
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -18,6 +28,14 @@
   <div class="field">
     <%= f.label :email %><br>
     <%= f.text_field :email, placeholder: "E-mail1" %>
+  </div>
+   <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password, placeholder: "password" %>
+  </div>
+  <div class="field">
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, placeholder: "Reply password" %>
   </div>
   <div class="actions">
     <%= f.submit "Create my account", class: "btn btn-primary"%>
