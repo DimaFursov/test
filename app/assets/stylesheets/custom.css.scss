@@ -1,14 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-/* forms */
 
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-  /*@include box_sizing;*/
-  /*Сама форма представлена в Листинге 7.13. Детально мы будем обсуждать ее в Разделе 7.2.2, а для начала давайте немного стилизуем ее с помощью SCSS из Листинга 7.14. (Обратите внимание на повторное использование примеси box_sizing из Листинга 7.2.) После применения этих CSS-правил страница регистрации выглядит так же, как на Рисунке 7.12.*/
-}
 
 input {
   height: auto !important;
@@ -30,6 +22,9 @@ $gray-medium-light: #eaeaea;
   width: 100%;
   margin-top: 45px;
   @include box_sizing;
+  /*уже вызванн @include box_sizing;  в обявлении выше 13 строка
+  
+  */
 }
 /* header */
 /*-------------------------------------------------------------------------------------*/
@@ -233,4 +228,13 @@ footer {
       margin-left: 15px;
     }
   }
+}
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+  /*Сама форма представлена в Листинге 7.13. Детально мы будем обсуждать ее в Разделе 7.2.2, а для начала давайте немного стилизуем ее с помощью SCSS из Листинга 7.14. (Обратите внимание на повторное использование примеси box_sizing из Листинга 7.2.) После применения этих CSS-правил страница регистрации выглядит так же, как на Рисунке 7.12.*/
 }
