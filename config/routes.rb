@@ -36,10 +36,6 @@ Rails.application.routes.draw do
   # Static_Pages_Controller.rb   #   def  home   end 
   root 'static_pages#home'
 
-
-
-
-
   get 'static_pages/home'
   #get 'home'    => 'static_pages#home'
   get 'help'    => 'static_pages#help'
@@ -61,6 +57,8 @@ Rails.application.routes.draw do
  #               root 'users#index' 
   #     Users_Controller.rb  metod  :users
   resources :users
+#  автоматически обеспечивает наше Rails-приложение возможностью отвечать на RESTful URL’ы из Таблицы 7.1. В частности, запрос POST к /users обрабатывается действием create.
+
 #  root 'users#index'
 
 
