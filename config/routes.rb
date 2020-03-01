@@ -33,7 +33,8 @@ Rails.application.routes.draw do
 
 
 
-  # Static_Pages_Controller.rb   #   def  home   end 
+  # http://rusrails.ru/rails-routing#crud-metody-i-ekshny 
+  #Static_Pages_Controller.rb   #   def  home   end 
   root 'static_pages#home'
 
   get 'static_pages/home'

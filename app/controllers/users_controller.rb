@@ -53,7 +53,8 @@ class UsersController < ApplicationController
     end
 =end 
     def create
-    @user = User.new(params[:user])    # Не окончательная реализация!
+    #@user = User.new(params[:user])
+    @user = User.new(user_params)    # Не окончательная реализация!
     if @user.save
       # Обработать успешное сохранение.
     else
