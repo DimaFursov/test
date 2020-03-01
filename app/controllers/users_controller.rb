@@ -13,20 +13,20 @@ class UsersController < ApplicationController
 =end
   def index
     @users = User.all
-    #debugger
+
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    #debugger
+
   end
 
   # GET /users/new
   def new
     @user = User.new
-    #debugger
+
   end
 
   # GET /users/1/edit
@@ -38,7 +38,8 @@ class UsersController < ApplicationController
 
   # resources :users
   #  автоматически обеспечивает наше Rails-приложение возможностью отвечать на RESTful URL’ы из Таблицы 7.1. В частности, запрос POST к /users обрабатывается действием create.
-  def create
+=begin
+   def create
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
@@ -50,7 +51,16 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-    #debugger
+=end 
+    def create
+    @user = User.new(params[:user])    # Не окончательная реализация!
+    if @user.save
+      # Обработать успешное сохранение.
+    else
+      render 'new'
+    end
+  end
+
   end
 
   # PATCH/PUT /users/1
@@ -65,7 +75,7 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-    #debugger
+
   end
 
   # DELETE /users/1
@@ -88,5 +98,5 @@ class UsersController < ApplicationController
     def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
-    #debugger
-end
+
+
