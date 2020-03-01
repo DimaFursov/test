@@ -60,8 +60,13 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-
-  end
+  
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+  end  
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
@@ -94,9 +99,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
+
+
 
 

@@ -1,4 +1,38 @@
-/*Сначала посмотрим на внешнюю структуру, которая состоит из встроенного Ruby, она открывается вызовом form_for и закрывается end:
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |f| %><!--/*do указывает на то, что form_for принимает блок с одной переменной, которую мы назвали f 
+    f возвращает код этого элемента, специально предназначенный для установки атрибута объекта @user*/-->
+    <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+    <% end %>
+    </ul>
+    </div>
+    <%# end %>
+      <%= f.label :name%><br>
+      <%= f.text_field :name, placeholder: "First Name" %>
+
+      <%= f.label :email %><br>
+      <%= f.text_field :email, placeholder: "E-mail" %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, placeholder: "password" %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, placeholder: "Reply password" %>
+
+      <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<!--/*Сначала посмотрим на внешнюю структуру, которая состоит из встроенного Ruby, она открывается вызовом form_for и закрывается end:
 Наличие ключевого слова do указывает на то, что form_for принимает блок с одной переменной, которую мы назвали f (от “form”).
 
 */
@@ -7,8 +41,8 @@
 render 'form' =
 f.label :name 
 f.text_field :name
-*/
 создает HTML элемента “текстовое поле с заголовком” для назначения атрибута name модели User.
+
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -41,3 +75,4 @@ f.text_field :name
     <%= f.submit "Create my account", class: "btn btn-primary"%>
   </div>
 <% end %>
+-->
