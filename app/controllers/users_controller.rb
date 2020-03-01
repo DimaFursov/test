@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     #@user = User.new(params[:user])
     @user = User.new(user_params)    # Не окончательная реализация!
     if @user.save
-      # Обработать успешное сохранение.
+      redirect_to @user# Обработать успешное сохранение.
     else
       render 'new'
     end
