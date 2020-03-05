@@ -26,17 +26,9 @@ Rails.application.routes.draw do делает (ActionController::Base )
 7-Представление использует Embedded (Встроенный) Ruby, чтобы визуализировать страницу в виде HTML.
 8-Контроллер возвращает HTML в браузе
 =end
-
-
 Rails.application.routes.draw do
-
-
-
-
   # http://rusrails.ru/rails-routing#crud-metody-i-ekshny 
-  #Static_Pages_Controller.rb   #   def  home   end 
   root 'static_pages#home'
-
   get 'static_pages/home'
   #get 'home'    => 'static_pages#home'
   get 'help'    => 'static_pages#help'
@@ -53,28 +45,19 @@ Rails.application.routes.draw do
   #def index
   #  @users = User.all
   #end
-
-
- #               root 'users#index' 
+  #               root 'users#index' 
   #     Users_Controller.rb  metod  :users
   resources :users
-#  автоматически обеспечивает наше Rails-приложение возможностью отвечать на RESTful URL’ы из Таблицы 7.1. В частности, запрос POST к /users обрабатывается действием create.
-
-#  root 'users#index'
-
-
-
+  #  добавляет рабочий URL /users/1; /users/new  /users/1/edit
+  #  автоматически обеспечивает наше Rails-приложение возможностью отвечать на RESTful URL’ы из Таблицы 7.1. В частности, запрос POST к /users обрабатывается действием create.
+  #  root 'users#index'
   #root 'application#hello'
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
-
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
   # Example resource route with options:
   #   resources :products do
   #     member do
@@ -86,13 +69,11 @@ Rails.application.routes.draw do
   #       get 'sold'
   #     end
   #   end
-
   # Example resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales
   #     resource :seller
   #   end
-
   # Example resource route with more complex sub-resources:
   #   resources :products do
   #     resources :comments

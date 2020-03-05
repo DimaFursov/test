@@ -13,20 +13,17 @@ class UsersController < ApplicationController
 =end
   def index
     @users = User.all
-
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-
   end
 
   # GET /users/new
   def new
     @user = User.new
-
   end
 
   # GET /users/1/edit
@@ -56,7 +53,7 @@ class UsersController < ApplicationController
     #@user = User.new(params[:user])
     @user = User.new(user_params)    # Не окончательная реализация!
     if @user.save
-      redirect_to @user# Обработать успешное сохранение.
+      redirect_to @user # Обработать успешное сохранение.
     else
       render 'new'
     end
