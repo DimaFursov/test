@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   #validates :email, format: { with: /<regular expression>/ },
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }                    
+                    uniqueness: { case_sensitive: false }    
+  has_secure_password    
                     # uniqueness: true, #на case_sensitive: false                     
                     #---------------------------------------------------------
                     #uniqueness: true # создать пользователя с таким же адресом электронной почты, как и у @user, применив @user.dup и создав таким образом дубликат пользователя с такими же атрибутами.
