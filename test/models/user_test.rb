@@ -5,6 +5,7 @@ class UserTest < ActiveSupport::TestCase
 # изначально валидный объект модели User @user с помощью специального метода setup
   def setup
     @user = User.new(name: "Example User", email: "user@example.com")
+                     password: "foobar", password_confirmation: "foobar")    
   end
 # метод assert, который в данном случае будет успешным при возвращении true от @user.valid?, и провальным при возвращении false.
   test "should be valid" do
@@ -51,5 +52,14 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     #Так как после этого мы сохраняем @user, то адрес электронной почты дублированного пользователя уже существует в базе данных, следовательно, он не должен быть валидным.
     assert_not duplicate_user.valid?
+  end
+  test "password should be present (nonblank)" do
+    @user.password = @user.password_confirmation = " " * 1
+    assert_not @user.valid?
+  end
+
+  test "password should have a minimum length" do
+    @user.password = @user.password_confirmation = "a" * 1
+    assert_not @user.valid?
   end
 end
