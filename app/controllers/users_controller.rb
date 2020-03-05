@@ -49,20 +49,25 @@ class UsersController < ApplicationController
       end
     end
 =end 
-    def create
-    #@user = User.new(params[:user])
-    @user = User.new(user_params)    # Не окончательная реализация!
-    if @user.save
-      redirect_to @user # Обработать успешное сохранение.
-    else
+  def create
+      #user = User.new(params[:user])
+    @user = User.new(user_params)
+      respond_to do |format|
+      if @user.save
+      format.html { redirect_to @user, notice: 'User was successfully created.' }
+      format.json { render :show, status: :created, location: @user }
+      #redirect_to @user # Обработать успешное сохранение.
+      else
+      format.html { render :new }
+      format.json { render json: @user.errors, status: :unprocessable_entity }
       render 'new'
-    end
+      end
   end
   
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit()
     end
   end  
 
@@ -96,6 +101,7 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+  end  
 
 
 
