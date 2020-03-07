@@ -27,6 +27,7 @@ Rails.application.routes.draw do делает (ActionController::Base )
 8-Контроллер возвращает HTML в браузе
 =end
 Rails.application.routes.draw do
+
   get 'sessions/new'
 
   # http://rusrails.ru/rails-routing#crud-metody-i-ekshny 
@@ -38,6 +39,9 @@ Rails.application.routes.draw do
   get 'contact' => 'static_pages#contact'
   #get  'static_pages/contact'
   get 'signup'  => 'users#new'
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
   resources :microposts
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 
@@ -101,4 +105,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
 end
