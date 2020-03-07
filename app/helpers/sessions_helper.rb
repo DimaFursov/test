@@ -25,6 +25,9 @@ module SessionsHelper
   # Ссылки для невошедших пользователей
 <% end %>
 =end
+=begin
+#--------------------------------------------------------------    
   def destroy
-  end      
+  end
+=end        
 end
