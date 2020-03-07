@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
     log_in user
-    redirect_to user        
+    redirect_to user_url(user) #redirect_to user        
       # Осуществить вход пользователя и перенаправление на страницу профиля.
       # Выдать сообщение об ошибке. authenticate возвращает false при сбое аутентификации
     else
