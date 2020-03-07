@@ -8,9 +8,9 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       # Осуществить вход пользователя и перенаправление на страницу профиля.
+      # Выдать сообщение об ошибке. authenticate возвращает false при сбое аутентификации
     else
       flash[:danger] = 'Invalid email/password combination' # Не совсем верно!          
-      # Выдать сообщение об ошибке. authenticate возвращает false при сбое аутентификации
       render 'new'
     end
   end
