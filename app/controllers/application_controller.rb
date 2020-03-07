@@ -2,6 +2,9 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  # В этом разделе пользователь будет входить с помощью куки временной сессии, которая автоматически завершается после закрытия браузера. модуль Sessions helper был автоматически создан при генерации контроллера Sessions (Раздел 8.1.1). Более того, такие хелперы автоматически доступны в Rails-представлениях; а если указать модуль в базовом классе всех контроллеров (контроллер Application), то он станет так же доступен и во всех контроллерах
+  include SessionsHelper  
+
   # Определяем действие, которое возвращает обект код ruby
   # маршрутизатор Rails, находится перед контроллером
   
