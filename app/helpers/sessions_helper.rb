@@ -13,6 +13,7 @@ module SessionsHelper
    else
    @current_user
    end 
+    #не работает ----------------------------------------------------------------------------------------------------
 =end   
     #@current_user = @current_user || User.find_by(id: session[:user_id]) 
   def logged_in?
