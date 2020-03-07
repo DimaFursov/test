@@ -15,10 +15,9 @@ module SessionsHelper
    end 
 =end   
     #@current_user = @current_user || User.find_by(id: session[:user_id]) 
-    
   def logged_in?
     !current_user.nil?
-  end    
+  end  
 =begin    
     <% if logged_in? %>
   # Ссылки для вошедших пользователей
@@ -26,5 +25,6 @@ module SessionsHelper
   # Ссылки для невошедших пользователей
 <% end %>
 =end
-    
+  def destroy
+  end      
 end
