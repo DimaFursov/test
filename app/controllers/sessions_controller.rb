@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       render 'new'
     end
   end
-#--------------------------------------------------------------    
+#--------------------------------------------------------------    gemfileneedcheck_dropdownstyle
   def destroy
     log_out
     redirect_to root_url
