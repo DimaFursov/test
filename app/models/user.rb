@@ -2,16 +2,23 @@ class User < ActiveRecord::Base
   has_many :microposts  
 # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   before_save { self.email = email.downcase }
+  # before_save { self.email = self.email.downcase }
+  # self внутри модели User ключевое слово self необязательно
   validates :name,  presence: true, length: { maximum: 50 }
   # Регулярное выражение VALID_EMAIL_REGEX — это константа, которая обозначается в Ruby именем, начинающимся с заглавной буквы
   # оно позволяет недопустимые адреса, содержащие последовательно расположенные точки, например foo@bar..com.
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # Код приложения для валидации формата электронной почты использует format
   #validates :email, format: { with: /<regular expression>/ },
-  validates :email, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }    
-  has_secure_password    
+  has_secure_password
+  validates :password, presence: true, length: { minimum: 1 }
+=begin  # При включении в модель этот метод добавляет следующую функциональность:
+Возможность сохранять безопасно хэшированный атрибут password_digest в базу данных
+Пару виртуальных атрибутов22 (password и password_confirmation), вместе с валидацией их наличия при создании объекта и валидацией их совпадения
+Метод authenticate, который возвращает пользователя в ответ на верный пароль (иначе false)    
+=end
                     # uniqueness: true, #на case_sensitive: false                     
                     #---------------------------------------------------------
                     #uniqueness: true # создать пользователя с таким же адресом электронной почты, как и у @user, применив @user.dup и создав таким образом дубликат пользователя с такими же атрибутами.

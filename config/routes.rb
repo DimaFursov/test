@@ -27,6 +27,8 @@ Rails.application.routes.draw do делает (ActionController::Base )
 8-Контроллер возвращает HTML в браузе
 =end
 Rails.application.routes.draw do
+  get 'sessions/new'
+
   # http://rusrails.ru/rails-routing#crud-metody-i-ekshny 
   root 'static_pages#home'
   get 'static_pages/home'
@@ -39,8 +41,12 @@ Rails.application.routes.draw do
   resources :microposts
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 
+  get 'sessions/new'
+
   #направляет /users к действию index в контроллере Users.
   # =>   Rails.application.routes.draw do 
+  get 'sessions/new'
+
   #     Users_Controller.rb :user metod 
   #def index
   #  @users = User.all
