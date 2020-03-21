@@ -110,7 +110,10 @@ ivars:
   #private
     # Never trust parameters from the scary internet, only allow the white list through.
 # метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:  
-#private
+
+#private мадификатор доступа чтобы к переменной или коду был доступ
+# только у элементов содержащихся в том же объекте
+# но как именно работает private?
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
