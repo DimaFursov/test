@@ -64,7 +64,27 @@ REST  HTTP metod - URL    - Metod Rails обявленный - Имя маршр
       GET          /users/1(new) show(new)           user_path(user) (new_user_path)
       POST          /users   create                   users_path
       PATCH        /users/1  update                  user_path(user)
-      DELETE       /users/№  destroy                 user_path(user)
+      DELETE       /users/№  destroy                 user_path(user) 
+--- хэш params ---
+ содержит информацию о каждом запросе
+ --- !ruby/hash-with-ivars:ActionController::Parameters
+elements:
+  controller: sessions
+  action: new
+ivars:
+  :@permitted: false
+--- !ruby/hash-with-ivars:ActionController::Parameters
+elements:
+  controller: users
+  action: show
+  id: '10'
+ivars:
+  :@permitted: false        
+  В случае отправки регистрационной формы params вместо этого содержит хэш хэшей,
+  стратегически названной переменной params
+  ****--- Хэши, по существу, это массивы, которые не ограничены целочисленными индексами. ---****
+  Вместо этого, хэш-индексами, или ключами, могут быть практически любые объекты. 
+  Например, мы можем использовать строки в качестве ключей:
 =end  
   resources :users
   #  добавляет рабочий URL /users/1; /users/new  /users/1/edit

@@ -33,6 +33,7 @@ ivars:
 =end  
   def show
     @user = User.find(params[:id])
+    #debugger  #С ней можно обращаться так же, как с Rails-консолью Ctrl-D
   end
 
   # GET /users/new
@@ -64,6 +65,13 @@ ivars:
     end
 =end 
   def create
+=begin
+ #@user = User.new(params[:user])
+    #params.require(:user).permit(:name, :email, :password, :password_confirmation)
+Для облегчения использования этих параметров обычно вводят вспомогательный 
+метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:    
+=end     
+   
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -98,6 +106,8 @@ ivars:
 =end  
   #private
     # Never trust parameters from the scary internet, only allow the white list through.
+# метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:  
+#private  
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
