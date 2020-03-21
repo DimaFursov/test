@@ -1,30 +1,30 @@
+<h2> - form - </h2>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %><!--/*do указывает на то, что form_for принимает блок с одной переменной, которую мы назвали f 
-      f возвращает код этого элемента, специально предназначенный для установки атрибута объекта @user*/-->
-<!--=begin      
-      <% if @user.errors.any? %>
-        <div id="error_explanation">
-        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-        <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-        </div>
-      <% end %>
-      </ul>
-      </div>
-=end-->      
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>    
+    <!--
+сообщений об ошибках, связанных с объектом @user. Для их отображения в браузере мы будем показывать партиал error_messages, добавив CSS-класс form-control (у него есть специальное значение в Bootstrap) к каждому полю записи      
+=end
+, class: 'form-control'  ------------css 
+Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".
+Extracted source (around line #15):
+                
+    # Check for double render errors and set the content_type after rendering.
+    def render(*args) #:nodoc:
+      raise ::AbstractController::DoubleRenderError if self.response_body
+      super
+    end
+-->      
       <%# end %>
       <%= f.label :name%><br>
-      <%= f.text_field :name, placeholder: "First Name" %>
+      <%= f.text_field :name, class: 'form-control'%>
 
       <%= f.label :email %><br>
-      <%= f.text_field :email, placeholder: "E-mail" %>
+      <%= f.text_field :email, class: 'form-control'%>
 
       <%= f.label :password %>
-      <%= f.password_field :password, placeholder: "password" %>
+      <%= f.password_field :password, class: 'form-control'%>
 
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation, placeholder: "Reply password" %>

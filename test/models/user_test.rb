@@ -3,9 +3,17 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 #  Так как @user — это переменная экземпляра, то она автоматически доступна во всех тестах, и мы можем тестировать её валидность методом valid?
 # изначально валидный объект модели User @user с помощью специального метода setup
+=begin
+paul Harchenko, [06.03.20 15:24]
+@user = User.new(name: "Example User", email: "user@example.com")
+                     password: "foobar", password_confirmation: "foobar")
+
+paul Harchenko, [06.03.20 15:24]
+лишняя скобка и нет запятой
+
+=end
   def setup
-    @user = User.new(name: "Example User", email: "user@example.com")
-                     password: "foobar", password_confirmation: "foobar")    
+    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")    
   end
 # метод assert, который в данном случае будет успешным при возвращении true от @user.valid?, и провальным при возвращении false.
   test "should be valid" do

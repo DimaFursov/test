@@ -238,8 +238,10 @@ input, textarea, select, .uneditable-input {
   width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
+  
   /*Сама форма представлена в Листинге 7.13. Детально мы будем обсуждать ее в Разделе 7.2.2, а для начала давайте немного стилизуем ее с помощью SCSS из Листинга 7.14. (Обратите внимание на повторное использование примеси box_sizing из Листинга 7.2.) После применения этих CSS-правил страница регистрации выглядит так же, как на Рисунке 7.12.*/
 }
+/* - неработает чекнуть! - */
 #error_explanation {
   color: red;
   ul {
@@ -247,7 +249,7 @@ input, textarea, select, .uneditable-input {
     margin: 0 0 30px 0;
   }
 }
-
+/* - неработает чекнуть! - */
 .field_with_errors {
   @extend .has-error;
   .form-control {

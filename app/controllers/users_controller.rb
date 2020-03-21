@@ -103,11 +103,15 @@ ivars:
       format.json { render json: @user.errors, status: :unprocessable_entity }
       end
   end
+>> user.errors.full_messages
+=> ["Email is invalid", "Password is too short (minimum is 6 characters)"]
+Объект errors.full_messages (мы видели его краем глаза в Разделе 6.2.2) содержит массив сообщений об ошибках.  
 =end  
   #private
     # Never trust parameters from the scary internet, only allow the white list through.
 # метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:  
-#private  
+#private
+
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
