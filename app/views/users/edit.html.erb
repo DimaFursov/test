@@ -1,35 +1,25 @@
 <% provide(:title, "Edit user") %>
 <h1>Update your profile</h1>
 <%= render 'form' %>
-<h2> - form edit.html.erb - </h2>
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
+<h2> - form edit.html.erb - gravatar_edit - </h2>
 
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-      <%= f.submit "Save changes", class: "btn btn-primary" %>
-    <% end %>
 
     <div class="gravatar_edit">
       <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target="_blank">change</a>
-      <!--Кстати, target= "_blank" в ссылке на граватар — это изящный фокус для того, чтобы заставить браузер открыть страницу в новом окне или вкладке, весьма удобное поведение при переходе по ссылке на сторонний сайт.
-      -->
+      <a href="http://gravatar.com/emails" target="_blank" id: "img2",>change</a>
     </div>
-  </div>
-</div>
+
+<!--Кстати, target= "_blank" в ссылке на граватар — это изящный фокус для того, чтобы заставить браузер открыть страницу в новом окне или вкладке, весьма удобное поведение при переходе по ссылке на сторонний сайт.
+      как же Rails узнает, что нужно использовать запрос POST для новых пользователей и PATCH для редактирования? Ответ кроется в том, что посредством логического метода Active Record new_record? можно определить, является ли пользователь новым, или он уже существует в базе данных:
+
+ rails console
+>> User.new.new_record?
+=> true
+>> User.first.new_record?
+=> false
+При построении формы с помощью form_for(@user), 
+Rails использует POST, если @user.new_record? является true, и PATCH — если false.
+-->
 <%= link_to 'Show', @user, class: "btn btn-primary" %> |
 <%= link_to 'Back', users_path, class: "btn btn-primary" %> |
 <%= link_to 'New User', new_user_path, class: "btn btn-primary" %>
