@@ -41,10 +41,6 @@ ivars:
     @user = User.new
   end
 
-  # GET /users/1/edit
-  def edit
-  end
-
   # POST /users
   # POST /users.json
 
@@ -110,11 +106,14 @@ ivars:
   #private
     # Never trust parameters from the scary internet, only allow the white list through.
 # метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:  
-
+  
+  # GET /users/1/edit
+  def edit
+    @user = User.find(params[:id])    
+  end
 #private мадификатор доступа чтобы к переменной или коду был доступ
 # только у элементов содержащихся в том же объекте
 # но как именно работает private?
-
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
