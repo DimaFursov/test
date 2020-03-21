@@ -6,9 +6,10 @@
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Help", help_path %></li>
         <!--<li><%= link_to "Log in", login_path %></li> <!--login_path нету логина вооще авторизации-->
+        <!-- 
+        -->
         <% if logged_in? %>
           <li><%= link_to "Link_to:user", current_user%>
-
            <!--нет стоп авторизованн раз видно-->
           <%= link_to "logout123", logout_path, method: "delete" %>  <!--нерабочий  delete 'logout'  => 'sessions#destroy'  Если вы полностью закроете браузер, то можете убедиться, что приложение забыло ваш статус и требует войти снова, чтобы появилась возможность увидеть вышеописанные изменения.-->
           </li> <!--нет стоп авторизованн раз видно-->
@@ -31,7 +32,7 @@
       </ul>
     </nav>
   </div>
-</header>    
+</header>  
 <!--
 <div class="dropdown-content">
           <a href="http://localhost:3000/sessions/new">Link 1</a>
