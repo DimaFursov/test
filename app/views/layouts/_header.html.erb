@@ -5,9 +5,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Help", help_path %></li>
-        <li><%= link_to "Log in", login_path %></li> <!--login_path нету логина вооще авторизации-->
+        <!--<li><%= link_to "Log in", login_path %></li> <!--login_path нету логина вооще авторизации-->
         <% if logged_in? %>
-          <li><%= link_to "Users123", '#' %><!--нет стоп авторизованн раз видно-->
+          <li><%= link_to "Link_to:user", current_user%>
+
+           <!--нет стоп авторизованн раз видно-->
           <%= link_to "logout123", logout_path, method: "delete" %>  <!--нерабочий  delete 'logout'  => 'sessions#destroy'  Если вы полностью закроете браузер, то можете убедиться, что приложение забыло ваш статус и требует войти снова, чтобы появилась возможность увидеть вышеописанные изменения.-->
           </li> <!--нет стоп авторизованн раз видно-->
           <li class="dropdown"> <!--нету dropdown -->
