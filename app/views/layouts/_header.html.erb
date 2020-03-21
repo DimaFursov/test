@@ -16,9 +16,11 @@
         <!-- 
         -->
         <% if logged_in? %>
-          <li><%= link_to "Link_to:user", current_user%>
+          <li><%= link_to "Link_to:user", current_user%></li>
+          <li><p style="color: red"><%= @user.email %></p></li> <!-- lol axaxax-->
+
            <!--нет стоп авторизованн раз видно-->
-          <%= link_to "logout123", logout_path, method: "delete" %>  <!--нерабочий  delete 'logout'  => 'sessions#destroy'  Если вы полностью закроете браузер, то можете убедиться, что приложение забыло ваш статус и требует войти снова, чтобы появилась возможность увидеть вышеописанные изменения.-->
+          <li><%= link_to "logout123", logout_path, method: "delete" %></li>  <!--нерабочий  delete 'logout'  => 'sessions#destroy'  Если вы полностью закроете браузер, то можете убедиться, что приложение забыло ваш статус и требует войти снова, чтобы появилась возможность увидеть вышеописанные изменения.-->
           </li> <!--нет стоп авторизованн раз видно-->
           <li class="dropdown"> <!--нету dropdown -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

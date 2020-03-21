@@ -57,6 +57,15 @@ Rails.application.routes.draw do
   #end
   #               root 'users#index' 
   #     Users_Controller.rb  metod  :users
+  # Можно заставить работать маршрутизацию для /users/1, добавив всего одну строку в файл маршрутов (config/routes.rb):
+=begin
+REST  HTTP metod - URL    - Metod Rails обявленный - Имя маршрута
+      GET          /users    inedx                    user_path
+      GET          /users/1(new) show(new)           user_path(user) (new_user_path)
+      POST          /users   create                   users_path
+      PATCH        /users/1  update                  user_path(user)
+      DELETE       /users/№  destroy                 user_path(user)
+=end  
   resources :users
   #  добавляет рабочий URL /users/1; /users/new  /users/1/edit
   #  автоматически обеспечивает наше Rails-приложение возможностью отвечать на RESTful URL’ы из Таблицы 7.1. В частности, запрос POST к /users обрабатывается действием create.

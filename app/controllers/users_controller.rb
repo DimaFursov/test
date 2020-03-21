@@ -17,6 +17,20 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
+=begin
+представление user show 
+определяем переменную 
+@user в соответствующем действии show контроллера Users. 
+используем метод find для модели User
+для получения пользователя из базы данных
+--- !ruby/hash-with-ivars:ActionController::Parameters
+elements:
+  controller: users
+  action: show
+  id: '10'
+ivars:
+  :@permitted: false
+=end  
   def show
     @user = User.find(params[:id])
   end
