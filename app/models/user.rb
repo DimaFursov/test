@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :microposts  
 # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   before_save { self.email = email.downcase }
+  # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase
   # before_save { self.email = self.email.downcase }
   # self внутри модели User ключевое слово self необязательно
   validates :name,  presence: true, length: { maximum: 50 }
@@ -13,7 +14,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }    
   has_secure_password
-  validates :password, presence: true, length: { minimum: 1 }
+  validates :password, presence: true, length: { minimum: 6 }
 =begin  # При включении в модель этот метод добавляет следующую функциональность:
 Возможность сохранять безопасно хэшированный атрибут password_digest в базу данных
 Пару виртуальных атрибутов22 (password и password_confirmation), вместе с валидацией их наличия при создании объекта и валидацией их совпадения

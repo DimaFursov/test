@@ -1,11 +1,18 @@
+<!--Основное различие между классами и идентификаторами в том, что классы могут быть использованы несколько раз на странице, а идентификаторы — лишь один раз
+  navbar классы имеют особое значение для фреймворка 
+  Bootstrap
+
+-->
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "sample app", root_path, id: "logo" %>
     <nav>
+      <!--Тег <nav> хотя формально здесь и не нужен, служит для обозначения того, что это именно навигационные ссылки Тем временем, классы nav, navbar-nav и navbar-right тега ul имеют особое значение для Bootstrap и будут автоматически стилизованы, когда мы включим Bootstrap CSS-->
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Help", help_path %></li>
-        <!--<li><%= link_to "Log in", login_path %></li> <!--login_path нету логина вооще авторизации-->
+        <!--link_to для создания ссылок (которые мы создавали непосредственно с якорным (анкорным) тегом a
+          <li><%= link_to "Log in", login_path %></li> <!--login_path нету логина вооще авторизации-->
         <!-- 
         -->
         <% if logged_in? %>
