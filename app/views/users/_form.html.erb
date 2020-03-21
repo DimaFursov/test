@@ -17,7 +17,7 @@ Extracted source (around line #15):
     end
 -->      
       <%# end %>
-      <%= f.label :name%><br>
+      <%= f.label :name %><br>
       <%= f.text_field :name, class: 'form-control'%>
 
       <%= f.label :email %><br>
@@ -27,7 +27,7 @@ Extracted source (around line #15):
       <%= f.password_field :password, class: 'form-control'%>
 
       <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, placeholder: "Reply password" %>
+      <%= f.password_field :password_confirmation, class: 'form-control'%>
 
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
