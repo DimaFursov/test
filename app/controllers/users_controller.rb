@@ -60,13 +60,14 @@ ivars:
       end
     end
 =end 
-  def create
 =begin
  #@user = User.new(params[:user])
     #params.require(:user).permit(:name, :email, :password, :password_confirmation)
 Для облегчения использования этих параметров обычно вводят вспомогательный 
 метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:    
 =end     
+
+  def create
    
     @user = User.new(user_params)
 
