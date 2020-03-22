@@ -112,21 +112,16 @@ ivars:
   def edit
     @user = User.find(params[:id])    
   end
-#private мадификатор доступа чтобы к переменной или коду был доступ
-# только у элементов содержащихся в том же объекте
-# но как именно работает private?
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
-  end  
-
-  # PATCH/PUT /users/1
+    # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+    @user = User.find(params[:id])
+    #respond_to do |format|
+      if @user.update_attributes(user_params) #@user.update_attributes(user_params)
+        #format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @user }
+        flash[:success] = "Profile updated"
+        redirect_to @user        
       else
         render 'edit'
         #format.html { render :edit }
@@ -134,6 +129,16 @@ ivars:
       end
     end
   end
+#private мадификатор доступа чтобы к переменной или коду был доступ
+# только у элементов содержащихся в том же объекте
+# но как именно работает private?
+  #private
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+  #end  
+
+
 
   # DELETE /users/1
   # DELETE /users/1.json

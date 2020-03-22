@@ -17,8 +17,8 @@
         -->
         <% if logged_in? %>
           <li><%= link_to "Profile", current_user %></li>
-          <li><%= link_to "Link_to:edit_user_path", edit_user_path(current_user)%></li>
-          
+          <li><%= link_to "Settings:edit_user_path(current_user)", edit_user_path(current_user)%></li>
+                       
 
            <!--нет стоп авторизованн раз видно-->
           <li><%= link_to "logout123", logout_path, method: "delete" %></li>  <!--нерабочий  delete 'logout'  => 'sessions#destroy'  Если вы полностью закроете браузер, то можете убедиться, что приложение забыло ваш статус и требует войти снова, чтобы появилась возможность увидеть вышеописанные изменения.-->
