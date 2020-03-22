@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :logged_in_user, only: [:edit, :update]
   # GET /users
   # GET /users.json
 =begin
+Предфильтры применяют команду before_action для указания конкретному методу на то, что он должен быть вызван до заданных
+ действий.3 Для того, что потребовать от пользователей войти на сайт, мы определим метод logged_in_user и вызовем его
+ через before_action :logged_in_user
 2-Rails направляет /users к действию index в контроллере Users.
 3-Действие index запрашивает у модели User получение всех пользователей (User.all).
 4-Модель User вытягивает всех пользователей из базы данных.
@@ -68,12 +71,12 @@ ivars:
 =end     
 
   def create
-   
     @user = User.new(user_params)
-
     respond_to do |format|
-      if @user.save        
+      if @user.save
+        log_in @user        
         flash[:success] = "Welcome to the Sample App!"
+        redirect_to @user
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -108,12 +111,15 @@ ivars:
     # Never trust parameters from the scary internet, only allow the white list through.
 # метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:  
   
-  # GET /users/1/edit
+  # GET /users/1/edit Вспомните, что id пользователя доступен в переменной params[:id]
+  #Вместо действия new, отображающего представление для нового пользователя, есть edit 
   def edit
     @user = User.find(params[:id])    
   end
-    # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json 
+    # PATCH/PUT /users/n/edit
+  # PATCH/PUT /users/1.json
+  #вместо create, отвечающего на запрос POST, есть действие update и запрос PATCH 
+  # PATCH /users/1  update  user_path(user) обновление пользователя с id 1 
   def update
     @user = User.find(params[:id])
     #respond_to do |format|
@@ -132,16 +138,8 @@ ivars:
 #private мадификатор доступа чтобы к переменной или коду был доступ
 # только у элементов содержащихся в том же объекте
 # но как именно работает private?
-  #private
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
-  #end  
-
-
-
-  # DELETE /users/1
-  # DELETE /users/1.json
+# DELETE /users/1
+  # DELETE /users/1.json 
   def destroy
     @user.destroy
     respond_to do |format|
@@ -154,6 +152,22 @@ ivars:
     def set_user
       @user = User.find(params[:id])
     end
+
+  private
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    # Предфильтры
+
+    # Подтверждает вход пользователя
+    def logged_in_user
+      unless logged_in?
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end    
+  #end  
 
 
 
