@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   # http://rusrails.ru/rails-routing#crud-metody-i-ekshny 
   root 'static_pages#home'
   get 'static_pages/home'
+  get 'hello'=>'application#hello'#http://localhost:3000/hello
   #get 'home'    => 'static_pages#home'
   get 'help'    => 'static_pages#help'
   get 'about'   => 'static_pages#about'

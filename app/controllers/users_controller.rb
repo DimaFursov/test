@@ -109,8 +109,6 @@ ivars:
 => ["Email is invalid", "Password is too short (minimum is 6 characters)"]
 Объект errors.full_messages (мы видели его краем глаза в Разделе 6.2.2) содержит массив сообщений об ошибках.  
 =end  
-  #private
-    # Never trust parameters from the scary internet, only allow the white list through.
 # метод user_params (который возвращает соответствующий инициализационный хэш) и используют его вместо params[:user]:  
   
   # GET /users/1/edit Вспомните, что id пользователя доступен в переменной params[:id]

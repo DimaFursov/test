@@ -1,11 +1,11 @@
 <% provide(:title, "Edit user") %>
 <h1>Update your profile</h1>
-<%= render 'form' %>
+<%= render 'form' #Частичные шаблоны (партиалы)%>
 <h2> - form edit.html.erb - gravatar_edit - </h2>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>    
+      <%= render 'shared/error_messages' #Частичные шаблоны (партиалы)%>    
 
       <%= f.label :name %><br>
       <%= f.text_field :name, class: 'form-control'%>
