@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:edit, :update]
+  # перенаправления пользователя
+  before_action :correct_user,   only: [:edit, :update, :destroy]
   # GET /users
   # GET /users.json
 =begin
@@ -121,7 +123,8 @@ ivars:
   #вместо create, отвечающего на запрос POST, есть действие update и запрос PATCH 
   # PATCH /users/1  update  user_path(user) обновление пользователя с id 1 
   def update
-    @user = User.find(params[:id])
+    #Предфильтр correct_user определяет переменную @user, поэтому мы можем ликвидировать присвоение @user в действиях edit и update.
+    # @user = User.find(params[:id])
     #respond_to do |format|
       if @user.update_attributes(user_params) #@user.update_attributes(user_params)
         #format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -166,6 +169,12 @@ ivars:
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
+    end
+    # Подтверждает правильного пользователя
+    def correct_user
+      @user = User.find(params[:id])
+      # unless @user == current_user
+      redirect_to(root_url) unless current_user?(@user)
     end    
   #end  
 
