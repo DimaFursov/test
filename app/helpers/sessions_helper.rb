@@ -37,7 +37,20 @@ module SessionsHelper
 <% end %>
 Так как ссылка “Log out (Выход)” уже определена (Листинг 8.16),
  нам достаточно всего лишь написать верное действие контроллера для уничтожения пользовательской сессии.
+Чтобы отправить пользователя в нужный ему пункт назначения, нужно где-то сохранить расположение запрашиваемой страницы, 
+а затем перенаправить туда вместо страницы по умолчанию. Мы добьемся этого с помощью пары методов,
+ store_location и redirect_back_or
 =end
+  # Перенаправляет к сохраненному расположению (или по умолчанию).
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # Сохраняет запрошенный URL.
+  def store_location
+    session[:forwarding_url] = request.url if request.get?
+  end
   def log_out
     session.delete(:user_id)
     @current_user = nil
