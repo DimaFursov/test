@@ -163,9 +163,10 @@ ivars:
 
     # Предфильтры
 
-    # Подтверждает вход пользователя
+    # Подтверждает вход пользователя Чтобы использовать store_location, необходимо добавить его в предфильтр logged_in_user
     def logged_in_user
       unless logged_in?
+        store_location
         flash[:danger] = "Please log in."
         redirect_to login_url
       end

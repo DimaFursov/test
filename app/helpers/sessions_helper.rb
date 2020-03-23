@@ -47,7 +47,8 @@ module SessionsHelper
     session.delete(:forwarding_url)
   end
 
-  # Сохраняет запрошенный URL.
+  # Сохраняет запрошенный URL.Метод store_location помещает запрашиваемый URL 
+  # в переменную session под ключом :forwarding_url, но только в случае запроса GET.выдаст запрос GET к URL
   def store_location
     session[:forwarding_url] = request.url if request.get?
   end
