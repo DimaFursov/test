@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update]
   # перенаправления пользователя
   before_action :correct_user,   only: [:edit, :update, :destroy]
   # GET /users
@@ -164,7 +164,7 @@ ivars:
     # Подтверждает вход пользователя Чтобы использовать store_location, необходимо добавить его в предфильтр logged_in_user
     def logged_in_user
       unless logged_in?
-        store_location
+        store_location ## Сохраняет запрошенный URL.session под ключом :forwarding_url
         flash[:danger] = "Please log in."
         redirect_to login_url
       end

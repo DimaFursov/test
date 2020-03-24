@@ -256,3 +256,14 @@ input, textarea, select, .uneditable-input {
     color: $state-danger-text;
   }
 }
+/*users index*/
+
+.users{
+  list-style:none;
+  margin:1;
+  li{
+  overflow: auto;
+  padding: 10px 1px;
+  border-bottom: 1px solid $gray-lighter;
+  }
+}
