@@ -12,15 +12,16 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
     <![endif]-->
-    <%= render 'layouts/shim' #HTML shim одним вызовом Rails-хелпера render%>
-    <%= render 'layouts/header' #HTML header одним вызовом Rails-хелпера render%>
+    <%= render 'layouts/shim' %>
+    <%= render 'layouts/header' %>
   <body>
     <div class="container">
+
             <% flash.each do |message_type, message| %>
             <div class="alert alert-<%= message_type %>"><%= message %></div>
             <% end %>
       <%= yield %>
-      <%= render 'layouts/footer' #HTML footer одним вызовом Rails-хелпера render%>
+      <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
       <!--
       1.отладочную информацию 
