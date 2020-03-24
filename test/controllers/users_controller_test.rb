@@ -1,11 +1,15 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+  
   setup do
     @user = users(:michael)
     @other_user = users(:archer)    
   end
-
+  def setup
+    @user       = users(:michael)
+    @other_user = users(:archer)
+  end
   test "should get index" do
     get :index
     assert_response :success
