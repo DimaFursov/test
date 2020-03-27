@@ -17,8 +17,14 @@ class UsersController < ApplicationController
 
 =end
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
   end
+=begin хеш - page
+>> User.paginate(page: 1) 
+  User Load (1.5ms)  SELECT "users".* FROM "users" LIMIT 30 OFFSET 0
+   (1.7ms)  SELECT COUNT(*) FROM "users"
+=> #<ActiveRecord::Relation [#<User id: 1,...
+=end
 
   # GET /users/1
   # GET /users/1.json
