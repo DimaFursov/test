@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  attr_accessor :remember_token, :activation_token
+  before_save   :downcase_email
+  before_create :create_activation_digest
   has_many :microposts  
 # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   before_save { self.email = email.downcase }
@@ -34,5 +37,16 @@ class User < ActiveRecord::Base
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
-  end  
+  end
+  private
+
+    # Переводит адрес электронной почты в нижний регистр.
+    def downcase_email
+      self.email = email.downcase
+    end
+    # Создает и присваивает активационнй токен и дайджест.
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end    
 end
