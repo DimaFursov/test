@@ -83,11 +83,14 @@ ivars:
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        log_in @user        
-        flash[:success] = "Welcome to the Sample App!"
+        UserMailer.account_activation(@user).deliver_now
+        flash[:info] = "Please check your email to activate your account."
+        redirect_to root_url        
+        #log_in @user        
+        #flash[:success] = "Welcome to the Sample App!"
         #redirect_to @user
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        #format.html { redirect_to @user, notice: 'User was successfully created.' }
+        #format.json { render :show, status: :created, location: @user }
       else
         #render 'new'
         format.html { render :new }

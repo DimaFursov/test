@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token
+  # Так как каждый вновь зарегистрированный пользователь потребует активации, мы должны присвоить
+  # активационный токен и дайджест каждому объекту User, прежде чем он будет создан
   before_save   :downcase_email
+  #Эта функция автоматически вызывается перед сохранением объекта, как при создании, так и при обновлении
   before_create :create_activation_digest
+  #происходит до создания пользователя.
   has_many :microposts  
 # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   before_save { self.email = email.downcase }
@@ -44,9 +48,15 @@ class User < ActiveRecord::Base
     def downcase_email
       self.email = email.downcase
     end
-    # Создает и присваивает активационнй токен и дайджест.
+    # перед созданием пользователя Создает хэш activation_digest string и присваивает активационнй токен и дайджест.
     def create_activation_digest
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
+    end
+
+    #Запоминает пользователя в базе данных для использования в постоянной сессии.
+    def remember
+      self.remember_token = User.new_token
+      update_attribute(:remember_digest, User.digest(remember_token))
     end    
 end
