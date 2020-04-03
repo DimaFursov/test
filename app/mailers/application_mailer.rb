@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"#(от кого)
-  layout 'mailer'#app/views/layouts mailer
+  default from: "noreply@example.com"
+  layout 'mailer'
 end
