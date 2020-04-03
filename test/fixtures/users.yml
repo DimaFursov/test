@@ -2,9 +2,17 @@
 one:
   name: MyString
   email: MyString
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 two:
   name: MyString
   email: MyString
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 michael:
   name: Michael Example
   email: michael@example.com
