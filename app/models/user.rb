@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     # перед созданием пользователя Создает 
     # хэш activation_digest string и присваивает активационнй токен и дайджест.
     def create_activation_digest
-      self.activation_token  = User.new_toke#app/models/user.rb:55:in `create_activation_digest'
+      self.activation_token  = User.new_token#app/models/user.rb:55:in `create_activation_digest'
       self.activation_digest = User.digest(activation_token)#хэш string
     end
 
