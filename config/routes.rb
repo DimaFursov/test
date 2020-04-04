@@ -28,6 +28,10 @@ Rails.application.routes.draw do делает (ActionController::Base )
 =end
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   get 'sessions/new'
 
   # http://rusrails.ru/rails-routing#crud-metody-i-ekshny 
@@ -46,10 +50,18 @@ Rails.application.routes.draw do
   resources :microposts
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   get 'sessions/new'
 
   #направляет /users к действию index в контроллере Users.
   # =>   Rails.application.routes.draw do 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   get 'sessions/new'
 
   #     Users_Controller.rb :user metod 
