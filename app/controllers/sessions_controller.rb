@@ -7,10 +7,20 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-    log_in user
+        if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+      else
+        message  = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end  
+    
     #params[:session][:remember_me] == '1' ? remember(user) : forget(user)
     #redirect_to user_url(user) #redirect_to user        
-    redirect_back_or user
+    #redirect_back_or user
       # Осуществить вход пользователя и перенаправление на страницу профиля.
       # Выдать сообщение об ошибке. authenticate возвращает false при сбое аутентификации
     else

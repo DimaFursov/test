@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # происходит до создания пользователя.
   has_many :microposts  
 # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
-  before_save { self.email = email.downcase }
+  # before_save { self.email = email.downcase }#-------mtod
   # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase
   # before_save { self.email = self.email.downcase }
   # self внутри модели User ключевое слово self необязательно
@@ -43,9 +43,32 @@ class User < ActiveRecord::Base
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+  def authenticated?(attribute, token)
+      digest = send("#{attribute}_digest")
+      return false if digest.nil?
+      BCrypt::Password.new(digest).is_password?(token)
+  end
+    # Активирует аккаунт.
+  def activate
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
+  end
+
+  # Отправляет электронное письмо для активации.
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end    
   private
 
     # Переводит адрес электронной почты в нижний регистр.
+    # NoMethodError: undefined method `downcase_email' for #<User:0x00564e83ea04c0>
+    #/home/nomid/.rvm/gems/ruby-2.3.3/gems/activemodel-4.2.2/lib/active_model/attribute_methods.rb:433:in 
+    #{}`method_missing'
+=begin 2.3.3 :001 > user = User.first
+  User Load (0.1ms)  SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1
+ => nil 
+=end
+
     def downcase_email
       self.email = email.downcase
     end
@@ -60,5 +83,8 @@ class User < ActiveRecord::Base
     def remember
       self.remember_token = User.new_token
       update_attribute(:remember_digest, User.digest(remember_token))
-    end    
+    end
+      # Возвращает true, если данный токен совпадает с дайджестом.
+    
+  end    
 end
