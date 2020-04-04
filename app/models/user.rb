@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessor :remember_token, :activation_token
+  attr_accessor :remember_token, :activation_token, :reset_token
   # Так как каждый вновь зарегистрированный пользователь потребует активации, мы должны присвоить
   # активационный токен и дайджест каждому объекту User, прежде чем он будет создан
   before_save   :downcase_email
@@ -38,10 +38,14 @@ class User < ActiveRecord::Base
   # валидации наличия имени является метод validates с аргументом presence: true
   # Аргумент presence: true — это хэш опций с одним элементом;
   # фигурные скобки необязательны, если хэш передаётся последним аргументом в метод.
-  def User.digest(string)
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+  # Возвращает случайный токен.
+  def self.new_token
+    SecureRandom.urlsafe_base64
   end
   def authenticated?(attribute, token)
       digest = send("#{attribute}_digest")
@@ -57,6 +61,17 @@ class User < ActiveRecord::Base
   # Отправляет электронное письмо для активации.
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+  # Устанавливает атрибуты для сброса пароля.
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_attribute(:reset_digest,  User.digest(reset_token))
+    update_attribute(:reset_sent_at, Time.zone.now)
+  end
+
+  # Отправляет электронное письмо для сброса пароля.
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
   end    
   private
 

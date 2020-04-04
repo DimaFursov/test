@@ -64,44 +64,9 @@ Rails.application.routes.draw do
 
   get 'sessions/new'
 
-  #     Users_Controller.rb :user metod 
-  #def index
-  #  @users = User.all
-  #end
-  #               root 'users#index' 
-  #     Users_Controller.rb  metod  :users
-  # Можно заставить работать маршрутизацию для /users/1, добавив всего одну строку в файл маршрутов (config/routes.rb):
-=begin
-REST  HTTP metod - URL    - Metod Rails обявленный - Имя маршрута
-      GET          /users    inedx                    user_path
-      GET          /users/1(new) show(new)           user_path(user) (new_user_path)
-      POST          /users   create                   users_path
-      PATCH        /users/1  update                  user_path(user)
-      DELETE       /users/№  destroy                 user_path(user) 
---- хэш params ---
- содержит информацию о каждом запросе
- --- !ruby/hash-with-ivars:ActionController::Parameters
-elements:
-  controller: sessions
-  action: new
-ivars:
-  :@permitted: false
---- !ruby/hash-with-ivars:ActionController::Parameters
-elements:
-  controller: users
-  action: show
-  id: '10'
-ivars:
-  :@permitted: false        
-  В случае отправки регистрационной формы params вместо этого содержит хэш хэшей,
-  стратегически названной переменной params
-  ****--- Хэши, по существу, это массивы, которые не ограничены целочисленными индексами. ---****
-  Вместо этого, хэш-индексами, или ключами, могут быть практически любые объекты. 
-  Например, мы можем использовать строки в качестве ключей:
-=end  
   resources :users
   # после перехода по ссылке edit_account_activation_url(activation_token, ...)
-  resources :account_activation, only: [:edit]
+  resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   #account_activation"s" edit_account_activation_url
   #  добавляет рабочий URL /users/1; /users/new  /users/1/edit
