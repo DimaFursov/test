@@ -102,6 +102,7 @@ ivars:
   resources :users
   # после перехода по ссылке edit_account_activation_url(activation_token, ...)
   resources :account_activation, only: [:edit]
+  resources :password_resets,     only: [:new, :create, :edit, :update]
   #account_activation"s" edit_account_activation_url
   #  добавляет рабочий URL /users/1; /users/new  /users/1/edit
   #  автоматически обеспечивает наше Rails-приложение возможностью отвечать на RESTful URL’ы из Таблицы 7.1. В частности, запрос POST к /users обрабатывается действием create.

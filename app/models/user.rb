@@ -87,4 +87,3 @@ class User < ActiveRecord::Base
       # Возвращает true, если данный токен совпадает с дайджестом.
     
   end    
-end
