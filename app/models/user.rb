@@ -72,7 +72,13 @@ class User < ActiveRecord::Base
   # Отправляет электронное письмо для сброса пароля.
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
-  end    
+  end
+
+  # Возвращает true, если истек срок давности ссылки для сброса пароля .
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
+  
   private
 
     # Переводит адрес электронной почты в нижний регистр.
