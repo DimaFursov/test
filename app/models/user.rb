@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token, :reset_token
+  
   # Так как каждый вновь зарегистрированный пользователь потребует активации, мы должны присвоить
   # активационный токен и дайджест каждому объекту User, прежде чем он будет создан
   before_save   :downcase_email
