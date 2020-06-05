@@ -50,20 +50,6 @@ Rails.application.routes.draw do
   resources :microposts
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 
-  get 'password_resets/new'
-
-  get 'password_resets/edit'
-
-  get 'sessions/new'
-
-  #направляет /users к действию index в контроллере Users.
-  # =>   Rails.application.routes.draw do 
-  get 'password_resets/new'
-
-  get 'password_resets/edit'
-
-  get 'sessions/new'
-
   resources :users
   # после перехода по ссылке edit_account_activation_url(activation_token, ...)
   resources :account_activations, only: [:edit]

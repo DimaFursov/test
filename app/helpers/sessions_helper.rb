@@ -1,6 +1,5 @@
 module SessionsHelper
   # Осуществляет вход данного пользователя.
-  # Этот код помещает в браузер пользователя временные куки с зашифрованной версией пользовательского id, и это позволяет нам получить id на следующей странице через session[:user_id]
   def log_in(user)
     session[:user_id] = user.id
   end
@@ -14,6 +13,12 @@ module SessionsHelper
   def current_user?(user)
     user == current_user
   end
+=begin  
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+=end  
+ 
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)

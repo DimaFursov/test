@@ -84,7 +84,6 @@ ivars:
 
     if @user.save
       redirect_to @user  
-      # Обработать успешное сохранение.
     else
       render 'new'
     end
