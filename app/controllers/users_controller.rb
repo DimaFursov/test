@@ -89,7 +89,6 @@ ivars:
       render 'new'
     end
   end
- 
 =begin
     respond_to do |format|
       if @user.save
