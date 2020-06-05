@@ -27,17 +27,3 @@ User.create!(name:  "Example User",
                activated_at: Time.zone.now)               
  
 end              
-=begin
-bundle exec rake db:seed
-DEPRECATION WARNING: Sprockets method `register_engine` is deprecated.
-Please register a mime type using `register_mime_type` then
-use `register_compressor` or `register_transformer`.
-https://github.com/rails/sprockets/blob/master/guides/extending_sprockets.md#supporting-all-versions-of-sprockets-in-processors
- (called from block (2 levels) in <class:Railtie> at /home/nomid/.rvm/gems/ruby-2.3.3/gems/sass-rails-5.0.2/lib/sass/rails/railtie.rb:57)
-DEPRECATION WARNING: Sprockets method `register_engine` is deprecated.
-Please register a mime type using `register_mime_type` then
-use `register_compressor` or `register_transformer`.
-https://github.com/rails/sprockets/blob/master/guides/extending_sprockets.md#supporting-all-versions-of-sprockets-in-processors
- (called from block (2 levels) in <class:Railtie> at /home/nomid/.rvm/gems/ruby-2.3.3/gems/sass-rails-5.0.2/lib/sass/rails/railtie.rb:58)
-
-=end

@@ -81,6 +81,16 @@ ivars:
 
   def create
     @user = User.new(user_params)
+
+    if @user.save
+      redirect_to @user  
+      # Обработать успешное сохранение.
+    else
+      render 'new'
+    end
+  end
+ 
+=begin
     respond_to do |format|
       if @user.save
         @user.send_activation_email
@@ -99,6 +109,8 @@ ivars:
       end
     end
   end
+=end
+
 =begin  
   def create
       #user = User.new(params[:user])
