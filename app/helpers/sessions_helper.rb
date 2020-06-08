@@ -1,5 +1,5 @@
 module SessionsHelper
-  # Осуществляет вход данного пользователя.
+  # Осуществляет вход данного пользователя. Метод rails отправляет браузеру времменные куки
   def log_in(user)
     session[:user_id] = user.id
   end
