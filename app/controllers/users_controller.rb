@@ -83,7 +83,9 @@ ivars:
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user  
+      log_in @user
+      flash[:success] = "Welcome to the Sample App!"
+      redirect_to edit_user_path(current_user) #@user
     else
       render 'new'
     end

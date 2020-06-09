@@ -36,7 +36,7 @@ $gray-medium-light: #eaeaea;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 19px;        /*19*/
+  padding-top: 20px;        /*19*/
   font-weight: bold;
   /* ------------ & родительский элемент #logo; в SCSS  */
   &:hover {
@@ -60,10 +60,10 @@ $gray-medium-light: #eaeaea;
 }
 /* The dropdown container */
 .dropdown {
-  float: right;
-  /*overflow: hidden;
+  float: right; /*right*/
+  /*overflow: hidden; */
   position: relative;
-  display: inline-block;*/
+  display: inline-block; /**/
 }
 
 /* Dropdown button */
