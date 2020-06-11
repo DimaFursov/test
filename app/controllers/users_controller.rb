@@ -190,7 +190,7 @@ ivars:
     # Подтверждает вход пользователя Чтобы использовать store_location, необходимо добавить его в предфильтр logged_in_user
     def logged_in_user
       unless logged_in?
-        store_location ## Сохраняет запрошенный URL.session под ключом :forwarding_url
+        # store_location ## Сохраняет запрошенный URL.session под ключом :forwarding_url
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
