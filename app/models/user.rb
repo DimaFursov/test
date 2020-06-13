@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   before_create :create_activation_digest
   # происходит до создания пользователя.
   has_many :microposts  
-# Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
+  # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   # before_save { self.email = email.downcase }#-------mtod
   # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase
   # before_save { self.email = self.email.downcase }
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
                     # uniqueness: true, #на case_sensitive: false                     
                     #---------------------------------------------------------
                     #uniqueness: true # создать пользователя с таким же адресом электронной почты, как и у @user, применив @user.dup и создав таким образом дубликат пользователя с такими же атрибутами.
-# Так как после этого мы сохраняем @user, то адрес электронной почты дублированного пользователя уже существует в базе данных, следовательно, он не должен быть валидным.                    
+  # Так как после этого мы сохраняем @user, то адрес электронной почты дублированного пользователя уже существует в базе данных, следовательно, он не должен быть валидным.                    
   #(В этом выражении есть один заметный недостаток: оно позволяет недопустимые адреса, содержащие последовательно расположенные точки, например foo@bar..com. Устранение этого недочета требует гораздо более сложного регулярного выражения и оставлено в качестве упражнения (Раздел 6.5).)
   #validates :email, presence: true
   # validates — это просто метод.
@@ -48,11 +48,20 @@ class User < ActiveRecord::Base
   def self.new_token
     SecureRandom.urlsafe_base64
   end
+    # Запоминает пользователя в базе данных для использования в постоянной сессии.
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
   def authenticated?(attribute, token)
       digest = send("#{attribute}_digest")
       return false if digest.nil?
       BCrypt::Password.new(digest).is_password?(token)
       #BCrypt::Password.new(remember_digest).is_password?(remember_token)      
+  end
+    # Забывает пользователя
+  def forget
+    update_attribute(:remember_digest, nil)
   end
     # Активирует аккаунт.
   def activate
@@ -102,11 +111,4 @@ class User < ActiveRecord::Base
       self.activation_digest = User.digest(activation_token)#хэш string
     end
 
-    #Запоминает пользователя в базе данных для использования в постоянной сессии.
-    def remember
-      self.remember_token = User.new_token
-      update_attribute(:remember_digest, User.digest(remember_token))
-    end
-      # Возвращает true, если данный токен совпадает с дайджестом.
-    
   end    

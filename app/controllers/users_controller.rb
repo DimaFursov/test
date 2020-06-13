@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
 =begin
-Предфильтры применяют команду before_action для указания конкретному методу на то, что он должен быть вызван до заданных
+"Предфильтры"
+ применяют команду before_action для указания конкретному методу на то, что он должен быть вызван до заданных
  действий.3 Для того, что потребовать от пользователей войти на сайт, мы определим метод logged_in_user и вызовем его
  через before_action :logged_in_user
 2-Rails направляет /users к действию index в контроллере Users.
@@ -15,7 +16,6 @@ class UsersController < ApplicationController
 4-Модель User вытягивает всех пользователей из базы данных.
 5-Модель User возвращает список пользователей в контроллер.
 6-Контроллер получает пользователей в переменной @users, которую он передаёт представлению index.
-
 =end
   def index
     @users = User.paginate(page: params[:page])
@@ -190,16 +190,19 @@ ivars:
     # Подтверждает вход пользователя Чтобы использовать store_location, необходимо добавить его в предфильтр logged_in_user
     def logged_in_user
       unless logged_in?
-        # store_location ## Сохраняет запрошенный URL.session под ключом :forwarding_url
+        store_location ## Сохраняет запрошенный URL.session под ключом :forwarding_url
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
     end
     # Подтверждает правильного пользователя
     def correct_user
+      #определение переменной user
       @user = User.find(params[:id])
       # unless @user == current_user
       redirect_to(root_url) unless current_user?(@user)
+      # def current_user?(user) 
+      # @user == current_user end
     end    
     # Подтверждает администратора.
     def admin_user

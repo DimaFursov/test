@@ -9,8 +9,10 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
         #if user.activated?
         log_in user
-        #remember user #super  Did you mean? remember_token
-        redirect_to user
+        #remember user #super  Did you mean? remember_token undefined method `forget' for #<SessionsController:0x007f32e4b37450> Did you mean? forgery_protection_strategy format
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+        #redirect_to user
         #params[:session][:remember_me] == '1' ? remember(user) : forget(user)
         #redirect_back_or user
       #else

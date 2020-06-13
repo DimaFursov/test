@@ -56,6 +56,7 @@ module SessionsHelper
  store_location и redirect_back_or
 =end
   # Перенаправляет к сохраненному расположению (или по умолчанию).
+  # если невошедший пользователь пытается посетить страницу редактирования, то после входа он будет перенаправлен
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
@@ -66,8 +67,17 @@ module SessionsHelper
   def store_location
     session[:forwarding_url] = request.url if request.get?
   end
+    # Забывает постоянную сессии.
+  def forget(user)
+    user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+  end
+    # Осуществляет выход текущего пользователя.
   def log_out
+    forget(current_user)
     session.delete(:user_id)
     @current_user = nil
-  end     
+  end
+  
 end
