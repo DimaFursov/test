@@ -14,7 +14,16 @@ class User < ActiveRecord::Base
   # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase
   # before_save { self.email = self.email.downcase }
   # self внутри модели User ключевое слово self необязательно
-  validates :name,  presence: true, length: { maximum: 50 }
+  validates :name,  presence: true, length: { maximum: 50 } # хэш опций в методе validates(:name, presence: true length: { maximum: 50 })
+=begin
+$ rails console --sandbox
+>> user = User.new(name: "", email: "mhartl@example.com")
+>> user.valid?
+=> false
+>> user.errors.full_messages
+=> ["Name can't be blank"]
+initialize return nill if blank? Переменные экземпляра всегда начинаются со знака  @name и являются nil, если не определены.
+=end  
   # Регулярное выражение VALID_EMAIL_REGEX — это константа, которая обозначается в Ruby именем, начинающимся с заглавной буквы
   # оно позволяет недопустимые адреса, содержащие последовательно расположенные точки, например foo@bar..com.
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
   def hello
-    render text: "def hello render text:hello, world! end"
+    log_out if logged_in?
+    render text: "log_out if logged_in?"    
   end
   # В этом разделе пользователь будет входить с помощью куки временной сессии, которая автоматически завершается после 
   #  закрытия браузера. модуль Sessions helper был автоматически создан при генерации контроллера Sessions 
