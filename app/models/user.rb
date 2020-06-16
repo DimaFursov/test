@@ -62,6 +62,7 @@ initialize return nill if blank? Переменные экземпляра вс�
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
   end
+    # Возвращает true, если данный токен совпадает с дайджестом. attribute = символу
   def authenticated?(attribute, token)
       digest = send("#{attribute}_digest")
       return false if digest.nil?

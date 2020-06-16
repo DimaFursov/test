@@ -24,7 +24,7 @@ module SessionsHelper
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(:remember, cookies[:remember_token])#2 аргумента
+      if user && user.authenticated?(:remember, cookies[:remember_token])#2 аргументаПричина в том, что метод current_user (Листинг 8.36) и проверка на нулевой дайджест (Листинг 8.43) используют старую версию authenticated?, которая принимает один аргумент вместо двух. Чтобы это исправить, просто обновим оба случая для использования общего метода,
         log_in user
         @current_user = user
       end

@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   end
   # post update отправко хеша заполненной формы логина емейл пароль params[:session][:email] масив
   # destroy DELETE к маршруту logout.
+  
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
@@ -31,7 +32,29 @@ class SessionsController < ApplicationController
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
     end
+  end  
+
+=begin  
+  def create
+    user = User.find_by(email: params[:session][:email].downcase)
+    if user && user.authenticate(params[:session][:password])
+      if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+      else
+        message  = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
+    else
+      flash.now[:danger] = 'Invalid email/password combination'
+      render 'new'
+    end
   end
+=end
+  
 #-------------gemfileneedcheck_dropdownstyle
   def destroy
     log_out

@@ -7,6 +7,8 @@ class UserMailer < ApplicationMailer
   #которая доступна в представлениях мэйлера, так же как переменные экземпляра из 
   #контроллеров доступны в обычных представлениях.
   def account_activation(user)
+    @greeting = "Hi"
+
     @user = user
     mail to: user.email, subject: "Account activation"
   end
