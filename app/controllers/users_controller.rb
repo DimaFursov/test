@@ -45,6 +45,7 @@ ivars:
 =end  
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])  
     #debugger  #С ней можно обращаться так же, как с Rails-консолью Ctrl-D
   end
 
@@ -83,9 +84,13 @@ ivars:
     @user = User.new(user_params)
 
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to edit_user_path(current_user) #@user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
+
+      #log_in @user
+      #flash[:success] = "Welcome to the Sample App!"
+      #redirect_to edit_user_path(current_user) #@user
     else
       render 'new'
     end
@@ -93,7 +98,9 @@ ivars:
 =begin
     respond_to do |format|
       if @user.save
+
         @user.send_activation_email
+        
         UserMailer.account_activation(@user).deliver_now
         flash[:info] = "Please check your email to activate your account."
         format.html {redirect_to root_url}        

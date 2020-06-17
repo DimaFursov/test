@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # ссылка на метод
   before_create :create_activation_digest
   # происходит до создания пользователя.
-  has_many :microposts  
+  has_many :microposts, dependent: :destroy
   # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   # before_save { self.email = email.downcase }#-------mtod
   # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase
