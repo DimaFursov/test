@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
+    #определяем микропост переменной экземпляра @micropost "if logged_in?" current_user Существует только для logged_in?
+    @micropost = current_user.microposts.build if logged_in? 
   end
 
   def help

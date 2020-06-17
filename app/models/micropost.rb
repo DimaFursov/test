@@ -1,6 +1,8 @@
 class Micropost < ActiveRecord::Base
   belongs_to :user
   default_scope -> { order(created_at: :desc) }
+  #по столбцу created_at order('created_at DESC')
+
 =begin
     функция, созданная без названия
   >> -> { puts "foo" }

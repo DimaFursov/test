@@ -2,8 +2,9 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>    
-    <!-- #Частичные шаблоны (партиалы)
+      <%= render 'shared/error_messages', object: f.object %>    
+    <!-- , object: f.object
+    #Частичные шаблоны (партиалы)
 сообщений об ошибках, связанных с объектом @user. Для их отображения в браузере мы будем показывать партиал error_messages, добавив CSS-класс form-control (у него есть специальное значение в Bootstrap) к каждому полю записи      
 =end
 , class: 'form-control'  ------------css 

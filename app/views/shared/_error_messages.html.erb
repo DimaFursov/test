@@ -1,75 +1,12 @@
-<% if @user.errors.any? %>
-  <h2> - error_messages - </h2>
+<% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
+      The form contains <%= pluralize(object.errors.count, "error") %>.
     </div>
     <ul>
-    <% @user.errors.full_messages.each do |msg| %>
+    <% object.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
   </div>
 <% end %>
-<!-- #Частичные шаблоны (партиалы)
-Started POST "/users" for 127.0.0.1 at 2020-03-21 17:10:38 +0200
-Processing by UsersController#create as HTML
-  Parameters: {"utf8"=>"✓", "authenticity_token"=>"jM0j3KfereMcDV125Tx5gid2RD93b3kW3t3fBrwRHTpU9iXOQUzotwK/da9OY3ega3OO82yAmATF3fektV4G6g==", "user"=>{"name"=>"sfname1", "email"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create my account"}
-   (0.3ms)  begin transaction
-  User Exists (0.4ms)  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('') LIMIT 1
-   (0.3ms)  rollback transaction
-  Rendered shared/_error_messages.html.erb (14.0ms)
-  Rendered users/_form.html.erb (50.8ms)
-  Rendered users/new.html.erb within layouts/application (54.1ms)
-  Rendered layouts/_shim.html.erb (0.2ms)
-  User Load (0.5ms)  SELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
-  Rendered layouts/_header.html.erb (5.1ms)
-  Rendered layouts/_footer.html.erb (0.7ms) 
-Completed 500 Internal Server Error in 10335ms (Views: 10304.9ms | ActiveRecord: 1.5ms)
-
-AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
-  app/controllers/users_controller.rb:84:in `block (2 levels) in create'
-  app/controllers/users_controller.rb:77:in `create'
-
-
-  Rendered /home/nomid/.rvm/gems/ruby-2.3.3/gems/web-console-2.0.0.beta3/lib/action_dispatch/templates/rescues/_source.erb (50.4ms)
-  Rendered /home/nomid/.rvm/gems/ruby-2.3.3/gems/web-console-2.0.0.beta3/lib/action_dispatch/templates/rescues/_trace.html.erb (13.2ms)
-  Rendered /home/nomid/.rvm/gems/ruby-2.3.3/gems/web-console-2.0.0.beta3/lib/action_dispatch/templates/rescues/_request_and_response.html.erb (2.3ms)
-  Rendered /home/nomid/.rvm/gems/ruby-2.3.3/gems/web-console-2.0.0.beta3/lib/action_dispatch/templates/rescues/_web_console.html.erb (2.5ms)
-  Rendered /home/nomid/.rvm/gems/ruby-2.3.3/gems/web-console-2.0.0.beta3/lib/action_dispatch/templates/rescues/diagnostics.html.erb within rescues/layout (92.5ms)
-
-
-Started GET "/" for 127.0.0.1 at 2020-03-21 17:10:48 +0200
-Processing by StaticPagesController#home as HTML
-  Rendered static_pages/home.html.erb within layouts/application (9.4ms)
-  Rendered layouts/_shim.html.erb (0.2ms)
-  User Load (0.5ms)  SELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
-  Rendered layouts/_header.html.erb (5.1ms)
-  Rendered layouts/_footer.html.erb (1.0ms)
-Completed 200 OK in 212ms (Views: 209.6ms | ActiveRecord: 0.5ms)
-^C[2020-03-21 17:11:14] INFO  going to shutdown ...
-[2020-03-21 17:11:15] INFO  WEBrick::HTTPServer#start done.
-Exiting
-
-
-has_secure_password отлавливают пустые (nil) пароли, то сейчас форма регистрации выдает дублированную ошибку при отправке пустого пароля. Мы могли бы поработать с сообщениями об ошибках напрямую для устранения этой проблемы, но, к счастью, она автоматически будет решена при добавлении allow_nil: true
-
-  Этот партиал знакомит нас с несколькими новыми Rails и Ruby конструкциями, в том числе с двумя методами для объектов ошибок Rails. Первый из них — count, который просто возвращает количество ошибок:
->> user.errors.count
-=> 2
-Второй новый метод — any?, который (вместе с empty?) является одним из пары взаимодополняющих методов:
-
->> user.errors.empty?
-=> false
->> user.errors.any?
-=> true
-Другой новой идеей является текстовый хелпер pluralize. По умолчанию, он недоступен в консоли, но мы можем явно его включить через модуль ActionView::Helpers::TextHelper:9
-
->> include ActionView::Helpers::TextHelper
->> pluralize(1, "error")
-=> "1 error"
->> pluralize(5, "error")
-=> "5 errors"
-Pluralize принимает целочисленный аргумент и возвращает его с правильной версией множественного числа второго аргумента. В основе этого метода лежит мощный инфлектор, который знает, как преобразовать во множественное число огромное количество слов (в том числе, многие с неправильным множественным числом):
-
--->

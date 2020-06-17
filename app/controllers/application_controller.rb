@@ -6,6 +6,17 @@ class ApplicationController < ActionController::Base
   def hello
     render text: "def hello render text:hello, world! end"
   end
+
+    private
+
+    # Проверяет статус входа пользователя.
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
   # В этом разделе пользователь будет входить с помощью куки временной сессии, которая автоматически завершается после 
   #  закрытия браузера. модуль Sessions helper был автоматически создан при генерации контроллера Sessions 
   # Более того, такие хелперы автоматически доступны в Rails-представлениях; а если указать модуль в/* ::Base */базовом классе 

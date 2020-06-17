@@ -193,7 +193,7 @@ ivars:
     end
 
     # Предфильтры
-
+=begin
     # Подтверждает вход пользователя Чтобы использовать store_location, необходимо добавить его в предфильтр logged_in_user
     def logged_in_user
       unless logged_in?
@@ -202,6 +202,7 @@ ivars:
         redirect_to login_url
       end
     end
+=end
     # Подтверждает правильного пользователя
     def correct_user
       #определение переменной user
