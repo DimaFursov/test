@@ -1,35 +1,3 @@
-<% provide(:title, "Edit user") %>
-<h1>Update your profile</h1>
-<%= render 'form' %>
-<h2> - form edit.html.erb - gravatar_edit - </h2>
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages', object: f.object #, object: f.object%>    
-
-      <%= f.label :name %><br>
-      <%= f.text_field :name, class: 'form-control'%>
-
-      <%= f.label :email %><br>
-      <%= f.text_field :email, class: 'form-control'%>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control'%>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control'%>
-
-      <%= f.submit "Save changes", class: "btn btn-primary" %>
-    <% end %>
-  
-
-
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target="_blank" id: "img2",>change</a>
-    </div>
-  </div>  
-</div>
 <!--значительное совпадение предполагает вынесение повторяющегося кода в партиал
 Кстати, target= "_blank" в ссылке на граватар — это изящный фокус для того, чтобы заставить браузер открыть страницу в новом окне или вкладке, весьма удобное поведение при переходе по ссылке на сторонний сайт.
       как же Rails узнает, что нужно использовать запрос POST для новых пользователей и PATCH для редактирования? Ответ кроется в том, что посредством логического метода Active Record new_record? можно определить, является ли пользователь новым, или он уже существует в базе данных:
@@ -42,6 +10,35 @@
 При построении формы с помощью form_for(@user), 
 Rails использует POST, если @user.new_record? является true, и PATCH — если false.
 -->
+ <% provide(:title, "Edit user") %>
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+
+    <div class="gravatar_edit">
+      <%= gravatar_for @user %>
+      <a href="http://gravatar.com/emails" target="_blank" id: "img2",>change</a>
+    </div>
+  </div>
+</div>
 <%= link_to 'Show', @user, class: "btn btn-primary" %> |
 <%= link_to 'Back', users_path, class: "btn btn-primary" %> |
 <%= link_to 'New User', new_user_path, class: "btn btn-primary" %>

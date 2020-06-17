@@ -44,12 +44,12 @@ Rails.application.routes.draw do
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
-  resources :microposts,          only: [:show,:edit, :create, :destroy]#:show, :edit
+  resources :microposts,          only: [:create, :destroy]#:show, :edit
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 
   resources :users
   # после перехода по ссылке edit_account_activation_url(activation_token, ...)
-  resources :account_activations, only: [:edit]#:show,
+  resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
 end
