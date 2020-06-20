@@ -10,7 +10,8 @@ class Micropost < ActiveRecord::Base
 >> -> { puts "foo" }.call
 foo
 => nil
-=end  
+=end
+  mount_uploader :picture, PictureUploader  
   validates :user_id, presence: true  
   validates :content, presence: true, length: { maximum: 140 }
 end

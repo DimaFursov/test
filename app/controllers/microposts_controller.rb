@@ -90,7 +90,7 @@ class MicropostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def micropost_params
-      params.require(:micropost).permit(:content, :user_id)
+      params.require(:micropost).permit(:content, :picture)
     end
      def correct_user
       @micropost = current_user.microposts.find_by(id: params[:id])
