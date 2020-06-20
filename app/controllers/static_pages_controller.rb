@@ -1,9 +1,16 @@
 class StaticPagesController < ApplicationController
+=begin  
   def home
     #определяем микропост переменной экземпляра @micropost "if logged_in?" current_user Существует только для logged_in?
     @micropost = current_user.microposts.build if logged_in? 
   end
-
+=end
+  def home
+    if logged_in?
+      @micropost  = current_user.microposts.build
+      @feed_items = current_user.feed.paginate(page: params[:page])
+    end
+  end
   def help
   end
   

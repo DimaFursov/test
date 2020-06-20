@@ -39,6 +39,11 @@ class User < ActiveRecord::Base
   # валидации наличия имени является метод validates с аргументом presence: true
   # Аргумент presence: true — это хэш опций с одним элементом;
   # фигурные скобки необязательны, если хэш передаётся последним аргументом в метод.
+  # Определяет прото-ленту.
+  # Полная реализация в "Следовании за пользователями".
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
