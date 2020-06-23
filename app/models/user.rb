@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
   before_create :create_activation_digest
   # происходит до создания пользователя.
   has_many :microposts, dependent: :destroy
+  # Внешний ключ <class>_id
+  has_many :active_relationships, class_name:  "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent:   :destroy
+  has_many :following, through: :active_relationships, source: :followed                                  
   # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   # before_save { self.email = email.downcase }#-------mtod
   # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase
@@ -43,6 +48,19 @@ class User < ActiveRecord::Base
   # Полная реализация в "Следовании за пользователями".
   def feed
     Micropost.where("user_id = ?", id)
+  end
+  # Начать читать сообщения пользователя.
+  def follow(other_user)
+    active_relationships.create(followed_id: other_user.id)
+  end
+  # Перестать читать сообщения пользователя.
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # Возвращает true, если текущий пользователь читает сообщения другого пользователя.
+  def following?(other_user)
+    following.include?(other_user)
   end
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
