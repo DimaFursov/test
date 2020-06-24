@@ -13,7 +13,11 @@ class User < ActiveRecord::Base
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
-  has_many :following, through: :active_relationships, source: :followed                                  
+  has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy                                  
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower                                    
   # Адреса электронной почты обычно обрабатываются, как если бы они были нечувствительны к регистру — т.е., foo@bar.com считается равным FOO@BAR.COM или FoO@BAr.coM
   # before_save { self.email = email.downcase }#-------mtod
   # before_save и переводит адрес электронной почты пользователя в строчную версию его текущего значения, применив строковый метод downcase

@@ -44,6 +44,12 @@ Rails.application.routes.draw do
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
+  #/users/1/following and /users/1/followers following_user_path(n) followers_user_path(n)
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end  
   resources :microposts,          only: [:create, :destroy]#:show, :edit
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 
@@ -51,5 +57,6 @@ Rails.application.routes.draw do
   # после перехода по ссылке edit_account_activation_url(activation_token, ...)
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
+  resources :relationships,       only: [:create, :destroy]  
 
 end

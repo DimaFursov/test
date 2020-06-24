@@ -204,32 +204,42 @@ aside {
 .gravatar_edit {
   margin-top: 15px;
 }
-/*footer */
-/*одна переменная */
-$gray-medium-light: #ff0000; /*#eaeaea;*/
-footer {
-  background-color: #333;
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $gray-medium-light;
-  color: $gray-light;;
+.stats {
+  overflow: auto;
+  margin-top: 0;
+  padding: 0;
   a {
-    color: $gray;
-    &:hover {
-      color: $gray-darker;
-    }
-  }
-  small {
     float: left;
-  }
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-      margin-left: 15px;
+    padding: 0 10px;
+    border-left: 1px solid $gray-lighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
     }
   }
+  strong {
+    display: block;
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+
+.users.follow {
+  padding: 0;
 }
 /* forms */
 
@@ -311,5 +321,32 @@ span.picture {
   margin-top: 10px;
   input {
     border: 0;
+  }
+}
+/*footer */
+/*одна переменная */
+$gray-medium-light: #ff0000; /*#eaeaea;*/
+footer {
+  background-color: #333;
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
   }
 }
