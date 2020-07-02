@@ -49,9 +49,12 @@ class User < ActiveRecord::Base
   # Аргумент presence: true — это хэш опций с одним элементом;
   # фигурные скобки необязательны, если хэш передаётся последним аргументом в метод.
   # Определяет прото-ленту.
-  # Полная реализация в "Следовании за пользователями".
+  # Возвращает ленту сообщений пользователя.
   def feed
-    Micropost.where("user_id = ?", id)
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE  follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids})
+                     OR user_id = :user_id", user_id: id)
   end
   # Начать читать сообщения пользователя.
   def follow(other_user)
