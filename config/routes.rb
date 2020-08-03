@@ -52,7 +52,8 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
-  end  
+  end
+  resources :projects,            only: [:create, :destroy]    
   resources :microposts,          only: [:create, :destroy]#:show, :edit
   #1-Браузер выдает запрос на URL /users.
   #2-  Rails.application.routes.draw do 

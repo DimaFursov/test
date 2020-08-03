@@ -59,6 +59,7 @@ ivars:
 =end  
   def show
     @user = User.find(params[:id])
+    @projects = @user.projects
     @microposts = @user.microposts.paginate(page: params[:page])  
     #debugger  #С ней можно обращаться так же, как с Rails-консолью Ctrl-D
   end

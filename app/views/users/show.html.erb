@@ -16,7 +16,7 @@
       <%= render 'shared/stats' %>
     </section>    
   </aside>
-    <div class="col-md-8">
+  <div class="col-md-8">
     <%= render 'follow_form' if logged_in? %>      
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
@@ -24,6 +24,16 @@
         <%= render @microposts %>
       </ol>
       <%= will_paginate @microposts %>
+    <% end %>
+  </div>
+  <h2>H2</h2>
+  <div class="col-md-8">
+    <% if @user.projects.any? %>
+      <h3>Projects (<%= @user.projects.count %>)</h3>
+      <ol class="microposts">
+        <%= render @projects %>
+      </ol>
+      
     <% end %>
   </div>
 </div>
@@ -38,6 +48,7 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
+
 
 <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary" %> |
 <%= link_to 'Back', users_path, class: "btn btn-primary" %> |
