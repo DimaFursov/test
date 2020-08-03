@@ -25,6 +25,8 @@ Rails.application.routes.draw do делает (ActionController::Base )
 6-Контроллер получает пользователей в переменной @users, которую он передаёт представлению index.
 7-Представление использует Embedded (Встроенный) Ruby, чтобы визуализировать страницу в виде HTML.
 8-Контроллер возвращает HTML в браузе
+
+ресурсе Sessions нам нужны только те именованные маршруты, которые обрабатывают запросы GET и POST, delete logout logout_path
 =end
 Rails.application.routes.draw do
 
@@ -44,6 +46,7 @@ Rails.application.routes.draw do
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
+
   #/users/1/following and /users/1/followers following_user_path(n) followers_user_path(n)
   resources :users do
     member do

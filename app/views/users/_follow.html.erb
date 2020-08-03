@@ -1,4 +1,4 @@
-<%= form_for(current_user.active_relationships.build, remote: true) do |f| %> <!--ajax remote: true чтобы не покидал страницу-->
+<%= form_for(current_user.active_relationships.build, remote: true) do |f| %> <!--form_for(..., remote: true) do |f| ajax remote: true чтобы не покидал страницу-->
   <div><%= hidden_field_tag :followed_id, @user.id %></div>
   <%= f.submit "Follow", class: "btn btn-primary" %>
 <% end %>

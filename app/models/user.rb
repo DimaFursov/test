@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   validates :name,  presence: true, length: { maximum: 50 }
   # Регулярное выражение VALID_EMAIL_REGEX — это константа, которая обозначается в Ruby именем, начинающимся с заглавной буквы
   # оно позволяет недопустимые адреса, содержащие последовательно расположенные точки, например foo@bar..com.
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   # Код приложения для валидации формата электронной почты использует format
   #validates :email, format: { with: /<regular expression>/ },
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX },

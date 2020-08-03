@@ -4,8 +4,19 @@ module SessionsHelper
     session[:user_id] = user.id
   end
     # Запоминает пользователя в постоянной сессии.
+=begin       
+Как и с log_in, Листинг 8.34 передает всю настоящую работу Sessions-хелперу,
+ где мы определяем метод remember, вызывающий user.remember, тем самым он 
+ генерирует remember-токен и сохраняет в базу данных его дайджест. Затем 
+ он применяет cookies для создания постоянных куки пользовательского id и remember-токена  
+ В результате, оценка доходит до конца метода current_user и возвращает nil, как и требовалось.
+
+Напротив, когда мы закрываем Chrome, то сбрасываем session[:user_id] на nil 
+(так как у всех переменных session автоматически истекает срок годности при закрытии браузера), 
+но user_id в cookie остается в целости и сохранности. А значит, соответствующий пользователь будет найден в базе данных  
+=end
   def remember(user)
-    user.remember # super Did you mean? remember_token
+    user.remember 
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
