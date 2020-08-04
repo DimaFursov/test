@@ -23,6 +23,14 @@
         <% end %>
       </section>  
     </aside>
+    <div>
+      <h3>Projects (<%= @user.projects.count %>)</h3>
+      <div class="field"> 
+        <h1> Simple todo list </h1>
+        <h3> From ruby garage </h3> 
+        <%= render 'shared/feedprojects' %>
+      </div>
+    </div>  
     <div class="col-md-8">
       <h3>Micropost feed(lenta)</h3>
       <%= render 'shared/feed' %>    

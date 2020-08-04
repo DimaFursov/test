@@ -16,6 +16,13 @@
       <%= render 'shared/stats' %>
     </section>    
   </aside>
+  <h2>H2</h2>
+  <div class="col-md-8">
+      <h3>Projects (<%= @user.projects.count %>)</h3>
+      <ol class="projects">
+        <%= render @projects %><!---->
+      </ol>    
+  </div>
   <div class="col-md-8">
     <%= render 'follow_form' if logged_in? %>      
     <% if @user.microposts.any? %>
@@ -26,16 +33,7 @@
       <%= will_paginate @microposts %>
     <% end %>
   </div>
-  <h2>H2</h2>
-  <div class="col-md-8">
-    <% if @user.projects.any? %>
-      <h3>Projects (<%= @user.projects.count %>)</h3>
-      <ol class="projects">
-        <%= render @projects %><!---->
-      </ol>
-      
-    <% end %>
-  </div>
+  
 </div>
 <p id="notice"><%= notice %></p>
 

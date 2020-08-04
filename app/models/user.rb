@@ -50,6 +50,9 @@ class User < ActiveRecord::Base
   # фигурные скобки необязательны, если хэш передаётся последним аргументом в метод.
   # Определяет прото-ленту.
   # Возвращает ленту сообщений пользователя.
+  def feedprojects
+    Project.where("user_id = ?", id)
+  end  
   def feed
     following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"

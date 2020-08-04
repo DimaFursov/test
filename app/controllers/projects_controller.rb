@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-
+  before_action :correct_user,   only: :destroy
   def index
     @projects = Project.all
 
@@ -15,6 +15,11 @@ class ProjectsController < ApplicationController
       render 'static_pages/home'
     end
   end
+  def destroy
+    @project.destroy
+    flash[:success] = "Project deleted"
+    redirect_to request.referrer || root_url
+  end  
 
   private
     # Use callbacks to share common setup or constraints between actions.
