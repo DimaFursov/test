@@ -2,9 +2,26 @@ class ApplicationController < ActionController::Base
     # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  include SessionsHelper
+  include SessionsHelper # доступен и во всех контроллерах
+  def hello2
+    render text: "def hello2"
+  end  
   def hello
-    render text: "def hello render text:hello, world! end"
+    str =  "111.1 C"
+    temp = str
+    temp = temp.to_f
+    case str
+      when str
+      f = 1.8*temp + 32
+      str = f
+      when "F", "f"
+      c = (5.0/9.0)*(temp-32)
+      str = c
+    end
+    render text: str
+
+    $NOT_CONST = "$NOT_CONST"
+    #render text: "def hello render text:hello, world! end"+" "<<$NOT_CONST
   end
 
     private

@@ -1,7 +1,17 @@
 <li id="project-<%= project.id %>">
-  <span class="project_name"><%= project.project_name %></span>
+ 
     <% if current_user?(project.user) %>
-      <%= link_to "delete", project, method: :delete,
-                                       data: { confirm: "You sure?" } %>
-    <% end %>
+      <span class="name"><%= project.project_name %> project.id:<%= project.id %></span><!--удаление отображает index первый в списке после логина и попытки удалить  -->
+      <span><%= link_to image_tag("update.svg", id: "update_project_svg", alt: "update"), '#', 
+                                          class: "update_project",target:"_blank", remote: true %></span>
+                                          
+      <span><%= link_to image_tag("delete.svg", id: "delete_project_svg", alt: "delete"), '#',  
+                                          class: "delete_project", id: "delete_button_#{project.id}",
+                                          data: { id: project.id }, remote: true %></span>
+
+      <span><%= link_to image_tag("delete.svg", id: "delete_project_svg", alt: "delete"), '#', target:"_blank",  
+                                          class: "delete_project", id: "delete_button_#{project.id}",
+                                          data: { id: project.id }, remote: true %></span><!--сделать div-->                                       
+      
+    <% end %>    
 </li>

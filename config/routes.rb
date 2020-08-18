@@ -22,8 +22,10 @@ Rails.application.routes.draw do делает (ActionController::Base )
 3-Действие index запрашивает у модели User получение всех пользователей (User.all).
 4-Модель User вытягивает всех пользователей из базы данных.
 5-Модель User возвращает список пользователей в контроллер.
-6-Контроллер получает пользователей в переменной @users, которую он передаёт представлению index.
-7-Представление использует Embedded (Встроенный) Ruby, чтобы визуализировать страницу в виде HTML.
+6-Контроллер получает пользователей в переменной @users, которую 
+он передаёт представлению index.
+7-Представление использует Embedded (Встроенный) Ruby, чтобы визуализировать
+ страницу в виде HTML.
 8-Контроллер возвращает HTML в браузе
 
 ресурсе Sessions нам нужны только те именованные маршруты, которые обрабатывают запросы GET и POST, delete logout logout_path
@@ -38,7 +40,10 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
   get  'static_pages/home'
+  get  'hello2'=>'application#hello2'
   get  'hello'=>'application#hello'#http://localhost:3000/hello
+  get  'hello'=>'application/hello'
+  post 'hello'   => 'application#hello'
   get  'help'    => 'static_pages#help'
   get  'about'   => 'static_pages#about'
   get  'contact' => 'static_pages#contact'

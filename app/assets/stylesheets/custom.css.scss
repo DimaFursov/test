@@ -6,7 +6,7 @@
 input {
   height: auto !important;
 }
-
+/*.classname{ cursor: pointer }*/
 /* mixins, variables, etc. */
 
 $gray-medium-light: #eaeaea;
@@ -243,6 +243,12 @@ aside {
 }
 /* forms */
 
+#new_project{
+  border: 10px red #666;
+  background: red;
+  display: none;/* форму видно извачально */
+}
+
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
@@ -257,6 +263,9 @@ input, textarea, select, .uneditable-input {
     color: red;
     margin: 0 0 30px 0;
   }
+}
+.feld123{
+  background-color: gray;
 }
 .field_with_errors {
   @extend .has-error;

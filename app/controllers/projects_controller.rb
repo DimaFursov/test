@@ -1,5 +1,13 @@
 class ProjectsController < ApplicationController
   before_action :correct_user,   only: :destroy
+  def new
+    @project = Project.new
+    render :partial => 'projects/project'
+  end
+  def new
+  @user = User.new
+  render :partial => 'users/sign_up_modal'
+end
   def index
     @projects = Project.all
 
@@ -11,10 +19,12 @@ class ProjectsController < ApplicationController
       flash[:success] = "project created!"
       redirect_to root_url
     else
-      @feed_items = []
+      @feed_itemsprojects = []
       render 'static_pages/home'
     end
   end
+  def update
+  end  
   def destroy
     @project.destroy
     flash[:success] = "Project deleted"
@@ -28,7 +38,7 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params.require(:project).permit(:project_name) #:picture
+      params.require(:project).permit(:project_name)  # под ключём project Это те параметры которые ты отправляешь из хтмл
     end
     def correct_user
       @project = current_user.projects.find_by(id: params[:id])
