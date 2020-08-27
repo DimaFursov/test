@@ -1,6 +1,13 @@
 <% provide(:title, "Home") %>
 
 <% if logged_in? %>
+  <ul class="example">
+      <li>Игрок 1 <a href="javascript: return false;" class="remove-button right">Удалить</a></li>
+      <li>Игрок 2 <a href="javascript: return false;" class="remove-button right">Удалить</a></li>
+      <li>Игрок 3 <a href="javascript: return false;" class="remove-button right">Удалить</a></li>
+      <li>Игрок 4 <a href="javascript: return false;" class="remove-button right">Удалить</a></li>
+    </ul>
+    <a href="javascript: return false;" class="create-button">добавить</a>
   <div class="row">
     <aside class="col-md-4">
       <section class="user_info">
@@ -9,33 +16,13 @@
       <section class="stats">
         <%= render 'shared/stats' %>
       </section>      
-      <section class="micropost_form">
+      <section class="micropost_form"><!--erreor m-->
         <%= render 'shared/micropost_form' %>
       </section>
       <section >
       </section>  
     </aside>
-    <div>
-      <div class="field"> 
-        <h3> Simple todo list </h3>
-        <h3> From ruby garage </h3>
-        <h3>Projects (<%= @user.projects.count %>)</h3>
-        <button type="button" id="formButton">+ add_TODO_List</button>
-        <%= render 'shared/project_form' %>
-        <div class="feld123">
-        <%= form_for(@project) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-          <div class="field">
-          <%= f.text_area :project_name, placeholder: "+ add Project" %>
-          </div>
-          <%= f.submit "+ add TODO List", class: "btn btn-primary" %>
-        <% end %>
-        <%= form_tag method: :post do %>
-        <%= submit_tag 'Call Action' %>
-        <% end %>
-        <%= render 'shared/feedprojects' %>
-      </div>
-    </div>  
+    <!--home-->
     <div class="col-md-8">
       <h3>Micropost feed(lenta)</h3>
       <%= render 'shared/feed' %>    
@@ -44,12 +31,18 @@
 <% else %>
 
 <div class="center jumbotron">
-</h1>
+
   <h2>
     <img alt="Rails logo" src="/assets/Ruby.svg" id="img3" />
     This is the home page for the
     <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
     sample application.
+    <link ref="stylesheet" href=""><!--link to cssfile-->
+    <style>
+      h2{
+        color:red;
+      }
+    </style>  
   </h2>
 
   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
