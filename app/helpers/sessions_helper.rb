@@ -15,6 +15,7 @@ module SessionsHelper
 (так как у всех переменных session автоматически истекает срок годности при закрытии браузера), 
 но user_id в cookie остается в целости и сохранности. А значит, соответствующий пользователь будет найден в базе данных  
 =end
+
   def remember(user)
     user.remember 
     cookies.permanent.signed[:user_id] = user.id
@@ -30,6 +31,12 @@ module SessionsHelper
   end
 =end  
   #если пользователя нет или был обнулен nil ему прискаивается из базы 
+=begin
+При постоянных сессиях мы хотим получать пользователя из временной сессии, если существует session [:user_id],
+ но иначе для получения пользователя (и осуществления входа) нужно искать по cookies [:user_id],
+  который имеет отношение к постоянной сессии.
+  user_id присвоение
+=end  
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)

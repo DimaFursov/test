@@ -1,4 +1,4 @@
-console.log("console.log('app.js')")
+//console.log("console.log('app.js')")
 /*
 function logPerson(s,name,age){
     if (age<0){

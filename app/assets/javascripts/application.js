@@ -18,9 +18,663 @@
 //= require turbolinks
 //= require_tree .
 // `
+//console.log('---------------Event Loop-------------------------------')
+//promise
+//setTime(()=>{
+//}, 2500)
+
+var task_id = task_status_59.dataset.id;
+  var new_task_status5 = document.querySelector("#task_status_"+task_id).checked
+    console.log(new_task_status5)
+    //false  
+  var heading3 = document.querySelector('.status').checked
+  console.log(heading3)
+  //false
+  document.querySelector("#task_status_59").checked
+  //true
+
+const delay = (wait=1000) =>{
+  const promise = new Promise((resolve, regect)=>{
+    setTimeout(()=>{
+      //esolve()
+      regect('catch regect LOOK ERROR ')
+    }, wait)
+  })
+  return promise
+}   
+delay(0)
+  .then(()=>{
+    console.log('after 1s')
+  })
+  .catch( err=>console.error('error', err))
+  .finally(()=>console.log('finally'))
+
+const getData =()=> new Promise(resolve => resolve([1,1,2]))  
+getData().then(data=>{console.log(data)})
+//не работать с колбэками
+async function asyncExample(){
+  try{
+  await delay(3000)
+  const data = await getData()
+  console.log('data', data)
+  } catch (e){ console.log(e)}
+  finally { console.log('f')}
+}
+/*
+import Vue from 'vue/dist/vue.esm'
+import App from '../app.vue'
+*/
+/*------------------------------- drag and drop view js on a front ------------------------------*/  
+//$(document).addEventListener(function(){
+  
+  /*
+  $(".tasks_tbody").sortable({
+    update: function(e, ui){
+      //console.log($(this).sortable('serialize'))//
+      $.ajax({
+        url: $(this).data("url"),
+        type:'PATCH',
+        data:$(this).sortable('serialize'),
+      });
+    },
+    handle: ".task_priority_drag_and_drop"    
+  });
+  /**/
+//});
+/*
+  var element = document.querySelector(".tasks_tbody")
+  if (element != undefined){
+    
+    const app = new Vue({
+      el: element,
+      data:{
+        tasks: JSON.parse(element.datasset.lists)
+      },
+      tamplete: "<App :origonal_tasks='tasks'/>",
+      components: { App }
+    })
+    
+  }
+  */
+  /*  ----------------------------- checkbox----------------------------*/  /*
+  $(document).on('click', '.status', function() {
+    var taskId = this.dataset.id;
+    var projectId = this.dataset.projectid;
+    var newTaskStatus = document.querySelector("#task_status_"+taskId).checked
+    $.ajax({
+      url: '/projects/'+projectId+'/tasks/'+taskId,
+      type: 'PATCH',
+      data: {task: {status: newTaskStatus}},
+      success: function(updateData) {
+      }        
+    });    
+  });
+  /*  ----------------------------- new_task ---------------------------------------------*/  /*
+  $(document).on('click', '.new_task', function() {
+    var projectId = this.dataset.id;
+    var newTaskName = $("#project_task_"+projectId).val()
+    if (newTaskName == "") {        
+      $("#project-id-new-task-error-"+projectId).text("Task name must be filled out")
+    }else if(newTaskName.length>255){ 
+      $("#project-id-new-task-error-"+projectId).text("Task name is too long (maximum is 255 characters)")
+    }else {
+      $.ajax({
+        url: '/projects/' + projectId +'/tasks',
+        type: 'POST',
+        data: {task: {name: newTaskName}},
+        success: function(partialTask) {
+          $("#project-id-new-task-error-"+projectId).text("")
+          $("#project_task_"+projectId).val('')
+          $("#project_tasks-"+projectId).append(partialTask)
+        }    
+      })
+      .fail(function(errorTaskResponse) {
+        alert(errorTaskResponse.responseJSON.name)      
+      })
+    }
+  });
+  /*  ----------------------------- update_task ---------------------------------------------*/  /*
+  $(document).on('click', '.edit_task', function() {
+    var taskId =this.dataset.id
+    $("#task_name_" + taskId).toggle();
+    $("#task_input_" + taskId).toggle();    
+  });
+  $(document).on('click', '.update_task', function() {
+    var taskId = this.dataset.id;
+    var projectId = this.dataset.projectid;
+    var newTaskName = $("#task_edit_"+taskId).val();
+    if (newTaskName == "") {        
+      $("#task-edit-control-label-id-"+taskId).text("Task name must be filled out")
+    }else if(newTaskName.length>255){ 
+      $("#task-edit-control-label-id-"+taskId).text("Task name is too long (maximum is 255 characters)")
+    }else {
+      $.ajax({
+        url: '/projects/'+projectId+'/tasks/'+taskId,
+        type: 'PATCH',
+        data: {task: {name: newTaskName}},
+        success: function(updateTask) {
+          $("#task_name_" + updateTask.id).text(updateTask.name);
+          $("#task_input_" + updateTask.id).toggle();        
+          $("#task_name_" + updateTask.id).toggle();    
+        }        
+      })
+      .fail(function(errorTaskUpdate) {
+        alert(errorTaskUpdate.responseJSON.name)
+      })
+    }  
+  });
+
+  /*-------------------------- delete TASK ---------------------------*//*
+  $(document).on('click', '.delete_task', function() {    
+    var task_id = this.dataset.id;
+    var project_id = this.dataset.projectid;    
+    $.ajax({
+      url: '/projects/'+project_id+'/tasks/'+task_id,
+      type: 'DELETE',
+      success: function(result) {        
+        $("#task_"+ task_id).remove("#task_"+ task_id);
+      }      
+    });
+  });
+
+  /*  ----------------------------- updateTaskDeadline ----------------------------*/  
+  /*
+  $(document).on('click', '.deadline-task', function() {
+    var taskId =this.dataset.id
+    $("#task-deadline-edit-id-" + taskId).toggle();
+    $("#task-deadline-update-id-" + taskId).toggle();    
+  });
+  $(document).on('click', '.task-deadline-update', function() {
+    var taskId = this.dataset.id;
+    var projectId = this.dataset.projectid;
+    var updateTaskDeadline = $("#task-deadline-edit-id-"+taskId).val();
+    const currentDate = $('.current-date').text()
+    if (currentDate >= updateTaskDeadline) {        
+      $("#task-deadline-expired-id-"+taskId).text("Set upcoming date").css("color", "red")
+    }else{
+      $.ajax({
+        url: '/projects/'+projectId+'/tasks/'+taskId,
+        type: 'PATCH',
+        data: {task: {deadline: updateTaskDeadline}},
+        success: function(updateTask) {
+          if (currentDate < updateTaskDeadline) {
+            $("#task-deadline-expired-id-"+taskId).text("In progress").css("color", "green")
+          }
+        }        
+      })
+      .fail(function(errorTaskUpdate) {
+        alert(errorTaskUpdate.responseJSON.name)
+      });
+    }
+  });
+  /*--------------------------------------- create projects -------------------------------------*/
+  /*
+  $(document).on('click', '.project-create-btn', function() {    
+    var newProjectName = $(".project-input-form").val()
+    if (newProjectName == "") {        
+      $(".project-control-label").text("Project name must be filled out")
+    }else if(newProjectName.length>80){ 
+      $(".project-control-label").text("Project name is too long (maximum is 80 characters)")
+    }else { 
+      $.ajax({
+        url: '/projects',
+        type: 'POST',
+        data: {project: {name: newProjectName}},
+      success: function(partialProjectsList) {
+        $(".project-control-label").text("")
+        $('.project-input-form').val('')
+        $(".items-projects-list").append(partialProjectsList)
+        }
+      })
+      .fail(function(errorProjectResponse) {
+        alert(errorProjectResponse.responseJSON.name)      
+      })            
+    }      
+  });
+  /*-------------------------------------- delete_project  -------------------------------------*/
+  /*
+  $(document).on('click', '.delete_project', function() {
+    var id = this.dataset.id
+    $.ajax({
+      url: '/projects/' + id,
+      type: 'DELETE',
+      success: function(result) {
+        $("#project-"+ id).remove("#project-"+ id);        
+      }
+    });
+  });
+  
+  /*  ----------------------------- update_project ---------------------------------------------*/
+  /*
+
+  $(document).on('click', '.edit_project', function() {
+    var projectId =this.dataset.id
+    $("#project_input_" + projectId).toggle();
+    $("#form_project_name_" + projectId).toggle();    
+  });
+
+  $(document).on('click', '.update_project', function() {
+    var projectId = this.dataset.id;
+    var newProjectName = $("#project_edit_"+projectId).val()
+    if (newProjectName == "") {        
+      $("#project-update-id-error-" + projectId).text("Project name must be filled out")
+    }else if(newProjectName.length>80){ 
+      $("#project-update-id-error-" + projectId).text("Project name is too long (maximum is 80 characters)")
+    }else { 
+      $.ajax({
+        url: '/projects/' + projectId,
+        type: 'PATCH',
+        data: {project: {name: newProjectName}},
+        success: function(updateProject) {
+          $("#project_input_" + updateProject.id).toggle();
+          $("#project_name_" + updateProject.id).text(updateProject.name);
+          $("#form_project_name_" + updateProject.id).toggle(); 
+        }        
+      })
+      .fail(function(errorProjectUpdate) { 
+        alert(errorProjectUpdate.responseJSON.name)
+      })
+    }  
+  });  
+
+/*create.js.erb
+/*$(".stats").html("<%= raw(escape_javascript(render('shared/stats').html_safe))  %>");*/
+/*$(".new_project").html("<%= raw(escape_javascript(render('shared/project_form').html_safe))  %>");*/
+/*$(".projectsN").html("<%= raw(escape_javascript(render('shared/feedprojects').html_safe)) %>");
+*/
+/*--------------------------------------- create projects -------------------------------------*/
+  /*
+  $(document).on('click', '.project-create-btn', function() {    
+    var newProjectName = $(".project-input").val()
+    
+      var x = document.forms["myForm"]["fname"].value;
+      if (x == "") {
+        alert("Name must be filled out");
+      }else {
+        $.ajax({
+          url: '/projects',
+          type: 'POST',
+          data: {project: {name: newProjectName}},
+        success: function(partialProjectsList) {
+          $('.project-input').val('');      
+          $(".feed_itemsprojects_list").append(partialProjectsList);
+          }
+        })
+        .fail(function(errorProjectResponse) {
+          console.dir(errorProjectResponse.responseJSON.deadline)//delete after f Work deadline
+          alert(errorProjectResponse.responseJSON.name)      
+        })
+      }  
+/*  ----------------------------- updateTaskDeadline ----------------------------*/  
+  /*
+  $(document).on('click', '.edit_task', function() {
+    var taskId =this.dataset.id
+    $("#task_name_" + taskId).toggle();
+    $("#task_input_" + taskId).toggle();    
+  });
+  */
+  /* $(document).ready(function() { need loop on task.count event and check by id------------*/
+  /*  
+  var currentDate = $('.current-date').text()
+  var lastTask = $('.last-task').text()
+  for (var i = 0; i < lastTask; i++) {
+    var updateTaskDeadline = $("#task-deadline-edit-id-"+i).val()
+    if (currentDate > updateTaskDeadline) {
+      $("#task-deadline-expired-id-"+i).text("Expired").css("color", "red")
+    } else if(currentDate < updateTaskDeadline){
+      $("#task-deadline-expired-id-"+i).text("inprogress").css("color", "green")
+    } 
+  }
+  */    
+    /*
+    $.ajax({
+      url: '/projects',
+      type: 'POST',
+      data: {project: {name: newProjectName}},
+    success: function(partialProjectsList) {
+      $('.project-input').val('');      
+      $(".feed_itemsprojects_list").append(partialProjectsList);
+      }
+    })
+    .fail(function(errorProjectResponse) {
+      alert(errorProjectResponse.responseJSON.name)      
+    })
+    */    
+  });
+  /*-------------------------------------- delete_project  -------------------------------------*/
+  /* -------------------------- TASK create ------------------*/
+  /*
+  $(document).on('click', '.new_task', function() {    
+    var project_id = this.dataset.id;
+    var new_task_name = $("#project_task_"+project_id).val()
+    $.ajax({
+      url: '/projects/' + project_id +'/tasks',
+      type: 'POST',
+      data: {task: {name: new_task_name}},
+      success: function(new_data_name) {        
+        $("#project_tasks-"+project_id).append(new_data_name);
+        $("#project_task_"+project_id).val('');
+        $("#project_task_"+project_id).placeholder.toString = new_data_name.name;
+        console.log("new_data_name")
+        console.log(new_data_name.name)
+        console.dir(new_data_name.name)
+      }
+      
+    });
+  }//.catch (new_data_name){ console.log(new_data_name)}
+  );
+  */
+  /* -------------------------- TASK create ------------------*/
+    /*
+    .fail(function() {
+    alert( "error" )
+    })
+    */
+  /*,
+      error: function(new_data_name) {
+        console.log("new_data_name")        
+        console.log(new_data_name)
+        console.dir(new_data_name)
+        console.log(new_data_name.name)
+        console.dir(new_data_name.name)
+        alert( new_data_name );  
+      }*/
+      /*statusCode: {
+        422: function(new_data_name) {
+      alert( "page not found" );
+      console.log("new_data_name")        
+        console.log(new_data_name)
+        console.dir(new_data_name)
+        console.log(new_data_name.name)
+        console.dir(new_data_name.name)
+        
+      }
+      } */       
+      // & complete  
+    /*.fail(function() {
+      alert( "error" );
+    })
+    jqxhr.fail(function() {
+      alert( "second complete" )
+    })*/
+  /*
+  $(document).on('click', '.new_task', function() {    
+    var project_id = this.dataset.id;
+    var new_task_name = $("#project_task_"+project_id).val()
+
+    $.ajax({
+      url: '/projects/' + project_id +'/tasks',
+      type: 'POST',
+      data: {task: {name: new_task_name}},
+      success: function(new_data_name) {        
+        $("#project_tasks-"+project_id).append(new_data_name);
+        $("#project_task_"+project_id).val('');
+        $("#project_task_"+project_id).placeholder.toString = new_data_name.name;
+        console.log("new_data_name")
+        console.log(new_data_name.name)
+        console.dir(new_data_name.name)
+      }
+    })
+    .fail(function(){
+      alert( "error" )
+    })
+  }
+  );
+  */
+
+/*
+function addStyle(node){
+  node.textContent = 'A'
+}
 
 $(document).ready(function() {
+  var heading = document.getElementById('hello')
+  console.log(heading)
+  console.dir(heading)  
+  heading.textContent = 'A'
+  var heading2 = document.getElementsByTagName('h1')[0]
+  console.log(heading2)
+  console.dir(heading2)
+  var heading3 = document.querySelector('#hello')  
+  console.log(heading3)
+  console.dir(heading3)
+  heading.onclick = () =>{
+    if(heading.textContent = 'b'){
+    console.log('click h1')
+    }
+  }
+})
+
+//асинхронность Event Loop
+//console.log('---------------Event Loop-------------------------------')
+//promise
+//setTime(()=>{
+//}, 2500)
+/*
+var task_id = task_status_59.dataset.id;
+  var new_task_status5 = document.querySelector("#task_status_"+task_id).checked
+    console.log(new_task_status5)
+    //false  
+  var heading3 = document.querySelector('.status').checked
+  console.log(heading3)
+  //false
+  document.querySelector("#task_status_59").checked
+  //true
+
+const delay = (wait=1000) =>{
+  const promise = new Promise((resolve, regect)=>{
+    setTimeout(()=>{
+      //esolve()
+      regect('catch regect LOOK ERROR ')
+    }, wait)
+  })
+  return promise
+}
+delay(0)
+  .then(()=>{
+    console.log('after 1s')
+  })
+  .catch( err=>console.error('error', err))
+  .finally(()=>console.log('finally'))
+
+const getData =()=> new Promise(resolve => resolve([1,1,2]))  
+getData().then(data=>{console.log(data)})
+//не работать с колбэками
+async function asyncExample(){
+  try{
+  await delay(3000)
+  const data = await getData()
+  console.log('data', data)
+  } catch (e){ console.log(e)}
+  finally { console.log('f')}
+}
+
+
+//Context this
+console.log('---------------Context this-------------------------------')
+const person2 = {
+  //сложные названия в виде ключей ''
+  'complex key': 'complex value',
+  //свойства в скобки [вычислять значения]['Key_'+ (1 + 10)]: 'computed key',
+  ['Key_'+ 1 + 10]: 'computed key',
+  name: 'dima',
+  age: 29,
+  languages: ['ru', 'en'],
+  //функция someFunction является методом опа в объекте person
+  //someFunction: function() {}
+  someFunction(){
+    console.log('someFunction(){ from person')
+  },
+  info(){
+    console.log('this :', this)
+    console.info('info(){console.info(person.name//this :', this.name)//Context this person
+  }
+}
+const logger = {//object===logger совй консоль лог
+  keys() {
+    console.log('obj:', Object.keys(this))//keys1 is not a function
+  }
+}
+const bound = logger.keys.bind(logger)//bind(this object который указываем)( создает новую функцию привязывает контекст который сами выбираем
+bound()//делает функцию
+const bound2 = logger.keys(logger)//сразу вызывает
+console.log(bound2)//уже пусто
+logger.keys.call(logger)//сразу вызывает
+console.log('---------------logger.keys.call(person2)-------------------------------')
+logger.keys.call(person2)//сразу вызывает
+console.log('----------------------------------------------')
+
+console.log('Object.keys(logger):', Object.keys(logger))
+
+const keyV3= {
+  keysAndValues() {
+  //key: value
+  //array          .metod(array key)  
+  Object.keys(this).forEach(key =>{ //стрелочныу функции не используют свой собственный контекст
+    console.log(`"${key}": ${this[key]}`)
+                            //array[key]
+  })}
+}
+keyV3.keysAndValues.call(person2)
+const keyV2= {
+  keysAndValues() {
+  //key: value
+  //array          .metod(array key)
+  const selfKey = this //сохранить контекст
+  Object.keys(this).forEach(function(key) {
+    console.log(`"${key}": ${this[key]}`)
+                            //array[key]
+  }//.bind(this)
+  )  
+  }
+}
+keyV2.keysAndValues.call(person2)
+const keyV= {
+  keysAndValues() {
+  //key: value
+  //array          .metod(array key)
+  const selfKey = this //сохранить контекст
+  Object.keys(this).forEach(function(key) {
+    console.log(`"${key}": ${selfKey[key]}`)
+                            //array[key]
+  })  
+  }
+}
+console.log("person2")
+console.log("person2Object.keys(this).forEach(key =>{")
+keyV.keysAndValues.call(person2)
+keyV.keysAndValues.call({a: 1, c: {b:2}})
+
+/*
+//person2.info()
+const personKeys = Object.keys(person2)//не бежит по прототипу
+const logger = {//object===logger совй консоль лог
+  keys(obj) {
+    console.log('obj:', Object.keys(obj))//keys1 is not a function
+  }
+}
+const logger2 = {//object===logger совй консоль лог keys метод объекта logger2
+  keys() {//keys(person2)
+    console.log('obj:', Object.keys(this))//keys1 is not a function
+                                  //bind(person2)          
+  },
+  keysAndValues() {
+  //key: value
+  //array          .metod(array key)
+  Object.keys(this).forEach(key =>{
+    console.log(`"${key}": ${this[key]}`)
+                            //array[key]
+  })
+}
+}
+logger.keys(person2)
+logger2.keys(person2)
+const bound = logger2.keys.bind(logger2)//bind(ключи обекта)( создает новую функцию привязывает контекст который сами выбираем
+bound()//привязали контекст логгера2 в boun this===logger2
+const bound2 = logger2.keys.bind(person2)//ключи обекта person2
+bound2()
+logger2.keys.call(person2)//сразу вызывает функцию 
+
+logger2.keysAndValues.call(person2)
+logger2.keysAndValues.call(logger2)
+
+
+const keyV= {
+  keysAndValues() {
+  //key: value
+  //array          .metod(array key)
+  Object.keys(this).forEach(key =>{
+    console.log(`"${key}": ${this[key]}`)
+                            //array[key]
+  })  
+  }
+}
+console.log("person2")
+console.log("person2Object.keys(this).forEach(key =>{")
+keyV.keysAndValues.call(person2)
+keyV.keysAndValues.call({a: 1, c: {b:2}})
+*/
   
+
+
+  
+
+  //Есть глобальный объект Objects.методы
+  /*
+  const person = {
+    //сложные названия в виде ключей ''
+    'complex key': 'complex value',
+    //свойства в скобки [вычислять значения]['Key_'+ (1 + 10)]: 'computed key',
+    ['Key_'+ 1 + 10]: 'computed key',
+    name: 'dima',
+    age: 29,
+    languages: ['ru', 'en'],
+    //функция someFunction является методом опа в объекте person
+    //someFunction: function() {}
+    someFunction(){
+      console.log('someFunction(){ from person')
+    }
+  }
+  console.log(person)
+  //c Object делать циклы нельзя они не итерируемые цикл for in заходит в прототип только по своим свойствам
+  for (let key in person){
+    if (person.hasOwnProperty(key)){
+      console.log('key: '+key)
+      console.log('person[key]: '+person[key])    
+    }
+    //console.log('key: '+key)
+    //console.log('person[key]: '+person[key])
+  }
+  const personKeys = Object.keys(person)//не бежит по прототипу
+  console.log(personKeys)
+  //array
+  personKeys.forEach((key)=>{
+    console.log('key: '+key)
+    console.log('person[key]: '+person[key])    
+  })
+  
+
+  
+  /*
+  delete person.age
+  //const name = person.name
+  const {name, age: personAge = 10, languages}= person
+  console.log(name, personAge, languages)
+  //person.Key_110 = undefined
+  delete person['Key_110']
+  person.languages.push('jp')  
+  console.log(person)
+  console.log(person['Key_110'])
+  const ageKey = 'age'  
+  console.log(person[ageKey])
+  console.log(person[4])
+  console.log(person.name)
+  console.log(person['age'])//обращение через стоку к полю//29
+  console.log(person['complex key'])
+  console.log(person['Key_110'])
+  */
+
+  /*
 
   sameFunction('variable value 1')
   //function Expression initialization in variable
@@ -74,6 +728,7 @@ $(document).ready(function() {
   }
   sumAll(1,2,3)*/
   //замыкания private variable name
+  /*
   function createMember(name){
     return function (lastName){
       console.log(name+lastName)
@@ -95,6 +750,7 @@ $(document).ready(function() {
   console.log(cars)
   /*прототи для структур данных разный функционал 
   более глубокий прототип указывает на object*/
+  /*
   const arrayCars =['s', 'a']
   console.log("const arrayCars =['s', 'a']")
   console.log("arrayCars"+arrayCars.length)
@@ -170,12 +826,10 @@ $(document).ready(function() {
     return accumulator
   },0)
   console.log('allCostTWO'+allCost2)
-  //objects
-})
-  /*
+  */
 
 
-
+/*
 $(document).on('click', '.edit_project', function() {
     var dataset_id =this.dataset.id
     $("#project_input_" + dataset_id).toggle();
@@ -274,7 +928,11 @@ $.get('http://localhost:port/projects');
       });
 
 /*
+class="tasks_tbody list-group" data-url="<%= sort_tasks_path %>">
+<!-- need to have class id. on the tasks list rap each one of task in a div give that div an ids then jquery will no this is a group of items 
+and every group of items inside of here and it's gona be sortable   -->
 <script>
+
 // после загрузки DOM страницы
 $(function() {
   // вставить в элемент #refresh контент файла asidenav.tpl

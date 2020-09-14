@@ -3,10 +3,17 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   include SessionsHelper # доступен и во всех контроллерах
+  
+  def hello # метод экземпляра
+   puts "Привет, я #{@name}."
+  end
+
   def hello2
     render text: "def hello2"
   end  
-  def hello
+  
+
+  def hello3
     str =  "111.1 C"
     temp = str
     temp = temp.to_f

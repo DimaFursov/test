@@ -17,8 +17,7 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/new
   def new
-    @micropost = Micropost.new
-
+    @micropost = Micropost.new # объявить класс в перем
   end
 
   # GET /microposts/1/edit
@@ -37,21 +36,7 @@ class MicropostsController < ApplicationController
       render 'static_pages/home'
     end
   end  
-=begin  
-  def create
-    @micropost = Micropost.new(micropost_params)
 
-    respond_to do |format|
-      if @micropost.save
-        format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' } #redirect_to @micropost,  #redirect_to root_url
-        format.json { render :show, status: :created, location: @micropost }
-      else
-        format.html { render :new }
-        format.json { render json: @micropost.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-=end
   # PATCH/PUT /microposts/1
   # PATCH/PUT /microposts/1.json
   def update
@@ -72,16 +57,11 @@ class MicropostsController < ApplicationController
     @micropost.destroy
     flash[:success] = "Micropost destroyz"
     redirect_to request.referrer || root_url # перенаправление назад, на ту страницу, откуда был выдан запрос на удаление иначе на к
-  end  
-=begin  
-  def destroy
-    @micropost.destroy
-    respond_to do |format|
-      format.html { redirect_to microposts_url, notice: 'Micropost was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
-=end
+
+  def qwert
+  end  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_micropost
@@ -97,3 +77,27 @@ class MicropostsController < ApplicationController
       redirect_to root_url if @micropost.nil?
     end
 end
+=begin  
+  def create
+    @micropost = Micropost.new(micropost_params)
+
+    respond_to do |format|
+      if @micropost.save
+        format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' } #redirect_to @micropost,  #redirect_to root_url
+        format.json { render :show, status: :created, location: @micropost }
+      else
+        format.html { render :new }
+        format.json { render json: @micropost.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+=end
+=begin  
+  def destroy
+    @micropost.destroy
+    respond_to do |format|
+      format.html { redirect_to microposts_url, notice: 'Micropost was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+=end

@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   # Определяет прото-ленту.
   # Возвращает ленту сообщений пользователя.
   def feedprojects
-    Project.where("user_id = ?", id)
+    Project.where("user_id = ?", id) #self.id
   end  
   def feed
     following_ids = "SELECT followed_id FROM relationships
