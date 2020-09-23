@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
   root 'static_pages#home'
-  get  'static_pages/home'
+  #get  'static_pages/home'
   get  'hello2'=>'application#hello2'
   get  'hello'=>'application#hello'#http://localhost:3000/hello
   get  'hello'=>'application/hello'

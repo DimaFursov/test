@@ -1,6 +1,179 @@
 Панель с заголовком bootstrap
 
 нет смысла инициализировать если ты с ним никак не взаимодействуешь
+
+
+=begin
+    #2. get the count of all tasks in each project, order by tasks count descending   
+    render json: Project.find_by_sql("SELECT p.name as project_name, count(t.id) as count_tasks 
+      FROM projects p LEFT JOIN tasks t ON  t.project_id = p.id  GROUP BY project_name ORDER BY count_tasks DESC")
+      #[{ name: 'text', count: 1234 },{}...]
+      #sort_array = projects.sort_by { |hsh| -hsh[:tasks_count] }#.reverse!
+=end
+def all_tasks_count_in_project_desc
+    projects = Project.includes(:tasks).map do |project|
+      {
+        tasks_count: project.tasks.count,
+        project_name: project.name
+      }
+    end
+    
+    projects.sort_by! { |hsh| -hsh[:tasks_count]}
+    render json: projects
+  end
+  
+bundle exec guard init
+22:27:48 - INFO - Writing new Guardfile to /home/nomid/workspace/simple_todo_lists/Guardfile
+22:27:48 - INFO - minitest guard added to Guardfile, feel free to edit it
+/users/show
+<% provide(:title, @user.name) %>
+<div class="row">
+<p>
+  <strong><i>Name:</i>:</strong>
+  <%= current_user.name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<div class="projectsN">
+    <% if @user.projects.any? %>
+    <h3>Projects (<%= @user.projects.count %>)</h3>
+    <ol class="projects">
+      <%= render @projects %>
+    </ol>
+    <% end %>    
+</div>
+</div>
+
+    #Project.unscoped.select(:name).order(name: :desc)
+    #Task.where(:id=task.project_id).count
+    #Task.where(:project_id => id).select("COUNT(Task)")
+    #Task.where(:project_id => id).select("COUNT(Task.count) AS count_task").order(name: :desc) #.group(:title)
+    #TAsk.count
+rails db -p
+    #render json: Task.select(:name, :status).order(name: :asc).unscoped
+    #render json: Task.select(:name, :status).order(name: :asc)
+        #SELECT DISTINCT status FROM tasks ORDER BY status
+=begin
+SELECT p.name
+FROM projects p
+INNER JOIN (
+  SELECT `project_id`
+    FROM tasks
+    GROUP BY `project_id`
+    WHERE `status` 
+    AND
+    HAVING COUNT(`id`) > 10
+) `t` ON `t`.`project_id` = `p`.`id`
+ORDER BY `p`.`id` ASC
+=end
+  #SELECT `project_id`
+  #SELECT p.name FROM projects p WHERE EXISTS (SELECT 1 FROM tasks t 
+  WHERE p.id=t.project_id AND t.status="completed" HAVING count(*)>10) ORDER BY p.id
+=begin
+SELECT `p`.`name`
+FROM `projects` `p`
+INNER JOIN (
+  SELECT `project_id`
+    FROM `tasks`
+    GROUP BY `project_id`
+    WHERE `status` = "true"
+    HAVING COUNT(`id`) > 10
+) `t` ON `t`.`project_id` = `p`.`id`
+ORDER BY `p`.`id` ASC
+
+  Get the count of all tasks in each project, order by tasks count descending.
+  SELECT p.name as project_name, count(t.id) as count_tasks FROM projects p 
+  LEFT JOIN tasks t ON  t.project_id = p.id  GROUP BY project_name ORDER BY count_tasks DESC
+  Get the count of all tasks in each project, order by project names.
+  SELECT p.name as project_name, count(t.id) as count_tasks FROM projects p LEFT JOIN tasks t ON  t.project_id = p.id  GROUP BY project_name ORDER BY project_name
+  Get the tasks for all projects having the name beginning with “N” letter.
+  SELECT t.name as task_name, p.name as project_name FROM tasks t, projects p WHERE p.name LIKE "N%" AND t.project_id = p.id
+  Get the list of all projects containing the “a” letter in the middle of the name, and show the tasks count near each project. Mention that there can exist projects without tasks and tasks with project_id=NULL.
+  SELECT p.name as project_name, count(t.id) as count_tasks FROM projects p LEFT JOIN tasks t on t.project_
+  
+
+SELECT * 
+FROM `tasks`  
+INNER JOIN(
+    SELECT `name`  
+    FROM `tasks`  
+    GROUP BY `name`  
+    HAVING COUNT(`name`) > 1  
+) `temp` ON `tasks`.`name` = `temp`.`name`
+ORDER BY `tasks`.`name` ASC
+
+get the list of tasks having several exact matches of both name and status, from the project 'Garage'. Order by matches count
+SELECT `t`.`name`, `t`.`status`, COUNT(`t`.`name`) `c`
+FROM `tasks` `t`
+INNER JOIN `projects` `p` ON `t`.`project_id` = `p`.`id`
+INNER JOIN (
+  SELECT CONCAT(`name`, `status`) `ns`
+    FROM `tasks`
+    GROUP BY `ns`
+    HAVING COUNT(`ns`) > 1
+) `temp` ON CONCAT(`t`.`name`, `t`.status) = `temp`.`ns`
+WHERE `p`.`name` = 'Garage'
+GROUP BY `t`.`name`, `t`.`status`
+ORDER BY `c` ASC
+
+
+=end
+=begin
+  render json: Project.find_by_sql("SELECT `p`.`name`
+  FROM `projects` `p` INNER JOIN ( SELECT project_id FROM tasks GROUP BY `project_id` WHERE status = 'true'
+      HAVING COUNT(`id`) > 10) `t` ON `t`.`project_id` = `p`.`id` ORDER BY `p`.`id` ASC")
+=end
+=begin
+  Get the count of all tasks in each project, order by tasks count descending.
+  SELECT p.name as project_name, count(t.id) as count_tasks FROM projects p LEFT JOIN tasks t ON  t.project_id = p.id  GROUP BY project_name ORDER BY count_tasks DESC
+  Get the count of all tasks in each project, order by project names.
+  SELECT p.name as project_name, count(t.id) as count_tasks FROM projects p LEFT JOIN tasks t ON  t.project_id = p.id  GROUP BY project_name ORDER BY project_name
+  Get the tasks for all projects having the name beginning with “N” letter.
+  SELECT t.name as task_name, p.name as project_name FROM tasks t, projects p WHERE p.name LIKE "N%" AND t.project_id = p.id
+  Get the list of all projects containing the “a” letter in the middle of the name, and show the tasks count near each project. Mention that there can exist projects without tasks and tasks with project_id=NULL.
+  SELECT p.name as project_name, count(t.id) as count_tasks FROM projects p LEFT JOIN tasks t on t.project_
+  get the list of tasks with duplicate names. Order alphabetically
+
+SELECT * 
+FROM `tasks`  
+INNER JOIN(
+    SELECT `name`  
+    FROM `tasks`  
+    GROUP BY `name`  
+    HAVING COUNT(`name`) > 1  
+) `temp` ON `tasks`.`name` = `temp`.`name`
+ORDER BY `tasks`.`name` ASC
+
+get the list of tasks having several exact matches of both name and status, from the project 'Garage'. Order by matches count
+SELECT `t`.`name`, `t`.`status`, COUNT(`t`.`name`) `c`
+FROM `tasks` `t`
+INNER JOIN `projects` `p` ON `t`.`project_id` = `p`.`id`
+INNER JOIN (
+  SELECT CONCAT(`name`, `status`) `ns`
+    FROM `tasks`
+    GROUP BY `ns`
+    HAVING COUNT(`ns`) > 1
+) `temp` ON CONCAT(`t`.`name`, `t`.status) = `temp`.`ns`
+WHERE `p`.`name` = 'Garage'
+GROUP BY `t`.`name`, `t`.`status`
+ORDER BY `c` ASC
+
+get the list of project names having more than 10 tasks in status 'completed'. Order by project_id
+SELECT `p`.`name`
+FROM `projects` `p`
+INNER JOIN (
+  SELECT `project_id`
+    FROM `tasks`
+    GROUP BY `project_id`
+    WHERE `status` = 'completed'
+    HAVING COUNT(`id`) > 10
+) `t` ON `t`.`project_id` = `p`.`id`
+ORDER BY `p`.`id` ASC
+=end
+
 Чекбоксы и дедлайн должны ссылаться на экшн апдейт для тасков
 /*  ----------------------------- TASK drag and drop ----------------------------*/ /*
 document.addEventListener("turbolinks:load", function(){

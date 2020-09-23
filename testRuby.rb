@@ -1,3 +1,12 @@
+x = %w[alpha bravo charlie delta echo foxtrot]
+# Получить начальные буквы.
+a = x.collect {|w| w[0..0]} # %w[a b c d e f]
+# Получить длины строк.
+b = x.collect {|w| w.length} # [5, 5, 7, 5, 4, 7]
+# map – просто синоним.
+c = x.map {|w| w.length} # [5, 5, 7, 5, 4, 7]
+puts b
+
 a = Array.[](1, 2, 3, 4)
 b = Array[1,2,3,4]
 c = [1,2,3,4]
@@ -34,9 +43,9 @@ class Car2
   attr_reader :alpha, :beta
   attr_writer :gamma, :delta
   attr_accessor :epsilon, :speed, :model, :color # переменныу объекта экземпляра
-  #def new
-  #  @car = Car2.new
-  #end
+    #def new
+    #  @car = Car2.new
+    #end
   def accessor?(sym)
     return (self.respond_to?(sym) and self.respond_to?(sym+"="))
   end
@@ -48,7 +57,7 @@ class Car2
     @model = model
     @color = color
     @epsilon = epsilon
-  # Это переменные экземпляра конструкторы
+    # Это переменные экземпляра конструкторы
   end
   def isSpeed
     if @speed > 10

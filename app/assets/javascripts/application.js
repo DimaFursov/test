@@ -100,12 +100,18 @@ import App from '../app.vue'
   $(document).on('click', '.status', function() {
     var taskId = this.dataset.id;
     var projectId = this.dataset.projectid;
+    var newTaskStatus = $(this).is(":checked")
     var newTaskStatus = document.querySelector("#task_status_"+taskId).checked
     $.ajax({
       url: '/projects/'+projectId+'/tasks/'+taskId,
       type: 'PATCH',
       data: {task: {status: newTaskStatus}},
       success: function(updateData) {
+        if (checkboxStatus.status === true){
+          console.log('Status done: ' + checkboxStatus.status);
+        } else{
+          console.log('Status reopen: ' + checkboxStatus.status);
+        }
       }        
     });    
   });
