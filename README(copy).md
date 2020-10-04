@@ -1,8 +1,805 @@
+#Project.includes(:tasks).unscoped.where(name: 'Garage').map do |project| project.tasks.unscope(:order).group(:name).order('count_name desc').having('count_name > 1').count(:name) end
+      #Project.includes(:tasks).unscoped.where('projects.name = ?', 'Garage').map do |project| project.tasks.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name) end
+#b = project.tasks.unscope(:order).group(:status).order(:project_id).having(status: true).having('count_status > 10').count(:status)
+      #s = project.tasks.unscope(:order).group(:status).order('count_status desc').having('count_status > 10').count(:status)
+      #b = project.tasks.unscope(:order).group(:status).order(:project_id).having(status: true).having('count_status > 10').count(:status)
+      #q = project.tasks.limit(11).group(:status).order('task_status desc').having('task_status > 10').count(:status)
+    #.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name)      
+    #Project.unscoped.includes(:tasks).unscoped.map do |project| project.tasks.unscope(:order).group(:name, status: true).order('count_status desc').having('count_status > 10').count(:status) end
+    #Project.unscoped.includes(:tasks).unscoped.map do |project| project.tasks.unscope(:order).having(status: true).order('count_name desc').limit(11) end
+      # if Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true) > 10 then
+      # if project.tasks.limit(11).count(status: true) > 10 
+      #Task.unscoped.where('status = ?', 'true')
+      #Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true)
+      #q = project.tasks.group(:status).having(status: true)#.count(:status)
+      #if project.tasks.where(status: true).count(:status) > 10
+      #c = project.tasks.where(status: true).count(:status)
+      #if hash(s) > 10 then
+
+=begin
+    render json: Project.find_by_sql("
+      SELECT t.name, COUNT(*) as task_count, t.status 
+      FROM tasks t, projects p 
+      WHERE p.name='Garage' AND t.project_id = p.id 
+      GROUP BY t.name, t.status HAVING count(*)>1 ORDER BY task_count")
+=end          
+
+ #5. get the list of all projects containing the 'a' letter in the middle of
+  #the name, and show the tasks count near each project. Mentionthat there can exist projects without tasks and tasks with
+  # project_id = NULL
+  def list_projects_cont_a_middle
+    projects = Project.includes(:tasks).unscoped.where("
+      projects.name LIKE '%a%' AND projects.name NOT LIKE 'a%' AND projects.name NOT LIKE '%a'").map do |project|
+      {
+        projects: project.name,
+        count_tasks: project.tasks.count
+      }
+    end
+    projects.sort_by! { |x| x[:project_name]}  
+    render json: projects
+  end
+=begin    
+    render json: Project.find_by_sql("
+      SELECT p.name as project_name, count(t.id) as count_tasks 
+      FROM projects p LEFT JOIN tasks t on t.project_id = p.id 
+      WHERE p.name LIKE '%a%' AND p.name NOT LIKE 'a%' AND p.name NOT LIKE '%a' GROUP BY project_name")
+=end   
+
+  #6. get the list of tasks with duplicate names. Order alphabetically
+  def tasks_duplicate_name_asc
+    tasks = Task.unscoped.select(:name).distinct.order(name: :asc).map do |task|
+      {
+        distinct_task_name: task.name #project.tasks
+      }
+    end 
+    render json: tasks
+    #render json: Project.find_by_sql("SELECT name FROM tasks GROUP BY name HAVING count(*)>1 ORDER BY name")
+  end 
+
+=begin
+    render json: Project.find_by_sql("
+      SELECT t.name, COUNT(*) as task_count, t.status 
+      FROM tasks t, projects p 
+      WHERE p.name='Garage' AND t.project_id = p.id 
+      GROUP BY t.name, t.status HAVING count(*)>1 ORDER BY task_count")
+=end    
+  #7. get list of tasks having several exact matches of both name and status,
+  #   from the project 'Garage'. Order by matches count
+  def tasks_exact_matches_both_name_status_from_project_name_Garage  
+  #'projects.name = ?', 'Garage'  
+    projects = Project.includes(:tasks).unscoped.where('projects.name = ?', 'Garage').map do |project|
+      count_group_name_status = project.tasks.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name)#:order#tasks_status#,:status
+      # tasks_status
+      #Project.includes(:tasks).unscoped.where(name: 'Garage').map do |project| project.tasks.unscope(:order).group(:name).order('count_name desc').having('count_name > 1').count(:name) end
+      #Project.includes(:tasks).unscoped.where('projects.name = ?', 'Garage').map do |project| project.tasks.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name) end
+      {
+        project_name: project.name,
+        garage_tasks_count_desc: count_group_name_status,
+      }
+    end
+    render json: projects
+  end    
+
+  #8. - get the list of project names having more than 10 tasks in status'completed'. Order by project_id
+  def list_project_more_10_tasks_true
+=begin    
+    render json: Project.find_by_sql("
+      SELECT p.name 
+      FROM projects p WHERE EXISTS (SELECT `project_id` FROM tasks t 
+      WHERE p.id=t.project_id GROUP BY `project_id` AND t.status='true' HAVING count(*)>10) ORDER BY p.id ASC")  
+=end
+
+    projects = Project.includes(:tasks).unscoped.map do |project|
+      #q = project.tasks.limit(11).group(:status).order('task_status desc').having('task_status > 10').count(:status)
+    #.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name)      
+    #Project.unscoped.includes(:tasks).unscoped.map do |project| project.tasks.having('status = ?', 'true'>9) end
+    #Project.unscoped.includes(:tasks).unscoped.map do |project| project.tasks.unscope(:order).having(status: true).order('count_name desc').limit(11) end
+      # if Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true) > 10 then
+      # if project.tasks.limit(11).count(status: true) > 10 
+      a = Task.unscoped.where('status = ?', 'true')
+      #Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true)
+      q = project.tasks.group(:status).having(status: true)#.count(:status)
+      #if project.tasks.where(status: true).count(:status) > 10
+      c = project.tasks.where(status: true).count(:status)
+      {
+        project_id: project.id,
+        project_name: project.name,
+        pr_c_t: project.tasks.count,
+        q: q,
+        a: a,
+        c: c #0
+      }
+      #end
+    end
+    #projects = projects.compact
+    #projects.sort_by! { |hsh| -hsh[:project_id]}
+    render json: projects
+  end  
+
+heroku run rake db:migrate
+ ›   Warning: heroku update available from 7.43.1 to 7.43.2.
+Running rake db:migrate on ⬢ secure-shore-15920... up, run.8703 (Free)
+   (1.2ms)  SELECT pg_try_advisory_lock(2294364152804584770)
+   (2.0ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+Migrating to CreateUsers (20200731120805)
+   (1.1ms)  BEGIN
+== 20200731120805 CreateUsers: migrating ======================================
+-- create_table(:users)
+   (22.5ms)  CREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)
+   -> 0.0236s
+== 20200731120805 CreateUsers: migrated (0.0237s) =============================
+
+  ActiveRecord::SchemaMigration Create (1.3ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200731120805"]]
+   (3.9ms)  COMMIT
+Migrating to AddIndexToUsersEmail (20200731132108)
+   (1.1ms)  BEGIN
+== 20200731132108 AddIndexToUsersEmail: migrating =============================
+-- add_index(:users, :email, {:unique=>true})
+   (4.1ms)  CREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")
+   -> 0.0108s
+== 20200731132108 AddIndexToUsersEmail: migrated (0.0110s) ====================
+
+  ActiveRecord::SchemaMigration Create (1.6ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200731132108"]]
+   (2.0ms)  COMMIT
+Migrating to AddPasswordDigestToUsers (20200731132535)
+   (1.9ms)  BEGIN
+== 20200731132535 AddPasswordDigestToUsers: migrating =========================
+-- add_column(:users, :password_digest, :string)
+   (1.4ms)  ALTER TABLE "users" ADD "password_digest" character varying
+   -> 0.0017s
+== 20200731132535 AddPasswordDigestToUsers: migrated (0.0018s) ================
+
+  ActiveRecord::SchemaMigration Create (3.9ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200731132535"]]
+   (1.8ms)  COMMIT
+Migrating to AddRememberDigestToUsers (20200801130637)
+   (1.0ms)  BEGIN
+== 20200801130637 AddRememberDigestToUsers: migrating =========================
+-- add_column(:users, :remember_digest, :string)
+   (3.0ms)  ALTER TABLE "users" ADD "remember_digest" character varying
+   -> 0.0033s
+== 20200801130637 AddRememberDigestToUsers: migrated (0.0034s) ================
+
+  ActiveRecord::SchemaMigration Create (2.2ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200801130637"]]
+   (2.2ms)  COMMIT
+Migrating to CreateProjects (20200805083217)
+   (1.1ms)  BEGIN
+== 20200805083217 CreateProjects: migrating ===================================
+-- create_table(:projects)
+   (12.3ms)  CREATE TABLE "projects" ("id" bigserial primary key, "name" character varying, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_b872a6760a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)
+   (4.1ms)  CREATE  INDEX  "index_projects_on_user_id" ON "projects"  ("user_id")
+   -> 0.0210s
+-- add_index(:projects, [:user_id, :created_at])
+   (4.0ms)  CREATE  INDEX  "index_projects_on_user_id_and_created_at" ON "projects"  ("user_id", "created_at")
+   -> 0.0093s
+== 20200805083217 CreateProjects: migrated (0.0306s) ==========================
+
+  ActiveRecord::SchemaMigration Create (1.2ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200805083217"]]
+   (2.0ms)  COMMIT
+Migrating to CreateTasks (20200817134816)
+   (1.1ms)  BEGIN
+== 20200817134816 CreateTasks: migrating ======================================
+-- create_table(:tasks)
+   (7.5ms)  CREATE TABLE "tasks" ("id" bigserial primary key, "name" character varying, "status" boolean, "priority" integer, "deadline" timestamp, "project_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_02e851e3b7"
+FOREIGN KEY ("project_id")
+  REFERENCES "projects" ("id")
+)
+   (3.1ms)  CREATE  INDEX  "index_tasks_on_project_id" ON "tasks"  ("project_id")
+   -> 0.0151s
+-- add_index(:tasks, [:project_id, :created_at])
+   (3.7ms)  CREATE  INDEX  "index_tasks_on_project_id_and_created_at" ON "tasks"  ("project_id", "created_at")
+   -> 0.0077s
+== 20200817134816 CreateTasks: migrated (0.0230s) =============================
+
+  ActiveRecord::SchemaMigration Create (1.3ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200817134816"]]
+   (2.6ms)  COMMIT
+Migrating to AddPositionToTasks (20200913182905)
+   (2.4ms)  BEGIN
+== 20200913182905 AddPositionToTasks: migrating ===============================
+-- add_column(:tasks, :position, :integer)
+   (1.9ms)  ALTER TABLE "tasks" ADD "position" integer
+   -> 0.0022s
+== 20200913182905 AddPositionToTasks: migrated (0.0023s) ======================
+
+  ActiveRecord::SchemaMigration Create (1.2ms)  INSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"  [["version", "20200913182905"]]
+   (2.1ms)  COMMIT
+  ActiveRecord::InternalMetadata Load (1.4ms)  SELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2  [["key", "environment"], ["LIMIT", 1]]
+   (1.1ms)  BEGIN
+  ActiveRecord::InternalMetadata Create (1.4ms)  INSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"  [["key", "environment"], ["value", "production"], ["created_at", "2020-09-30 08:15:58.200158"], ["updated_at", "2020-09-30 08:15:58.200158"]]
+   (1.9ms)  COMMIT
+   (1.2ms)  SELECT pg_advisory_unlock(2294364152804584770)
+
+
+
+
+  def up
+      drop_table :users
+
+      create_table :users do |t|
+      t.string :name
+      #...
+
+      t.timestamps
+  end
+
+# Puma can serve each request in a thread from an internal thread pool.
+# The `threads` method setting takes two numbers: a minimum and maximum.
+# Any libraries that use thread pools should be configured to match
+# the maximum value specified for Puma. Default is set to 5 threads for minimum
+# and maximum; this matches the default thread size of Active Record.
+#
+threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+threads threads_count, threads_count
+
+# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+#
+port        ENV.fetch("PORT") { 3000 }
+
+# Specifies the `environment` that Puma will run in.
+#
+environment ENV.fetch("RAILS_ENV") { "development" }
+
+# Specifies the number of `workers` to boot in clustered mode.
+# Workers are forked webserver processes. If using threads and workers together
+# the concurrency of the application would be max `threads` * `workers`.
+# Workers do not work on JRuby or Windows (both of which do not support
+# processes).
+#
+# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+
+# Use the `preload_app!` method when specifying a `workers` number.
+# This directive tells Puma to first boot the application and load code
+# before forking the application. This takes advantage of Copy On Write
+# process behavior so workers use less memory.
+#
+# preload_app!
+
+# Allow puma to be restarted by `rails restart` command.
+plugin :tmp_restart
+
+
+
+
 Панель с заголовком bootstrap
 
 нет смысла инициализировать если ты с ним никак не взаимодействуешь
+ не все в куче
+a = b.get_smth(b)
+c = a.map{i.test}
+return {
+  key1: a,
+  key2: b
+}
+
+=begin       
+    projects = Project.includes(:tasks).unscoped.map do |project|
+
+      #q = project.tasks.limit(11).group(:status).order('task_status desc').having('task_status > 10').count(:status)
+    #.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name)      
+    #Project.unscoped.includes(:tasks).unscoped.map do |project| project.tasks.having('status = ?', 'true'>9) end
+    #Project.unscoped.includes(:tasks).unscoped.map do |project| project.tasks.unscope(:order).having(status: true).order('count_name desc').limit(11) end
+      # if Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true) > 10 then
+      # if project.tasks.limit(11).count(status: true) > 10 
+      a = Task.unscoped.where('status = ?', 'true')
+      #Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true)
+      q = project.tasks.group(:status).having(status: true)#.count(:status)
+      #if project.tasks.where(status: true).count(:status) > 10
+      c = project.tasks.where(status: true).count(:status)
+      {
+        project_id: project.id,
+        project_name: project.name,
+        pr_c_t: project.tasks.count,
+        q: q,
+        a: a,
+        c: c #0
+      }
+      #end
+    end
+    #projects = projects.compact
+    #projects.sort_by! { |hsh| -hsh[:project_id]}
+    render json: projects
+=end    
 
 
+Project.includes(:tasks).unscoped.where('projects.name = ?', 'Garage').map do |project| project.tasks.unscope(:order).group(:name, :status).order('count_name desc').having('count_name > 1').count(:name) end
+  Project Load (0.6ms)  SELECT "projects".* FROM "projects" WHERE (projects.name = 'Garage')
+   (1.3ms)  SELECT COUNT("tasks"."name") AS count_name, "tasks"."name" AS tasks_name, "tasks"."status" AS tasks_status FROM "tasks" WHERE "tasks"."project_id" = ? GROUP BY "tasks"."name", "tasks"."status" HAVING (count_name > 1) ORDER BY count_name desc  [["project_id", 4]]
+ => [{["truetaskGarage", true]=>3, ["taskGarage", false]=>2}]
+
+
+
+
+
+
+//= link projects.js
+//= link tasks.js
+// app/assets/javascripts/tasks.js
+// app/assets/javascripts/projects.js
+
+//= link_directory app/assets/javascripts/tasks
+//= link_directory app/assets/javascripts/projects
+
+//= link application.css
+//= link custom.css.scss
+//= link application.js
+//= link_tree ../images
+//= link_directory ../javascripts .js
+//= link_directory ../stylesheets .css
+
+//= link_tree ../images
+//= link_directory ../javascripts .js
+//= link_directory ../stylesheets .css
+
+
+
+----
+//= link_directory app/assets/javascripts/tasks.js
+//= link_directory app/assets/javascripts/projects.js
+//= require app/assets/javascripts/tasks
+//= require app/assets/javascripts/projects
+
+DEPRECATION WARNING: Leaving `ActiveRecord::ConnectionAdapters::SQLite3Adapter.represent_boolean_as_integer`
+set to false is deprecated. SQLite databases have used 't' and 'f' to serialize
+boolean values and must have old data converted to 1 and 0 (its native boolean
+serialization) before setting this flag to true. Conversion can be accomplished
+by setting up a rake task which runs
+
+  ExampleModel.where("boolean_column = 't'").update_all(boolean_column: 1)
+  ExampleModel.where("boolean_column = 'f'").update_all(boolean_column: 0)
+
+for all models and all boolean columns, after which the flag must be set to
+true by adding the following to your application.rb file:
+
+  Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+ (called from instance_eval at /home/nomid/.rvm/gems/ruby-2.6.3/gems/activesupport-5.2.2/lib/active_support/lazy_load_hooks.rb:71)
+Started GET "/" for 127.0.0.1 at 2020-09-29 19:31:41 +0300
+   (0.1ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (2.5ms)
+Completed 500 Internal Server Error in 830ms (ActiveRecord: 0.0ms)
+
+
+      #garage_id = project.id
+      #garage_tasks_distinct = Task.where('tasks.project_id = ?', garage_id).select(:name, :status).distinct      
+      # Order by matches count
+      #count = Task.where('tasks.project_id = ?', garage_id).select(:name, :status).distinct.count(:name, :status)
+     
+      #count_number = Task.unscoped.where('tasks.project_id = ?', garage_id).group(:name, :status).count(:name, :status)
+      #count_number1 = Task.unscoped.where('tasks.project_id = ?', garage_id).group(:name, :status).order(:name, :status).count
+      
+      #.order(status: :asc)
+      # .having('count(*)>1')#.group('count')
+      
+      #tasks_where_name_status = project.tasks.where(status: true)
+      # .count(:name, :status)
+      # project.tasks.group...count...
+      # group...order...count
+      # a = project.tasks.group...count...
+      #count_group_name_status = project.tasks.group(:name, :status).order('count_id asc').count('id')
+      #count_group_name_status = project.tasks.group(:name, :status).count(:name, :status)
+
+      #count_group_name_status = project.tasks.group(:name, :status).order(:name, :status).count
+      #w = project.tasks.unscoped.where('tasks.project_id = ?', garage_id).group(:name, :status).order(:name, :status).count
+      #  group ("recommended_tor_type_id", "recommended_for_types.name").count
+      #  Tag.select("tag, count(*) as total_count").group("tag").reverse_order
+      # Person.select("id, age").group(:id, :age).having("count(id) > 1").order("age desc")
+      # w = project.tasks.select("name, status").group(:name, :status)
+      # w = project.tasks.select("tasks.name, tasks.status").group(:name, :status).having("count(id) > 1")
+      # projects = Project.includes(:tasks).unscoped.where('projects.name = ?', 'Garage').map do |project| a = project.tasks.group(:name, :status).order(:name, :status).count end
+      # projects = Project.includes(:tasks).unscoped.where('projects.name = ?', 'Garage').map do |project| a = project.tasks.unscoped.where('projects.name = ?', 'Garage').group(:name, :status).order('count_id asc').count('id') end
+      
+      #project.tasks.limit(11).count(status: true)
+      #Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true)
+  
+#8. - get the list of project names having more than 10 tasks in status'completed'. Order by project_id
+  def list_project_more_10_tasks_true
+=begin    
+    render json: Project.find_by_sql("
+      SELECT p.name 
+      FROM projects p WHERE EXISTS (SELECT `project_id` FROM tasks t 
+      WHERE p.id=t.project_id GROUP BY `project_id` AND t.status='true' HAVING count(*)>10) ORDER BY p.id ASC")  
+=end
+    projects = Project.unscoped.includes(:tasks).unscoped.map do |project|
+      # project_id = project.id
+      # .limit(10).count
+      #  Task.limit(10).count(status: true)
+      if Task.where('tasks.project_id = ?', project.id).limit(11).count(status: true) > 10 then
+      {
+        project_id: project.id,
+        project_name: project.name,
+      }
+      end
+    end
+    #  remove null 
+    projects = projects.compact
+    projects.sort_by! { |hsh| -hsh[:project_id]}
+    render json: projects
+  end  
+
+    #  Project.includes(:tasks).where("'tasks.status=true'").references(:tasks)
+    # => projects = Project.includes(:tasks).where('tasks.name = ?', 'Garage').map do |project|
+    #  Project.includes(:tasks).where("'projects.name = Garage' AND 'tasks.status=true'")
+
+=begin
+  tasks = Task.where("tasks.project_id = 4").select(:name, :status).distinct.map do |task|
+        
+        {
+          distinct_task_name: task.name,
+          distinct_task_status: task.status,
+          project_id: project.id,
+          
+        }
+        end       
+        b = project.tasks.each do |task| 
+            {
+              #task: task.distinct.count(:name, :status)
+            }
+            end
+=end    
+    
+
+      #.calculate(:count, :all)
+      # User.joins(:topics).where(topics: { id: [1, 2, 3] }).group('users.id').having('count(distinct topics.id) = 3')
+      #@products = @products.joins(:tasks).where('tasks.id' => project.id).group('projects.id')
+      #.having("count(tasks.id) >= ?",area_ids.count) unless area_ids.blank?
+      #@products = @products.joins(:tasks).where('surfaces.id' => surface_ids).group('products.id')
+      #.having("count(surfaces.id) >= ?",surface_ids.count) unless surface_ids.blank?
+      # projects = Project.includes(:tasks)
+      # UserVideoWatching.where("created_at >= ? AND user_id != ?",1.month.ago, User.elephant.id)
+      #.group("DATE(created_at)").reorder('created_at').count
+      # UserVideoWatching.where("created_at >= ? AND user_id != ?",1.month.ago, User.elephant.id)
+      #.group("DATE(created_at)").reorder('created_at').select('COUNT(DISTINCT user_id) AS count_all, DATE(created_at) AS date_created')
+      # Task.having('count(*)>1').group('project_id')
+
+
+#render json: Project.find_by_sql("
+    #  SELECT t.name, COUNT(*) as task_count, t.status 
+    #  FROM tasks t, projects p 
+    #  WHERE p.name='Garage' AND t.project_id = p.id 
+    #  GROUP BY t.name, t.status HAVING count(*)>1 ORDER BY task_count")
+
+    #  Project.includes(:tasks).where("'tasks.status=true'").references(:tasks)
+    # => projects = Project.includes(:tasks).where('tasks.name = ?', 'Garage').map do |project|
+    #  Project.includes(:tasks).where("'projects.name = Garage' AND 'tasks.status=true'")
+
+=begin
+  tasks = Task.where("tasks.project_id = 4").select(:name, :status).distinct.map do |task|
+        
+        {
+          distinct_task_name: task.name,
+          distinct_task_status: task.status,
+          project_id: project.id,
+          
+        }
+        end       
+        b = project.tasks.each do |task| 
+            {
+              #task: task.distinct.count(:name, :status)
+            }
+            end
+=end    
+    
+
+      #.calculate(:count, :all)
+      # User.joins(:topics).where(topics: { id: [1, 2, 3] }).group('users.id').having('count(distinct topics.id) = 3')
+      #@products = @products.joins(:tasks).where('tasks.id' => project.id).group('projects.id')
+      #.having("count(tasks.id) >= ?",area_ids.count) unless area_ids.blank?
+      #@products = @products.joins(:tasks).where('surfaces.id' => surface_ids).group('products.id')
+      #.having("count(surfaces.id) >= ?",surface_ids.count) unless surface_ids.blank?
+      # projects = Project.includes(:tasks)
+      # UserVideoWatching.where("created_at >= ? AND user_id != ?",1.month.ago, User.elephant.id)
+      #.group("DATE(created_at)").reorder('created_at').count
+      # UserVideoWatching.where("created_at >= ? AND user_id != ?",1.month.ago, User.elephant.id)
+      #.group("DATE(created_at)").reorder('created_at').select('COUNT(DISTINCT user_id) AS count_all, DATE(created_at) AS date_created')
+      # Task.having('count(*)>1').group('project_id')
+
+=begin  
+  #4. get the tasks for all projects having the name beginning with "N" letter
+  def tasks_projects_name_beginning_n
+    projects = Project.includes(:tasks).unscoped.where("projects.name LIKE 'N%'").map do |project|
+      a = project.tasks.each do |task| 
+        {
+          task:task
+        }
+      end
+      {
+        project_name: project.name,
+        tasks: project.tasks
+      }
+    end
+    render json: projects
+  end 
+
+    projects = Project.includes(:tasks).unscoped.where("projects.name LIKE 'N%'").map do |project|
+      a = project.tasks.each do |task| 
+        {
+          task:task
+        }
+      end
+      {
+        project_name: project.name,
+        tasks: a
+        #project.tasks.each do |task| 
+        #{
+        #  task:task
+        #}
+        #end
+      }
+    end
+    render json: projects
+  end  
+=end  
+=begin
+
+    tasks = Task.unscoped.select(:name, :status).distinct.order(name: :asc).map do |task|
+      {
+        distinct_task_name: task.name,
+        distinct_task_status: task.status
+      }
+    end  
+        
+    render json: tasks
+=end  
+
+=begin  
+  #4. get the tasks for all projects having the name beginning with "N" letter
+  def tasks_projects_name_beginning_n
+    projects = Project.includes(:tasks).unscoped.where("projects.name LIKE 'N%'").map do |project|
+      a = project.tasks.each do |task| 
+        {
+          task:task
+        }
+      end
+      {
+        project_name: project.name,
+        tasks: project.tasks
+      }
+    end
+    render json: projects
+  end 
+
+    projects = Project.includes(:tasks).unscoped.where("projects.name LIKE 'N%'").map do |project|
+      a = project.tasks.each do |task| 
+        {
+          task:task
+        }
+      end
+      {
+        project_name: project.name,
+        tasks: a
+        #project.tasks.each do |task| 
+        #{
+        #  task:task
+        #}
+        #end
+      }
+    end
+    render json: projects
+  end  
+=end  
+
+
+#3. get the count of all tasks in each project, order by projects names
+  def all_count_tasks_project_order_projects_name
+    projects = Project.includes(:tasks).map do |project|
+      {
+        tasks_count: project.tasks.count,
+        project_name: project.name
+      } 
+    end
+    projects.sort_by! { |x| x[:project_name]}  
+    render json: projects
+=begin    
+    render json: Project.find_by_sql("SELECT p.name as project_name, count(t.id) as count_tasks 
+      FROM projects p LEFT JOIN tasks t ON  t.project_id = p.id  GROUP BY project_name ORDER BY project_name")
+=end      
+  end  
+
+  #4. get the tasks for all projects having the name beginning with "N" letter
+  def tasks_projects_name_beginning_n
+  projects = Project.includes(:tasks).unscoped.where("projects.name LIKE 'N%'").map do |project|
+      {
+      project_name: project.name,
+      tasks:
+        project.tasks.each do |task| 
+        {
+          task:task
+        }
+        end
+      }
+    end
+    
+    render json: projects#[:project_name ,:tasks_names ]    
+  end      
+=begin    
+    render json: Project.find_by_sql("
+      SELECT t.name as task_name, p.name as project_name 
+      FROM tasks t, projects p 
+      WHERE p.name LIKE 'N%' AND t.project_id = p.id")
+=end      
+
+  #5. get the list of all projects containing the 'a' letter in the middle of
+  #the name, and show the tasks count near each project. Mentionthat there can exist projects without tasks and tasks with
+  # project_id = NULL
+  def list_projects_cont_a_middle
+    projects = Project.includes(:tasks).unscoped.where("
+      projects.name LIKE '%a%' AND projects.name NOT LIKE 'a%' AND projects.name NOT LIKE '%a'").map do |project|
+      {
+        projects: project.name,
+        count_tasks: project.tasks.count
+      }
+    end
+    projects.sort_by! { |x| x[:project_name]}  
+    render json: projects
+  end
+=begin    
+    render json: Project.find_by_sql("
+      SELECT p.name as project_name, count(t.id) as count_tasks 
+      FROM projects p LEFT JOIN tasks t on t.project_id = p.id 
+      WHERE p.name LIKE '%a%' AND p.name NOT LIKE 'a%' AND p.name NOT LIKE '%a' GROUP BY project_name")
+=end      
+#6. get the list of tasks with duplicate names. Order alphabetically
+  def tasks_duplicate_name_asc
+    tasks = Task.unscoped.select(:name).distinct.order(name: :asc).map do |task|
+      {
+        distinct_task_name: task.name
+      }
+    end  
+    projects = Project.includes(:tasks).unscoped.map do |project|
+      {
+        tasks: project.tasks#counter
+      }
+    end
+    
+    render json: tasks
+    #render json: Project.find_by_sql("SELECT name FROM tasks GROUP BY name HAVING count(*)>1 ORDER BY name")
+  end  
+#1. get all statuses, not repeating, alphabetically ordered
+  def all_status_asc
+    render json: Task.unscoped.select(:status).distinct.order(status: :asc)
+    #Task.unscoped.order(status: :asc)
+  end
+
+=begin
+
+  #conditions = (range.first..range.last).to_a.map{ |letter| " name ILIKE '#{letter}%' " }.join('OR')
+  #Item.where(conditions)
+  #letters = ['N']
+  #Project.includes(:tasks).where("substr(name, 1, 1) IN (?)", letters)
+  #letters = ['N']
+  projects = Project.includes(:tasks).where("substr(name, 1, 1) IN (?)", letters).map do |project|
+      {
+      project_name: project.name,
+        
+      tasks_names:
+        if project.name.match(/^N/) 
+          project.tasks.each do |task|
+          {
+            task:task
+          }
+          end
+        end
+      }
+    end
+    
+    render json: projects#[:project_name ,:tasks_names ]  
+
+  #projects = projects.where.not(project_name: [nil, ""], tasks_names: [nil, ""])
+    #projects = projects.reject! { |x| x.nil? } 
+    #.compact
+    #projects.delete_if { |k, v| v.nil? || v.empty? }
+    #projects1 = projects.compact!
+
+  range = ['N']
+  projects = Project.includes(:tasks).where(range.first..range.last).to_a.map do |project| 
+      {
+      project_name: project.name,
+        
+      tasks_names:
+        if project.name.match(/^N/) 
+          project.tasks.each do |task|
+          {
+            task:task
+          }
+          end
+        end
+      }.join('OR')
+    end
+
+  letters = ['N']
+  projects = Project.includes(:tasks).where("substr(name, 1, 1) IN (?)", letters).map do |project|
+      {
+      project_name: project.name,
+        
+      tasks_names:
+        if project.name.match(/^N/) 
+          project.tasks.each do |task|
+          {
+            task:task
+          }
+          end
+        end
+      }
+    end
+
+  projects = Project.includes(:tasks).map do |project|
+      {
+      project_name: project.name,
+        
+      tasks_names:
+        if project.name.match(/^N/) 
+          project.tasks.each do |task|
+          {
+            task:task
+          }
+          end
+        end
+      }
+    end
+
+    render json: Project.find_by_sql("
+      SELECT t.name as task_name, p.name as project_name 
+      FROM tasks t, projects p 
+      WHERE p.name LIKE 'N%' AND t.project_id = p.id")
+=end 
+
+=begin
+ => #<Enumerator: [#<Project id: nil, name: "Et odio blanditiis eos sint nulla minus in repella...">,
+  #<Project id: nil, name: "Necessitatibus in autem et ut impedit perferendis ...">, 
+  #<Project id: nil, name: "Est corporis consectetur molestiae ea asperiores.">,
+   #<Project id: nil, name: "Garage">]:map> 
+
+ projects = Project.includes(:tasks).map do |project|
+      {
+      project_name: if project.name.match(/^N/) 
+          then project.name
+          end,
+        
+      tasks_names:
+        if project.name.match(/^N/) 
+          then 
+          project.tasks.each do |task|
+          {
+            task:task
+          }
+          end
+        end
+      }
+    end
+    #projects = projects.where.not(project_name: [nil, ""], tasks_names: [nil, ""])
+    
+  
+    render json: projects#[:project_name ,:tasks_names ]
+    #.where.not(name: [nil, ""])
+
+    projects.each do |key,value|
+      count = 0
+      if value == nil
+        projects[count] = projects.delete(key)
+        count += 1
+      end
+    end
+    #=~ %r"abc"
+    #'posts.name = ?', 'example'
+    #posts: { name: 'example' }
+    
+    #Project.includes(:tasks).where(tasks: { name: 'Quos' })
+    #Project.includes(:tasks).where('projects.name = ?', 'Necessitatibus.')
+    #REGEX = /^N/
+    #.where("table_column LIKE :prefix", prefix: "#{keyword}%")
+    #projects = Project.includes(:tasks).where(projects: { name: conditions }).map do |project|
+=end      
+  #range = [ 'N' ]
+  #conditions = (range.first..range.last).to_a.map{ |letter| '#{letter}%' }.join('OR')
+  #Item.where(conditions)
+  #letters = ('N').to_a
+  #Item.where("substr(name, 1, 1) IN (?)", letters)
+  #Item.where("substr(name, 1, 1) in ('N')")
+  #conditions = (range.first..range.last).to_a.map{ |letter| " name ILIKE '#{letter}%' " }.join('OR')
+  #Item.where(conditions)
 =begin
     #2. get the count of all tasks in each project, order by tasks count descending   
     render json: Project.find_by_sql("SELECT p.name as project_name, count(t.id) as count_tasks 
