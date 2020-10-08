@@ -1,7 +1,318 @@
-puts "
-([]([{[]}]))
-"
+#Зэн не нада
+#Лучше на новой строке
+#return false if condition Stack.pop
+def balance?(str)
+  hash = {')' => '(', ']' => '[', '}' => '{'}
+  stack = []
+  str.each_char do |ch|
+    case ch
+    when "(", "[", "{" 
+      stack << ch
+    when ")", "]", "}"
+      #return false if stack.empty? || stack[-1] =! hash[ch]
+      #stack.pop
+      return false if stack.empty?
+      if stack[-1] == hash[ch] then stack.pop else return false end
+    end  
+  end
+  true 
+end
+p b = "(adc(123[]{}))"
+unb = "]asd(123))"
+p balance?(b)
+p "______________new_________________________________"
+
+p a = "[([){[]}]"
+def balance?(str)
+  hash = {')' => '(', ']' => '[', '}' => '{'}
+  p x = "hash[')'] - #{hash[')']}"
+  stack = []
+  str.each_char do |ch|
+    case ch
+    when "(", "[", "{" 
+      stack << ch
+    when ")", "]", "}"
+      p "ch - #{ch}"
+      p "stack[-1] - #{stack[-1]}"
+      p hash
+      return false if stack.empty?
+      if stack[-1] == hash[ch] then stack.pop else return false end
+    end  
+  end
+  true 
+end
+b = "(adc(123[]{}))"
+unb = "]asd(123))"
+p balance?(a)
+
+p "______________1_________________________________"
+#a = ")(([][{[]}]))"
+#p a = "())(()"
+p a = "[([){[]}]"#"(()())"#"({)}"
+def balance_p?(str)
+  stack = []
+  str.each_char do |ch|
+    case ch
+    when "("
+      p "(" 
+      stack << ch
+      p stack
+    when "["
+      p "["
+      stack << ch
+      p stack
+    when "{" 
+      p "{:#{ch}"
+      stack << ch
+      p "{stack:"
+      p stack
+    when ")" 
+      p ")"    
+      p "array[-1] #{stack[-1]}"
+      return false if stack.empty?
+      if stack[-1] === "(" then stack.pop else return false end
+      #return false if stack[-1] != "("
+      p "end ) #{stack}"
+    when "]"
+      p "]"
+      p "array[-1] #{stack[-1]}"
+      #return false if stack.empty?
+      
+      return false if stack.empty? || stack[-1] != hash[ch]
+      if stack[-1] === "[" then stack.pop else return false end
+    when "}"
+      p "}:"
+      p ch
+      p "array[-1] #{stack[-1]}"
+      p stack[-1]
+      #return false if stack.empty?
+      #stack.pop if stack[-1] === "{"
+      if stack[-1] === "{" then stack.pop else return false end
+    end  
+    #p ch
+  end
+  true 
+end
+balance = "(adc(123[]{}))"
+unbalance = "]asd(123))"
+p balance_p?(a)
+#p balance_p?(balance)
+#split('')
+p "________________________________________________"
+#p a = "({)}"
+p str = "({"
+#str = "alpha,beta,gamma,,"
+list2 = str.split("",1)
+p list2
+stack = ["(","{"]
+p stack[-1]
+p a = "({)}"
+def balance_p?(str)
+  stack = []
+  str.each_char do |ch|
+    case ch
+    when "("
+      stack << ch
+    when ")"
+      if stack[-1] === "("
+      return false if stack.empty?
+    stack.pop
+    end  
+    p ch
+  end
+  true 
+end
+p balance_p?(a)
+end
+p "______________0_________________________________"
+p a = "[([){[]}]"
+hash = {'(' => ')', '[' => ']', '{' => '}'}
+def balance?(str)
+  stack = []
+  str.each_char do |ch|
+    case ch
+    when "(", "[", "{" 
+      stack << ch
+    when ")" 
+      return false if stack.empty?
+      if stack[-1] === "(" then stack.pop else return false end
+    when "]"
+      return false if stack.empty?
+      if stack[-1] === "[" then stack.pop else return false end
+    when "}"
+      return false if stack.empty?
+      if stack[-1] === "{" then stack.pop else return false end
+    end  
+  end
+  true 
+end
+b = "(adc(123[]{}))"
+unbalance = "]asd(123))"
+p balance?(a)
+# x = hash = {')' => '(', ']' => '[', '}' => '{'}
+#p hash = {')' => '(', ']' => '[', '}' => '{'}
+
 =begin
+String Challenge
+Have the function StringChallenge(str) take the str parameter being passed and determine if it passes as a valid password that follows the list of constraints:
+
+1. It must have a capital letter.
+2. It must contain at least one number.
+3. It must contain a punctuation mark.
+4. It cannot have the word "password" in the string.
+5. It must be longer than 7 characters and shorter than 31 characters.
+
+If all the above constraints are met within the string, the your program should return the string true, otherwise your program should return the string false. For example: if str is "apple!M7" then your program should return "true".
+Examples
+Input: "passWord123!!!!"
+Output: false
+Input: "turkey90AAA="
+Output: true
+
+
+
+
+
+
+
+hash = {'(' => ')', '[' => ']', '{' => '}'}
+    when ")" 
+      return false if stack.empty?
+      if stack[-1] === "(" then stack.pop else return false end
+    when "]"
+      return false if stack.empty?
+      if stack[-1] === "[" then stack.pop else return false end
+    when "}"
+      return false if stack.empty?
+      if stack[-1] === "{" then stack.pop else return false end
+=end  
+=begin
+p "________________________________________________"
+count_clouse_circle = 0
+count_open_square = 0
+count_clouse_square = 0
+count_open_wave = 0
+count_clouse_wave = 0
+#p a = "([[]]{)}"
+#bool = false
+first_clouse_circle_bool = true
+p a = "({)}"
+a = a.split("")
+string_length = a.length
+array = []
+for i in 0..string_length
+  case a[i]
+    when "("
+      array << a[i]
+      
+    when "["
+      array << a[i]    
+      
+    when "{"
+      array << a[i]
+
+    when ")"
+      p "array[-1] #{array[-1]}"
+      first_clouse_circle_bool = false if array.empty?
+      p "array[-1] #{array[-1]} i #{i}"
+      if array[-1] === "(" then array.pop end
+      
+      #2) если закрывающая: сравниваем с последним из стэка
+      #2.1) если совпадают то делаем поп
+      #2.2) если нет то невалидный
+      
+    when "]"
+      first_clouse_circle_bool = false if array.empty?
+      p "array[-1] #{array[-1]} i #{i}"
+      if array[-1] === "[" then array.pop end
+      
+    when "}"
+      first_clouse_circle_bool = false if array.empty?
+      p "array[-1] #{array[-1]} i #{i}"
+      if array[-1] === "{" then array.pop end
+      
+    end
+    p a[i]
+end
+  #if bool === true 
+   # p "ciecle equal #{bool}" end
+  if first_clouse_circle_bool === false
+    p "first_clouse_circle_bool: #{first_clouse_circle_bool}" end
+  if first_clouse_circle_bool === true
+    p "first_clouse_circle_bool equal: #{first_clouse_circle_bool}" end
+
+ #использования в выражениях 
+
+=begin
+p "______________Nend_list.each_char do |x|_______________________list.each do |x|_________"
+list = "(adc(123[]{}))" 
+list.each_char do |z|
+  p "#{z}"
+end
+p "______________list.each do |x|_________"
+list = list.split("")
+list.each do |x|
+  p "#{x} "
+end
+
+p a = "({)}"
+def balance_p?(str)
+  stack = []
+  str.each_char do |ch|
+    case ch
+    when "("
+      stack << ch
+    when ")"
+      if stack[-1] === "("
+      return false if stack.empty?
+    stack.pop
+    end  
+    p ch
+  end
+  true 
+end
+balance = "(adc(123))"
+unbalance = ")asd(123))"
+p balance_p?(unbalance)
+
+
+  if a[i] === "(" 
+    count_open_circle += 1
+    array << a[i]
+    bool = true
+
+  elsif a[i] === ")"
+    #p array[i]
+    #array[i] === "("
+    count_clouse_circle += 1
+    bool = false
+    array.pop
+
+  elsif a[i] === "]" 
+    count_open_square += 1 
+  elsif a[i] === "["    
+    count_clouse_square += 1 
+  elsif a[i] === "{"
+    count_open_wave += 1
+  elsif a[i] === "}"    
+    count_clouse_wave += 1
+
+  elsif array.empty? && a[i] === ")"
+    first_clouse_circle_bool = false
+  end
+=end
+=begin
+  p "count_open_square: #{count_open_square}"
+  p "count_clouse_squere: #{count_clouse_square}"
+  p "count_open_circle: #{count_open_circle}"
+  p "count_clouse_circle: #{count_clouse_circle}"
+  p "count_open_wave: #{count_open_wave}"
+  p "count_clouse_wave: #{count_clouse_wave}"
+
+p s1 = "Была темная грозовая ночь."
+p words = s1.split # ["Была", "темная", "грозовая", "ночь]
+p s3 = "львы и тигры и медведи"
+p zoo = s3.split(/ и /) # ["львы", "тигры", "медведи"]
 puts "[[1,5],
 [3,2]]
 Сумма 11
@@ -561,4 +872,97 @@ f1.hello # Привет, я Сюзанна.
 f2.hello # Привет, я Том.
 #Friend.our_common_friend # Все мы друзья Эндрю.
 #ruby -r "./test.rb" -e "Friend.our_common_friend"
+=end
+=begin
+class Object
+  attr_reader :alpha, :beta
+  attr_writer :gamma
+  attr_accessor :epsilon
+  
+end
+asd = Object.new()
+puts "puts asd.accessor?(:alpha) :gamma чтение установка атрибута с именем :epsilon "
+
+
+class Car2
+  attr_reader :alpha, :beta
+  attr_writer :gamma, :delta
+  attr_accessor :epsilon, :speed, :model, :color # переменныу объекта экземпляра
+    #def new
+    #  @car = Car2.new
+    #end
+
+  def self.find_by_id(id)
+    Task.find(id)             # self.find(id)        тут будет эквивалентно так как у метода идёт 'def self.'
+  end
+  def initialize(speed, model, color, epsilon) #конструктор
+    @speed = speed
+    @model = model
+    @color = color
+    @epsilon = epsilon
+    # Это переменные экземпляра конструкторы
+  end
+  def isSpeed
+    if @speed > 10
+      return true
+    
+    else
+      return false
+    end
+  end  
+  def printString
+  string11 = "String\nNexstring\nOnemorestring"
+  num = 0
+    #string11.each do |line|
+    #num +=1
+    #print "String #{num}_ #{line}"
+    #end
+    if string11 > ""
+      num +=1
+    print "String #{num}_ #{string11}"
+    a = "QWEERT"
+    b = :resurrect
+    a == a.to_sym
+    b == b.to_s #to_str
+    print a
+    print b
+    end
+
+  end  
+end
+
+class Extreme < Car2
+  attr_accessor :whatewer
+  def whatever
+    @whatewer
+  end
+  def whatever=(val)
+    @whatewer = val
+  end
+  def putsWhatever
+    puts "whatewer #{whatewer}"
+  end
+end  
+
+bmv = Car2.new(230, "a", "a", "b")
+puts "bmv.isSpeed"
+puts bmv.isSpeed
+puts "bmv.accessor?(:alpha)"
+
+extreme1 = Extreme.new(90, "a", "any", "c")
+extreme1.whatewer()
+extreme1.putsWhatever
+print "print Extreme.speed " 
+puts extreme1.isSpeed
+print "print Extreme.color " 
+puts extreme1.color
+puts extreme1.printString
+
+def mymethod(a, b, *c)
+  print a, b
+  c.each do |x| print x end
+end
+mymethod(1,2,3,4,5,6,7)
+
+p "---------------------------------------------------------------"
 =end
