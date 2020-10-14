@@ -20,8 +20,7 @@ def check(str)
   return 'true'
 end
 
-a = "112.124.667"
-p a
+p a = "112.124.667"
 p check(a)
 =begin
 

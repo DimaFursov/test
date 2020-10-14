@@ -31,19 +31,18 @@ def StringChallenge(str)
     #p "num_arr[1].to_i #{num_arr[1].to_i}"
     return 'false' if num_arr[-1].to_i <= num_arr[0].to_i || num_arr[-1].to_i <= num_arr[1].to_i
 
-    p "num_arr:_ #{num_arr}"
+    #digits (1 through 9) separated by a period.
     num_arr.each do |num|
-      p "num.to_i.in?([1,2]): #{num.to_i.in?([1,2])}"
-      p "num.to_i.in?([1,2]): #{num.to_i.in?([1,2])}"
+      p "num.to_i.in?([1,2,3,4,5,6,7,8,9]): #{num.to_i.in?([1,2,3,4,5,6,7,8,9])}"
       return 'false' unless num.to_i.in?([1,2,3,4,5,6,7,8,9])
     end
 
   end
   return '~~~true~~~'
 end
-num_arr = 
-num.to_i.in?([1,2])
-a = "112.124.567."
+#num_arr = 
+#num.to_i.in?([1,2])
+a = "112.124.130"
 p a
 p StringChallenge (a)
 str2 = "112"

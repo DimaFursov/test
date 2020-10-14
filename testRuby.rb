@@ -1,5 +1,52 @@
-#Зэн не нада
-#Лучше на новой строке
+def FindIntersection(strArr)
+
+  arr1 = str_to_arr(strArr[0])
+
+  arr2 = str_to_arr(strArr[1])
+
+  strArr = (arr1 & arr2).join(',')
+
+  # code goes here
+  return strArr
+end
+
+def str_to_arr(str)
+  str.split(',').map {|num| num.to_i}
+end
+
+# keep this function call here 
+puts FindIntersection(STDIN.gets)
+=begin
+def two_sum(arr, sum)
+  hash_table = {}
+  sums = []
+  arr.each do |n|
+    k = sum - n
+    if hash_table.key?(k)
+      sums.push([k, n])
+    end
+    hash_table[n] = true
+  end
+  sums
+end
+=begin
+def twoSum(arr, s):
+    for num in arr:
+        dif = s - num
+        try:
+            if arr.index(dif):
+                arr.remove(dif)
+                arr.remove(num)
+                yield num, dif
+        except ValueError:
+            pass
+
+
+arr = [3, 5, 2, -4, 8, 1,11]
+for num1, num2 in twoSum(arr, 4):
+    print(num1, num2)
+end    
+=begin
 #return false if condition Stack.pop
 def balance?(str)
   hash = {')' => '(', ']' => '[', '}' => '{'}
