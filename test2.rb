@@ -1,4 +1,94 @@
+require 'active_support'
+require 'active_support/core_ext'
+def StringChallenge(str)
+  #p "str #{str}"
+  arr = str.split('.')
+  #p "arr #{arr}"
+  return 'false' if arr.size != 3
+  #p "arr.size #{arr.size}"
+  arr.each_with_index do |num_str, idx|
+    #p "idx #{idx}"
+    #p "num_str #{num_str}"
+    
+    
+    num_arr = num_str.split('')
+    #p "num_arr = num_str.split('') #{num_arr}"#[\"1\", \"2\", \"4\"]"
 
+    return 'false' if num_arr.size != 3
+
+    #The first set of digits must add up to an even number.
+    #p "num_arr.map(&:to_i) #{num_arr.map(&:to_i).split('')}"
+    #p "if idx == 0 && (num_arr.map(&:to_i).sum % 2) != 0 #{(num_arr.map(&:to_i).sum % 2) != 0}"
+    return 'false' if idx == 0 && (num_arr.map(&:to_i).sum % 2) != 0
+    
+    #The second set of digits must add up to an odd number
+    #p "if idx == 0 && (num_arr.map(&:to_i).sum % 2) != 0 #{(num_arr.map(&:to_i).sum % 2) == 0}"
+    return 'false' if idx == 1 && (num_arr.map(&:to_i).sum % 2) == 0
+
+    #The last digit in each set must be larger than the two previous digits in the same set.
+    #p "num_arr[-1].to_i #{num_arr[-1].to_i}"
+    #p "num_arr[0].to_i #{num_arr[0].to_i}"
+    #p "num_arr[1].to_i #{num_arr[1].to_i}"
+    return 'false' if num_arr[-1].to_i <= num_arr[0].to_i || num_arr[-1].to_i <= num_arr[1].to_i
+
+    p "num_arr:_ #{num_arr}"
+    num_arr.each do |num|
+      p "num.to_i.in?([1,2]): #{num.to_i.in?([1,2])}"
+      p "num.to_i.in?([1,2]): #{num.to_i.in?([1,2])}"
+      return 'false' unless num.to_i.in?([1,2,3,4,5,6,7,8,9])
+    end
+
+  end
+  return '~~~true~~~'
+end
+num_arr = 
+num.to_i.in?([1,2])
+a = "112.124.567."
+p a
+p StringChallenge (a)
+str2 = "112"
+p pc = str2.split('') #["1", "1", "2"]
+
+=begin
+String Challenge
+Have the function StringChallenge(str) take the str parameter being passed 
+and determine if it is a valid serial number with the following constraints:
+
+1. It needs to contain three sets each with three digits (1 through 9) separated by a period.
+2. The first set of digits must add up to an even number.
+3. The second set of digits must add up to an odd number.
+4. The last digit in each set must be larger than the two previous digits in the same set.
+
+If all the above constraints are met within the string, the your program should return the string true,
+ otherwise your program should return the string false. For example: if str is "224.315.218"
+  then your program should return "true".
+
+Examples
+Input: "11.124.667"
+Output: false
+Input: "114.568.112"
+Output: true
+
+=begin
+arr2 = ["qwe","asd"]
+arr2.each_with_index do |num_str, idx|
+  p "num_str #{num_str}"
+    p "idx #{idx}"
+  end  
+=begin
+str1 = "Wolf 359"
+p /\d/.match(str1) # Соответствует "Wolf" (то же, что /[a-zA-Z_0-9]+/)
+/\w+ \d+/.match(str1) # Соответствует "Wolf 359"
+/\w+ \w+/.match(str1) # Соответствует "Wolf 359"
+/\s+/.match(str1) # Соответствует " "
+=begin
+str = "Когда-то\nдавным-давно...\nКонец\n"
+num = 0
+str.each_char do |line|
+num += 1
+print "Строка #{num}: #{line}"
+end
+=begin
 def StringChallenge(str)
   split_by_dot_str = str.split('.')
   split_by_ch_str = str.split("")
