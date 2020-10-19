@@ -5,7 +5,6 @@ def check(str)
   return 'false' if arr.size != 3
 
   arr.each_with_index do |num_str, idx|
-
     num_arr = num_str.split('')
     return 'false' if num_arr.size != 3
     return 'false' if idx == 0 && (num_arr.map(&:to_i).sum % 2) != 0
@@ -22,6 +21,29 @@ end
 
 p a = "112.124.667"
 p check(a)
+
+
+require 'active_support'
+require 'active_support/core_ext'
+def serial(str)
+  arr = str.split('.')
+  return 'false' if arr.size !=3
+
+  arr.each_with_index do |num_str, idx|
+    num_arr = num_str.split('')
+    return 'false' if num_arr.size !=3
+    return 'false' if idx == 0 && (num_arr.map(&.to_i).sum % 2 ) != 0
+    return 'false' if idx == 1 && (num_arr.map(&.to_i).sum % 2 ) == 0
+    return 'false' if num_arr[-1].to_i <= num_arr[0].to_i || num_arr[-1].to_i <= num_arr[1].to_i
+    num_arr.each do |num|
+      return 'false' unless
+      num.to_i.in?([1,2,3,4,5,6,7,8,9])
+    end
+  end  
+  return 'true'
+end  
+p a = "112.124.667"
+p serial(a)
 =begin
 
 String Challenge
