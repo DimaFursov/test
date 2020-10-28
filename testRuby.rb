@@ -1,3 +1,29 @@
+puts (1..10) === 1
+puts (1..10) === 0
+puts (1..10) === '1'
+p "/bcdef/ === 'abcdef' #{/bcdef/ === 'abcdef'}"
+p "string === #{String === 1}" 
+p -> a { a > 5 } === 6
+=begin
+for i in 1...10
+ puts "i = #{i}"
+ if i > 5
+ i = i + 5 #изменение переменной i в любой момент цикла
+ puts "i2 = #{i}" #i2 = 6  #i = 11
+ end
+end
+=begin
+a = true
+b = false
+c = true
+d = true
+a1 = a && b or c && d # Операции && выполняются первыми. c 
+a2 = a && (b or c) && d # Операция or выполняется первой. true
+puts c or b #первое выражение or: true or false
+puts a1 # Печатается false
+puts a2 # Печатается true
+
+=begin
 require 'active_support'
 require 'active_support/core_ext'
 def serial(str)
