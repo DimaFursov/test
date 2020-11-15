@@ -1,3 +1,20 @@
+p file1 = File.new("one")
+=begin
+case "Hello"
+ when /Hell/
+ puts "Есть соответствие."
+else
+ puts "Нет соответствия."
+end
+#делает не то же самое, что фрагмент
+case /Hell/
+ when "Hello"
+ puts "Есть соответствие."
+else
+ puts "Нет соответствия."
+end
+
+=begin
 puts (1..10) === 1
 puts (1..10) === 0
 puts (1..10) === '1'
