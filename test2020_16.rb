@@ -1,4 +1,28 @@
 puts " run: #{}"
+
+
+puts "'Ruby'.concat('Padavan') run: #{
+'Ruby'.concat('Padavan')
+}"
+puts "'Fear is the path to the dark side'.split('') run: #{
+'Fear is the path to the dark side'.split('')
+}"
+def string_length_interpolater(incoming_string)
+  "The string you just gave me has a length of #{incoming_string.length}"
+end
+ puts string_length_interpolater("asd")
+def stringin2
+  #return "[Luke:] I can’t believe it. [Yoda:] That is why you fail.".include? 'Yoda'
+  #return "Ruby is a beautiful language Ruby".start_with? "Ruby"
+  return "Ruby is a beautiful language ".end_with? "Ruby"
+end
+puts ".include? 'Yoda' .start_with? Ruby .end_with? run: #{ stringin2 }"
+puts "4.+(3) run: #{4.+(3)}" # 0_o ого!
+
+
+
+
+
 puts "2.between? -1,3 run: #{2.between? 3,-1}"
 puts 2.between? 2,3
 puts ['rock','paper','scissors'].index('paper')
@@ -6,9 +30,7 @@ puts "{['rock','paper','scissors'].index('rock')} run: #{['rock','paper','scisso
 
 
 
-=begin
 
-puts 1.methods
 a = 5
 b = 6
 puts a + b
@@ -29,4 +51,6 @@ end
 puts Calculator.new.add(5, 6)
 
 puts 2.even?
+=begin
+puts 1.methods
 =end
