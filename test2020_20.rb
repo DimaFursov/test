@@ -1,6 +1,15 @@
-puts " run: #{}"
+p " run: #{}"
 
+def reverse_sign(an_integer)
+  return 0 - an_integer
+end
 
+p reverse_sign(0+1-1)
+p reverse_sign(-5)
+
+p " Could you replace all the characters in capital case with number '0' in the following problem? 
+run: #{'RubyMonk Is Pretty Brilliant'.gsub(/[A-Z]/,'0')}"
+puts "I should".gsub('I','We')
 puts "'Ruby'.concat('Padavan') run: #{
 'Ruby'.concat('Padavan')
 }"
@@ -52,5 +61,5 @@ puts Calculator.new.add(5, 6)
 
 puts 2.even?
 =begin
-puts 1.methods
+puts 1.methods+
 =end
